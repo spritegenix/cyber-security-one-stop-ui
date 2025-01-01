@@ -1,3 +1,4 @@
+import Env from '@/lib/env';
 import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
@@ -18,10 +19,14 @@ export default function robots(): MetadataRoute.Robots {
                     "/user-profile/[id]",
                     "/feedback/[userType]",
 
+                    "/privacy-policy",
+
                 ],
             },
         ],
-        sitemap: 'https://cybersecurity.com/sitemap.xml',
-        host: 'https://cybersecurity.com',
+        sitemap: `${Env.BASE_URL}/sitemap.xml`,
+        host: `${Env.BASE_URL}`,
     };
 }
+
+// /robots.txt

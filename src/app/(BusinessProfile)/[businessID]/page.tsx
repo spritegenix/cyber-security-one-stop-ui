@@ -17,12 +17,13 @@ import { VscVerifiedFilled } from "react-icons/vsc";
 import { fetchBusinessById } from "@/app/_queryCall/businessProfile/ssg";
 import { notFound } from "next/navigation";
 
-export const revalidate = 1; // Rebuild the page every hour
+export const revalidate = 3600; // Rebuild the page every hour
 type Props = {
   params: Promise<{ businessID: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+// make alļ business pages static at build time
 // export async function generateStaticParams() {
 //   const business = await fetchBusinessById({ businessSlug: id });
 // return business.map((post) => ({
@@ -34,10 +35,8 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  // read route params
   const id = (await params).businessID;
 
-  // fetch data
   const business = await fetchBusinessById({ businessSlug: id });
   // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
@@ -54,7 +53,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
   // const { query } = await searchParams;
   // console.log(query);
   const business = await fetchBusinessById({ businessSlug: businessID });
-  if (!business) {
+  if (!business || !business.getBusinessById) {
     notFound();
   }
   return (
