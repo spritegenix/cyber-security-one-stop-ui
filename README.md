@@ -6,11 +6,6 @@ https://chatgpt.com/c/67036635-1178-8013-87e0-d710a66d0ea3
 
 https://xstarnextjs.vercel.app/service
 
-/ – Home
-/services/[service]  - individual service provider list
-/services/[service]/[individual] - individual service
-/business/[business] - individual service provider list
-
 
 Image Sizes - 
 ServiceListingHeroCard - h-144px
@@ -19,7 +14,7 @@ ServiceListingHeroCard - h-144px
 /signup
 
 
-
+Vercel - https://cyber-security-one-stop-ui.vercel.app/
 
 
 Commands - 
