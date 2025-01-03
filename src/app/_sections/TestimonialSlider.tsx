@@ -40,11 +40,11 @@ export const TestimonialSlider = ({ testimonials }: any) => {
             className="mb-12 w-full overflow-hidden rounded-2xl border border-zinc-300 bg-white shadow-lg"
           >
             <TestimonialCard
-              avatar={testimonial?.user?.avatar}
-              name={testimonial?.user?.name}
+              avatar={testimonial?.user?.avatar || undefined}
+              name={testimonial?.user?.name || undefined}
               profession={testimonial?.user?.profession || "Unknown"} // Default profession if not available
-              testimonial={testimonial?.comment}
-              rating={testimonial?.rating}
+              testimonial={testimonial?.comment || undefined}
+              rating={testimonial?.rating || undefined}
             />
           </SwiperSlide>
         ))}
