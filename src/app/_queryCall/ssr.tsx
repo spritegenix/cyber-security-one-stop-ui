@@ -1,5 +1,5 @@
 import { query } from "@/lib/client";
-import { gql } from "@apollo/client";
+import { ApolloError, gql } from "@apollo/client";
 
 export const GET_ALL_CATEGORIES = gql`
   query AllCategories {
@@ -18,18 +18,18 @@ export const fetchCategoriesSSR = async () => {
       query: GET_ALL_CATEGORIES,
     });
 
-    return {
-      props: {
-        categories: data.allCategories || [],
-      },
-    };
+    if (!data || !data.allCategories) {
+      console.warn("No categories found.");
+      return null;
+    }
+
+    return data;
   } catch (error) {
-    console.error("Error fetching categories:", error);
-    return {
-      props: {
-        categories: [],
-      },
-    };
+    if (error instanceof ApolloError) {
+      console.error("Error while fetching categories:", error.message);
+      return null;
+    }
+    throw error;
   }
 };
 
@@ -61,23 +61,423 @@ export const GET_ALL_TESTIMONIALS = gql`
   }
 `;
 
-export const fetchTestimonialsSSR = async (type: ["REVIEW", "FEEDBACK"], page = 1, limit = 10) => {
+export const fetchTestimonialsSSR = async ({
+  type,
+  page,
+  limit,
+}: {
+  type?: "REVIEW" | "FEEDBACK";
+  page?: number;
+  limit?: number;
+}) => {
   try {
     const { data } = await query({
       query: GET_ALL_TESTIMONIALS,
       variables: { type, page, limit },
     });
 
+    if (!data || !data.allTestimonials) {
+      console.warn("No testimonials found.", { type, page, limit });
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof ApolloError) {
+      console.error("ApolloError while fetching testimonials:", error.message);
+      return null;
+    }
+    throw error;
+  }
+};
+
+// Define the GraphQL query
+export const GET_ALL_BUSINESSES = gql`
+  query GetAllBusinesses {
+    getAllBusinesses {
+      id
+      name
+      slug
+      primaryContacts {
+        id
+        type
+        value
+      }
+      additionalContacts
+      isBusinessVerified
+      averageRating
+      reviewCount
+      reviews {
+        id
+        rating
+        comment
+        user {
+          id
+          slug
+          name
+        }
+      }
+      feedbacks {
+        id
+        rating
+        comment
+        user {
+          id
+          slug
+          name
+        }
+      }
+      businessSupportingDocuments {
+        id
+        type
+        url
+      }
+      businessDetails {
+        id
+        registrationNumber
+        license
+        experience
+        teamSize
+        description
+        websites {
+          id
+          type
+          url
+        }
+        primaryWebsite
+        coverImages {
+          id
+          url
+          order
+        }
+        adBannerImages {
+          id
+          url
+          order
+        }
+        mobileAdBannerImages {
+          id
+          url
+          order
+        }
+        operatingHours {
+          id
+          dayOfWeek
+          openingTime
+          closingTime
+        }
+        latitude
+        longitude
+        degrees
+        languages {
+          id
+          name
+          slug
+        }
+        proficiencies {
+          id
+          name
+          slug
+        }
+        courts {
+          id
+          name
+          slug
+        }
+        gstNumber
+        categories {
+          id
+          name
+          slug
+        }
+        tags {
+          id
+          name
+        }
+        addresses {
+          id
+          street
+          city
+          country
+          pincode
+          state
+          message
+          token
+        }
+        logo
+        createdAt
+        updatedAt
+        deletedAt
+        message
+        token
+      }
+      price
+      message
+      token
+    }
+  }
+`;
+
+// Define the SSR function
+export const fetchBusinessesSSR = async () => {
+  try {
+    const { data } = await query({
+      query: GET_ALL_BUSINESSES,
+    });
+
+    if (!data || !data.getAllBusinesses) {
+      console.warn("No businesses found.");
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof ApolloError) {
+      console.error("ApolloError while fetching businesses:", error.message);
+      return null;
+    }
+    throw error;
+  }
+};
+
+// Define the GraphQL query
+export const GET_ALL_BUSINESS_SLUGS = gql`
+  query GetAllBusinesses {
+    getAllBusinesses {
+      slug
+    }
+  }
+`;
+
+// Define the SSR function
+export const fetchBusinessSlugsSSR = async () => {
+  try {
+    const { data } = await query({
+      query: GET_ALL_BUSINESS_SLUGS,
+    });
+
+    if (!data || !data.getAllBusinesses) {
+      console.warn("No business slugs found.");
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof ApolloError) {
+      console.error("ApolloError while fetching business slugs:", error.message);
+      return null;
+    }
+    return error;
+  }
+};
+
+// Define the GraphQL query
+export const GET_ALL_AD_BANNERS = gql`
+  query Query {
+    getAllAddBanners {
+      id
+      url
+      order
+      businessDetails {
+        business {
+          id
+          slug
+          name
+        }
+      }
+    }
+    getAllMobileAddBanners {
+      id
+      url
+      order
+      businessDetails {
+        business {
+          id
+          slug
+          name
+        }
+      }
+    }
+  }
+`;
+
+// Define the SSR function
+export const fetchAdBannersSSR = async () => {
+  try {
+    const { data } = await query({
+      query: GET_ALL_AD_BANNERS,
+    });
+
+    if (!data || !data.getAllAddBanners) {
+      console.warn("No ad banners found.");
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof ApolloError) {
+      console.error("ApolloError while fetching add banners:", error.message);
+      return null; // Return null on GraphQL or network error
+    }
+
+    return null;
+  }
+};
+
+// Define the GraphQL query
+export const FILTER_BUSINESS = gql`
+  query Search(
+    $minPrice: Float
+    $maxPrice: Float
+    $minRating: Float
+    $sortBy: SortByEnum
+    $order: OrderEnum
+    $categoryId: ID
+    $categorySlug: ID
+    $languages: [String!]
+    $courts: [String!]
+    $proficiencies: [String!]
+    $pincode: String
+    $city: String
+    $state: String
+    $country: String
+    $search: String
+    $page: Int
+    $limit: Int
+    $verified: Boolean
+  ) {
+    search(
+      minPrice: $minPrice
+      maxPrice: $maxPrice
+      minRating: $minRating
+      sortBy: $sortBy
+      order: $order
+      categoryId: $categoryId
+      categorySlug: $categorySlug
+      languages: $languages
+      courts: $courts
+      proficiencies: $proficiencies
+      pincode: $pincode
+      city: $city
+      state: $state
+      country: $country
+      search: $search
+      page: $page
+      limit: $limit
+      verified: $verified
+    ) {
+      businesses {
+        id
+        name
+        slug
+        primaryContacts {
+          type
+          value
+        }
+        isBusinessVerified
+        averageRating
+        reviewCount
+        businessDetails {
+          categories {
+            slug
+            name
+            id
+          }
+          experience
+          coverImages {
+            id
+            url
+            order
+          }
+          addresses {
+            id
+            order
+            street
+            pincode
+            city
+            state
+            country
+          }
+        }
+      }
+      categories {
+        id
+        name
+        slug
+        categoryImage
+      }
+      total
+      page
+      limit
+      totalPages
+    }
+  }
+`;
+
+// Define the SSG function
+export const fetchBusinessesSSG = async ({
+  minPrice,
+  maxPrice,
+  minRating,
+  sortBy,
+  order,
+  categorySlug,
+  city,
+  state,
+  country,
+  pincode,
+  search,
+  page,
+  limit,
+  verified,
+}: {
+  minPrice?: number;
+  maxPrice?: number;
+  minRating?: number;
+  sortBy?: "alphabetical" | "rating" | "price" | "popularity" | "experience";
+  order?: "asc" | "desc";
+  categorySlug?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  pincode?: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+  verified?: boolean;
+}) => {
+  try {
+    const { data } = await query({
+      query: FILTER_BUSINESS,
+      variables: {
+        minPrice,
+        maxPrice,
+        minRating,
+        sortBy,
+        order,
+        categorySlug,
+        city,
+        state,
+        country,
+        pincode,
+        search,
+        page,
+        limit,
+        verified,
+      },
+    });
+
     return {
       props: {
-        testimonials: data.allTestimonials || [],
+        searchResults: data?.search || {},
       },
+      revalidate: 60, // Optional: Set a revalidation time for incremental static regeneration
     };
   } catch (error) {
-    console.error("Error fetching testimonials:", error);
+    console.error("Error fetching business suggestions for SSG:", error);
     return {
       props: {
-        testimonials: [],
+        searchResults: {},
       },
     };
   }

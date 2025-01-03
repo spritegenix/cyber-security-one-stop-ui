@@ -1,29 +1,26 @@
 import { search } from "@/assets";
 import Wrapper from "@/components/elements/Wrappers";
-import { categoryArray } from "@/data/global";
+// import { categoryArray } from "@/data/global";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function Categories() {
+export default function Categories({ categories }: any) {
   return (
     <Wrapper className="my-16">
       <h2 className="mb-5 text-3xl font-bold text-bg1">Categories</h2>
       <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 lg:gap-10 xl:grid-cols-8">
-        {categoryArray?.map((item) => (
+        {categories?.map((category: any) => (
           <CategoryCard
-            key={item?.id}
-            id={item?.id}
-            label={item?.label}
-            href={item?.href}
-            icon={item?.icon}
-            desc={item?.description}
+            key={category?.id || undefined}
+            id={category?.id || undefined}
+            label={category?.name || undefined}
+            href={category?.slug || undefined}
+            icon={category?.categoryImage || undefined}
+            desc={category?.description || undefined}
           />
         ))}
-        <Link
-          href={"#"}
-          className="group w-full cursor-pointer transition-all duration-300"
-        >
+        <Link href={"#"} className="group w-full cursor-pointer transition-all duration-300">
           <div className="mb-4 flex w-full justify-center rounded-md border border-zinc-400 p-8 duration-300 group-hover:border-bg1 group-hover:shadow-lg">
             <Image
               src={search}
@@ -33,9 +30,7 @@ export default function Categories() {
               className="h-full w-full object-contain"
             />
           </div>
-          <h4 className="text-center transition-all duration-300 group-hover:text-bg1">
-            More
-          </h4>
+          <h4 className="text-center transition-all duration-300 group-hover:text-bg1">More</h4>
         </Link>
       </ul>
     </Wrapper>
