@@ -281,6 +281,11 @@ export const UPDATE_BUSINESS_DETAILS = gql`
   }
 `;
 export function useMutationBusinessDetails() {
+  const { setTokenType } = useAuthStore();
+  const token = useAuthStore((state) => state?.firmToken);
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [mutate, { data, loading, error }] = useMutation<
     UpdateBusinessDetailsResult,
     UpdateBusinessDetailsVariables
@@ -327,6 +332,11 @@ export const BUSINESS_FILE_UPLOAD = gql`
 `;
 
 export function useMutationBusinessFile() {
+  const { setTokenType } = useAuthStore();
+  const token = useAuthStore((state) => state?.firmToken);
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [mutate, { data, loading, error }] = useMutation(BUSINESS_FILE_UPLOAD);
 
   const handleUpdate = async (variables: any): Promise<void> => {
