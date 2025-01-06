@@ -1,37 +1,82 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 interface AuthState {
-    tokenType: "user" | "firm";
+    tokenType: 'user' | 'firm' | 'admin';
     userToken: string | null;
     firmToken: string | null;
-    setTokenType: (tokenType: "user" | "firm") => void;
+    adminToken: string | null;
+    setTokenType: (tokenType: 'user' | 'firm' | 'admin') => void;
     setUserToken: (token: string | null) => void;
     setFirmToken: (token: string | null) => void;
+    setAdminToken: (token: string | null) => void;
     clearTokens: () => void;
     clearFirmTokens: () => void;
     clearUserTokens: () => void;
+    clearAdminTokens: () => void;
 }
 
 const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
-            tokenType: "user",
+            tokenType: 'user',
             userToken: null,
             firmToken: null,
-            setTokenType: (tokenType: "user" | "firm") => set({ tokenType }),
-            setUserToken: (token: string | null) => set({ userToken: token }),
-            setFirmToken: (token: string | null) => set({ firmToken: token }),
-            clearTokens: () => set({ userToken: null, firmToken: null, tokenType: "user" }),
-            clearFirmTokens: () => set({ firmToken: null }),
-            clearUserTokens: () => set({ userToken: null }),
+            adminToken: null,
+            setTokenType: (tokenType: 'user' | 'firm' | 'admin') => set({ tokenType }),
+            setUserToken: (token: string | null) => {
+                set({ userToken: token });
+                if (token) {
+                    cookies.set('userToken', token, { path: '/', secure: true, sameSite: 'strict' });
+                } else {
+                    cookies.remove('userToken', { path: '/' });
+                }
+            },
+            setFirmToken: (token: string | null) => {
+                set({ firmToken: token });
+                if (token) {
+                    cookies.set('firmToken', token, { path: '/', secure: true, sameSite: 'strict' });
+                } else {
+                    cookies.remove('firmToken', { path: '/' });
+                }
+            },
+            setAdminToken: (token: string | null) => {
+                set({ adminToken: token });
+                if (token) {
+                    cookies.set('adminToken', token, { path: '/', secure: true, sameSite: 'strict' });
+                } else {
+                    cookies.remove('adminToken', { path: '/' });
+                }
+            },
+            clearTokens: () => {
+                set({ userToken: null, firmToken: null, tokenType: 'user' });
+                cookies.remove('userToken', { path: '/' });
+                cookies.remove('firmToken', { path: '/' });
+                cookies.remove('adminToken', { path: '/' });
+            },
+            clearFirmTokens: () => {
+                set({ firmToken: null });
+                cookies.remove('firmToken', { path: '/' });
+            },
+            clearUserTokens: () => {
+                set({ userToken: null });
+                cookies.remove('userToken', { path: '/' });
+            },
+            clearAdminTokens: () => {
+                set({ adminToken: null });
+                cookies.remove('adminToken', { path: '/' });
+            },
         }),
         {
-            name: "auth-storage", // Name for localStorage key
+            name: 'auth-storage', // Name for localStorage key
             partialize: (state) => ({
                 tokenType: state.tokenType,
                 userToken: state.userToken,
                 firmToken: state.firmToken,
+                adminToken: state.adminToken,
             }),
         }
     )
@@ -39,10 +84,4 @@ const useAuthStore = create<AuthState>()(
 
 export default useAuthStore;
 
-// const { setUserToken, setFirmToken, setTokenType } = useAuthStore.getState();
-// setTokenType("firm")
-// setFirmToken(token)
-// setUserToken(token)
 
-
-// const token = useAuthStore((state) => (isFirm ? state.firmToken : state.userToken));

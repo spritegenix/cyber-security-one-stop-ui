@@ -63,6 +63,9 @@ http://localhost:3000/user-verify/email/9999999999
 http://localhost:3000/user-verify/phone/9999999999
 # User Profile
 http://localhost:3000/user-profile/pankaj
+# Admin
+http://localhost:3000/admin
+http://localhost:3000/admin/dashborad
 
 
 

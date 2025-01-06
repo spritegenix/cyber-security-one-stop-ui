@@ -1,14 +1,10 @@
+import useAuthStore from "@/zustandStore/authStore";
 import { gql, useLazyQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
 
 export const ADMIN_LOGIN = gql`
   query AdminLogin($email: String!, $password: String!) {
     adminLogin(email: $email, password: $password) {
-      id
-      name
-      email
-      createdAt
-      updatedAt
-      deletedAt
       message
       token
     }
@@ -17,22 +13,30 @@ export const ADMIN_LOGIN = gql`
 
 // Admin Login Query
 export function useAdminLogin() {
+  const router = useRouter();
+  const { setAdminToken, setTokenType } = useAuthStore();
   const [fetchAdminLogin, { data, loading, error }] = useLazyQuery(ADMIN_LOGIN, {
     onCompleted: (data: any) => {
-      // console.log("Admin login successful:", data);
+      if (data && data?.businessLogin) {
+        const token = data?.adminLogin?.token;
+        setAdminToken(token);
+        setTokenType("admin");
+      }
+      // Redirect to profile page
+      router.push("/admin/dashboard");
     },
   });
 
-  const adminLogin = async (email: string, password: string) => {
+  const adminLogin = async ({ email, password }: { email: string; password: string }) => {
     try {
       const response = await fetchAdminLogin({
         variables: { email, password },
       });
-      return { response: response.data, error: null };
+      return { response: response?.data?.adminLogin, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
   };
 
-  return { adminLogin, data: data?.adminLogin, loading, error };
+  return { adminLogin, data, loading, error };
 }

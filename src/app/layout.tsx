@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | Cyber Security",
   },
   description: "One stop Solution",
-  twitter:{
+  twitter: {
     card: "summary_large_image",
   },
   openGraph: {
@@ -40,11 +40,6 @@ export const metadata: Metadata = {
   icons: {
     shortcut: "/favicon.ico",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },  
 };
 
 export default function RootLayout({

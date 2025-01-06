@@ -1,13 +1,7 @@
 "use client";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import useAuthStore from "@/zustandStore/authStore";
-import {
-  ApolloError,
-  DocumentNode,
-  MutationHookOptions,
-  TypedDocumentNode,
-  useMutation,
-} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { UpdateBusinessDetailsResult, UpdateBusinessDetailsVariables } from "./types";
