@@ -8,6 +8,7 @@ const GET_ALL_CATEGORIES = gql`
       id
       name
       slug
+      description
       categoryImage
     }
   }
@@ -78,6 +79,7 @@ export const SEARCH_AUTOSUGGESTION = gql`
         id
         name
         slug
+        description
         categoryImage
       }
       total
@@ -274,6 +276,7 @@ const FILTER_BUSINESS = gql`
         reviewCount
         businessDetails {
           categories {
+            description
             slug
             name
             id
@@ -302,6 +305,7 @@ const FILTER_BUSINESS = gql`
         id
         name
         slug
+        description
         categoryImage
         __typename
       }

@@ -545,6 +545,7 @@ export const GET_BUSINESS_DETAILS = gql`
         categories {
           id
           name
+          description
           slug
           createdAt
           deletedAt

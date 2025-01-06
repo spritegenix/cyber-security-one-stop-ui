@@ -106,6 +106,7 @@ export const ADMIN_ALL_BUSINESSES = gql`
             id
             name
             slug
+            description
           }
           logo
         }
@@ -371,6 +372,7 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           id
           name
           slug
+          description
           createdAt
           deletedAt
           categoryImage
