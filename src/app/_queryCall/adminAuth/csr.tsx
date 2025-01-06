@@ -1,11 +1,7 @@
 import useAuthStore from "@/zustandStore/authStore";
 import { gql, useLazyQuery } from "@apollo/client";
-<<<<<<< HEAD
-import { useRouter } from "next/navigation";
-=======
+import { useRouter } from "next/router";
 import { useEffect } from "react";
->>>>>>> 1a1aa5c (Category / Testimonial)
-
 export const ADMIN_LOGIN = gql`
   query AdminLogin($email: String!, $password: String!) {
     adminLogin(email: $email, password: $password) {
