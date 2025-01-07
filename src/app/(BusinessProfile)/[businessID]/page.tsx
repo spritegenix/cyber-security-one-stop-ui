@@ -440,14 +440,15 @@ const transformOperatingHours = (operatingHours: any[]) => {
   }, {});
 
   // Map operating hours to respective days
-  operatingHours.forEach((slot) => {
-    const { dayOfWeek, openingTime, closingTime } = slot;
-    timeSlots[dayOfWeek] = {
-      checked: true,
-      start: openingTime,
-      end: closingTime,
-    };
-  });
+  operatingHours.length > 0 &&
+    operatingHours?.forEach((slot) => {
+      const { dayOfWeek, openingTime, closingTime } = slot;
+      timeSlots[dayOfWeek] = {
+        checked: true,
+        start: openingTime,
+        end: closingTime,
+      };
+    });
 
   return timeSlots;
 };
@@ -471,7 +472,7 @@ const ConsultationTiming = ({ timeSlots }: any) => {
           <React.Fragment key={day}>
             <p
               className={`border-input relative col-span-1 flex size-9 cursor-pointer flex-col items-center justify-center rounded-full border text-center capitalize shadow-sm shadow-black/5 transition-colors ${
-                slot?.checked ? "bg-orange-500 text-white" : "bg-white text-zinc-800"
+                slot?.checked ? "bg-bg1 text-white" : "bg-white text-zinc-800"
               }`}
             >
               {day[0]} {/* Display the first letter of the day */}

@@ -43,11 +43,11 @@ export default async function middleware(req: NextRequest) {
     // Handle public routes
     if (isPublicRoute) {
         // Redirect logged-in users to appropriate protected routes
-        if ((path.startsWith('/login') || path.startsWith('/signup')) && userToken)
+        if ((path.match('/login') || path.match('/signup')) && userToken)
             return NextResponse.redirect(new URL('/', req.nextUrl));
-        if ((path.startsWith('/listing-login') || path.startsWith('/listing-signup')) && firmToken)
+        if ((path.match('/listing-login') || path.match('/listing-signup')) && firmToken)
             return NextResponse.redirect(new URL('/', req.nextUrl));
-        if (path.startsWith('/admin') && adminToken)
+        if (path.match('/admin') && adminToken)
             return NextResponse.redirect(new URL('/', req.nextUrl));
     }
 

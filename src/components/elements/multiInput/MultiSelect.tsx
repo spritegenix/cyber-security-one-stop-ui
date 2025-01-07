@@ -48,7 +48,7 @@ export default function MultiSelect({
           <select
             value={selectedValue?.id || ""}
             onChange={handleSelectChange}
-            className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-orange-500"
+            className="h-10 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
             {...props}
           >
             <option value="" disabled>
