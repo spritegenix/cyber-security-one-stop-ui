@@ -105,7 +105,7 @@ export default function WeekCheckbox({
               <label
                 htmlFor={`checkbox-${item.id}`}
                 className={`border-input relative flex size-9 cursor-pointer flex-col items-center justify-center rounded-full border text-center shadow-sm shadow-black/5 transition-colors ${
-                  timeSlot?.checked ? "bg-orange-500 text-white" : "bg-white text-zinc-800"
+                  timeSlot?.checked ? "bg-bg1 text-white" : "bg-white text-zinc-800"
                 }`}
               >
                 <Checkbox

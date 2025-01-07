@@ -334,7 +334,7 @@ export function DocumentUploaderForm({
                   maxSize={maxFileSize}
                   maxFiles={maxFiles - cachedDocuments?.length}
                   onDropRejected={(data) =>
-                    data.forEach((item) =>
+                    data?.forEach((item) =>
                       setOtherErrors((prev) => [
                         ...prev,
                         `${item.file.name} - ${item.errors[0].code}`,

@@ -13,8 +13,7 @@ export default function Navbar({ children }: NavbarProps) {
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainerRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       setShowLeftButton(scrollLeft > 0);
       setShowRightButton(scrollLeft + clientWidth < scrollWidth);
     }
@@ -58,7 +57,7 @@ export default function Navbar({ children }: NavbarProps) {
       </ul>
       {showLeftButton && (
         <button
-          className="absolute left-0 top-1/2 -translate-y-1/2 transform rounded-full bg-orange-500 p-1 opacity-60 hover:opacity-100"
+          className="absolute left-0 top-1/2 -translate-y-1/2 transform rounded-full bg-bg1 p-1 opacity-60 hover:opacity-100"
           onClick={handleScrollLeft}
         >
           <FaAngleLeft className="text-3xl text-white" />
@@ -66,7 +65,7 @@ export default function Navbar({ children }: NavbarProps) {
       )}
       {showRightButton && (
         <button
-          className="absolute right-0 top-1/2 -translate-y-1/2 transform rounded-full bg-orange-500 p-1 opacity-60 hover:opacity-100"
+          className="absolute right-0 top-1/2 -translate-y-1/2 transform rounded-full bg-bg1 p-1 opacity-60 hover:opacity-100"
           onClick={handleScrollRight}
         >
           <FaAngleRight className="text-3xl text-white" />
