@@ -1,13 +1,7 @@
 "use client";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import useAuthStore from "@/zustandStore/authStore";
-import {
-  ApolloError,
-  DocumentNode,
-  MutationHookOptions,
-  TypedDocumentNode,
-  useMutation,
-} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { UpdateBusinessDetailsResult, UpdateBusinessDetailsVariables } from "./types";
@@ -86,7 +80,10 @@ export const RESEND_BUSINESS_OTP = gql`
 
 export function useResendBusinessOtp() {
   const route = useRouter();
-  const { setUserToken, setFirmToken, setTokenType } = useAuthStore();
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [resendBusinessOtpMutation, { data, loading, error }] = useMutation(
     RESEND_BUSINESS_OTP, // Define this GraphQL mutation in your query file
     {
@@ -184,7 +181,7 @@ export const BUSINESS_LOGIN = gql`
 // Firm/ Individual Login
 export const useBusinessLogin = () => {
   const router = useRouter();
-  const { setUserToken, setFirmToken, setTokenType } = useAuthStore();
+  const { setFirmToken, setTokenType } = useAuthStore();
   const [fetchBusinessLogin, { data, loading, error }] = useLazyQuery(BUSINESS_LOGIN, {
     fetchPolicy: "network-only",
     onCompleted: (data: any) => {
@@ -287,6 +284,10 @@ export const UPDATE_BUSINESS_DETAILS = gql`
   }
 `;
 export function useMutationBusinessDetails() {
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [mutate, { data, loading, error }] = useMutation<
     UpdateBusinessDetailsResult,
     UpdateBusinessDetailsVariables
@@ -333,6 +334,10 @@ export const BUSINESS_FILE_UPLOAD = gql`
 `;
 
 export function useMutationBusinessFile() {
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [mutate, { data, loading, error }] = useMutation(BUSINESS_FILE_UPLOAD);
 
   const handleUpdate = async (variables: any): Promise<void> => {
@@ -541,6 +546,7 @@ export const GET_BUSINESS_DETAILS = gql`
         categories {
           id
           name
+          description
           slug
           createdAt
           deletedAt
@@ -589,48 +595,13 @@ export const GET_BUSINESS_DETAILS = gql`
 
 export const useGetBusinessDetails = () => {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state) => state?.firmToken);
   useEffect(() => {
     setTokenType("firm");
   }, []);
+  const token = useAuthStore((state) => state?.firmToken);
   const { data, loading, error, refetch } = useQuery(GET_BUSINESS_DETAILS, {
     fetchPolicy: "cache-and-network", // Fetch fresh data but use cache when available
     skip: !token,
-  });
-  if (error) {
-    console.log(error?.message);
-  }
-  const userData = data?.businessMe;
-  return { userData, loading, error, refetch };
-};
-
-export const GET_HEADER_USER = gql`
-  query Query {
-    businessMe {
-      id
-      name
-      slug
-      businessDetails {
-        logo
-      }
-    }
-  }
-`;
-// Header User Query
-export const useHeaderUser = () => {
-  const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state) => state?.firmToken);
-  useEffect(() => {
-    setTokenType("firm");
-  }, []);
-  const { data, loading, error, refetch } = useQuery(GET_HEADER_USER, {
-    fetchPolicy: "cache-and-network", // Fetch fresh data but use cache when available
-    skip: !token,
-    // onCompleted: (data: any) => {
-    //   if (data && data?.businessMe) {
-    //     console.log("Header user data:", data?.businessMe);
-    //   }
-    // },
   });
   if (error) {
     console.log(error?.message);
@@ -649,6 +620,10 @@ export const FORGET_BUSINESS_PASSWORD = gql`
 
 // Custom Hook for Forgetting Business Password
 export function useForgetBusinessPassword() {
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [forgetPasswordMutation, { data, loading, error }] = useMutation(FORGET_BUSINESS_PASSWORD, {
     onCompleted: (data: any) => {
       // Optional: Add logic here for what to do when the mutation is successful
@@ -700,6 +675,10 @@ export const CHANGE_BUSINESS_PASSWORD = gql`
 
 // Custom Hook for Changing Business Password
 export function useChangeBusinessPassword() {
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [changePasswordMutation, { data, loading, error }] = useMutation(CHANGE_BUSINESS_PASSWORD, {
     onCompleted: (data: any) => {
       // Optional: Add logic here for what to do when the mutation is successful
@@ -727,7 +706,7 @@ export function useChangeBusinessPassword() {
           phone: phone || undefined,
         },
       });
-      return { response: response.data, error: null };
+      return { response: response?.data, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
@@ -740,3 +719,38 @@ export function useChangeBusinessPassword() {
     error,
   };
 }
+
+export const GET_HEADER_USER = gql`
+  query Query {
+    businessMe {
+      id
+      name
+      slug
+      businessDetails {
+        logo
+      }
+    }
+  }
+`;
+// Header User Query
+export const useHeaderUser = () => {
+  const { setTokenType } = useAuthStore();
+  const token = useAuthStore((state) => state?.firmToken);
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
+  const { data, loading, error, refetch } = useQuery(GET_HEADER_USER, {
+    fetchPolicy: "cache-and-network", // Fetch fresh data but use cache when available
+    skip: !token,
+    // onCompleted: (data: any) => {
+    //   if (data && data?.businessMe) {
+    //     console.log("Header user data:", data?.businessMe);
+    //   }
+    // },
+  });
+  if (error) {
+    console.log(error?.message);
+  }
+  const userData = data?.businessMe;
+  return { userData, loading, error, refetch };
+};

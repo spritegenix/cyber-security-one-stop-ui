@@ -35,8 +35,8 @@ function makeClient() {
   // Authorization Link with JWT from Zustand
   const authLink = setContext((_, { headers }) => {
     // Fetch tokens dynamically
-    const { userToken, firmToken, tokenType } = useAuthStore.getState();
-    const token = tokenType === "user" ? userToken : firmToken;
+    const { userToken, firmToken, adminToken, tokenType } = useAuthStore.getState();
+    const token = tokenType === "user" ? userToken : tokenType === "firm" ? firmToken : adminToken;
     return {
       headers: {
         ...headers,

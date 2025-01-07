@@ -12,7 +12,7 @@ const config: Config = {
         font1: ['var(--font1)'],
       },
       colors: {
-        bg1: '#F97316', // orange
+        bg1: '#e03944', // orange
         bg2: '#000000', // black
         bg3: '#FAE7D6', // light orange
       },

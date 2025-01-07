@@ -10,8 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import Button from "@/components/elements/Button";
-import { testimonials } from "@/data/global";
-export const TestimonialSlider = ({ data }: any) => {
+// import { testimonials } from "@/data/global";
+export const TestimonialSlider = ({ testimonials }: any) => {
   const uniqueId = "testimonials123";
 
   const swiperOptions = {
@@ -34,17 +34,17 @@ export const TestimonialSlider = ({ data }: any) => {
   return (
     <>
       <Swiper {...swiperOptions} className="w-full max-w-fit px-5 md:w-[90%]">
-        {testimonials?.map((user: any, index: number) => (
+        {testimonials?.map((testimonial: any, index: number) => (
           <SwiperSlide
-            key={index}
+            key={testimonial?.id || index}
             className="mb-12 w-full overflow-hidden rounded-2xl border border-zinc-300 bg-white shadow-lg"
           >
             <TestimonialCard
-              avatar={""}
-              name={user?.name}
-              profession={user?.profession}
-              testimonial={user?.testimonial}
-              rating={5}
+              avatar={testimonial?.user?.avatar || undefined}
+              name={testimonial?.user?.name || undefined}
+              profession={"User"} // Default profession if not available
+              testimonial={testimonial?.comment || undefined}
+              rating={testimonial?.rating || undefined}
             />
           </SwiperSlide>
         ))}
@@ -56,13 +56,7 @@ export const TestimonialSlider = ({ data }: any) => {
   );
 };
 
-function TestimonialCard({
-  avatar,
-  name,
-  profession,
-  testimonial,
-  rating,
-}: any) {
+function TestimonialCard({ avatar, name, profession, testimonial, rating }: any) {
   return (
     <div className="flex min-h-[19.2rem] w-full flex-col justify-between p-4">
       <div className="flex items-center">

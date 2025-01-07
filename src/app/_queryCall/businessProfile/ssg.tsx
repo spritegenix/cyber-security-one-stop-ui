@@ -1,5 +1,5 @@
 import { query } from "@/lib/client";
-import { gql } from "@apollo/client";
+import { ApolloError, gql } from "@apollo/client";
 
 const GET_BUSINESS_BY_ID = gql`
   query Query($businessId: String, $businessSlug: String) {
@@ -154,6 +154,7 @@ const GET_BUSINESS_BY_ID = gql`
           id
           name
           slug
+          description
           createdAt
           deletedAt
           categoryImage
@@ -205,10 +206,25 @@ export const fetchBusinessById = async ({
 }: {
   businessId?: string;
   businessSlug?: string;
-}) => {
-  const { data } = await query({
-    query: GET_BUSINESS_BY_ID,
-    variables: { businessId, businessSlug },
-  });
-  return data;
+}): Promise<any | null> => {
+  try {
+    const { data } = await query({
+      query: GET_BUSINESS_BY_ID,
+      variables: { businessId, businessSlug },
+    });
+
+    if (!data || !data.getBusinessById) {
+      console.warn("Business not found for provided ID or slug:", { businessId, businessSlug });
+      return null; // Return null if no business is found
+    }
+
+    return data;
+  } catch (error) {
+    // Handle ApolloError gracefully
+    if (error instanceof ApolloError) {
+      console.error("ApolloError while fetching business:", error.message);
+      return null; // Return null on GraphQL or network error
+    }
+    throw error;
+  }
 };
