@@ -33,9 +33,19 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   openGraph: {
+    title: "Cyber Security | One stop Solution",
     type: "website",
     locale: "en_US",
     siteName: "Cyber Security",
+    description: "One stop Solution",
+    images: [
+      {
+        url: "/api/og-image/route.ts",
+        width: 1200,
+        height: 600,
+        alt: "Cyber Security - One Stop Solution",
+      },
+    ],
   },
   icons: {
     shortcut: "/favicon.ico",

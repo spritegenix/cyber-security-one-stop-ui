@@ -82,11 +82,14 @@ https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 
 https://nextjs.org/docs/app/api-reference/functions/not-found
 
+https://nextjs.org/docs/app/building-your-application/optimizing/metadata#json-ld
+
 
 https://docs.srv.us/
 https://www.opengraph.xyz/
 
-
+// 56:25
+//3:2
 
 
 

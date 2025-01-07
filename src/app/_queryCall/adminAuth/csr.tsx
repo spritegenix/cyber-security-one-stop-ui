@@ -17,7 +17,7 @@ export function useAdminLogin() {
   const { setAdminToken, setTokenType } = useAuthStore();
   const [fetchAdminLogin, { data, loading, error }] = useLazyQuery(ADMIN_LOGIN, {
     onCompleted: (data: any) => {
-      if (data && data?.businessLogin) {
+      if (data && data?.adminLogin) {
         const token = data?.adminLogin?.token;
         setAdminToken(token);
         setTokenType("admin");

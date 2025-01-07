@@ -28,11 +28,7 @@ export default function Wrapper({
       className={`w-full px-3 xl:px-20 ${bgColor} ${containerClassName} ${isTop && "pt-16 md:pt-36"} ${isTop2 && "pt-20"} `}
       {...props}
     >
-      <div
-        className={`mx-auto w-full ${isMaxWidthChangeRequired} ${className}`}
-      >
-        {children}
-      </div>
+      <div className={`mx-auto w-full ${isMaxWidthChangeRequired} ${className}`}>{children}</div>
     </Component>
   );
 }

@@ -54,9 +54,9 @@ export default function UserProfile() {
           <div className="relative space-y-2 rounded-lg">
             {/* Rating and Reviews  */}
             <h2 className="text-2xl font-semibold">Your Rating and Reviews</h2>
-            <div className="relative max-h-[34.5rem] space-y-3 rounded-md border-2 border-bg1 p-1 md:overflow-y-auto">
-              {userData?.reviews &&
-                userData?.reviews.map((item: any, index: number) => (
+            {userData?.reviews.length > 0 ? (
+              <div className="relative max-h-[34.5rem] space-y-3 rounded-md border-2 border-bg1 p-1 md:overflow-y-auto">
+                {userData?.reviews.map((item: any, index: number) => (
                   <ReviewsCard
                     key={item?.id || index}
                     avatar={item?.business?.logo}
@@ -66,7 +66,10 @@ export default function UserProfile() {
                     slug={item?.business?.slug}
                   />
                 ))}
-            </div>
+              </div>
+            ) : (
+              <p>No Reviews</p>
+            )}
           </div>
         </div>
       </Wrapper>

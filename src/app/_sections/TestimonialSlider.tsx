@@ -42,7 +42,7 @@ export const TestimonialSlider = ({ testimonials }: any) => {
             <TestimonialCard
               avatar={testimonial?.user?.avatar || undefined}
               name={testimonial?.user?.name || undefined}
-              profession={testimonial?.user?.profession || "Unknown"} // Default profession if not available
+              profession={"User"} // Default profession if not available
               testimonial={testimonial?.comment || undefined}
               rating={testimonial?.rating || undefined}
             />
