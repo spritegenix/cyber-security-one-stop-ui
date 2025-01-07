@@ -60,7 +60,7 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
   return (
     <div className="flex min-h-[19.2rem] w-full flex-col justify-between p-4">
       <div className="flex items-center">
-        <div className="flex-center h-14 w-14 rounded-full border-2 border-white bg-orange-500 font-bold text-white shadow-lg">
+        <div className="flex-center h-14 w-14 rounded-full border-2 border-white bg-bg1 font-bold text-white shadow-lg">
           {avatar ? (
             <Image
               src={avatar}
@@ -81,7 +81,7 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
       <p className="my-2 line-clamp-4">{testimonial}</p>
       <div className="flex-center mb-3">
         {Array.from({ length: rating }, (_, i) => (
-          <FaStar key={i} className="mx-2 text-2xl text-orange-500" />
+          <FaStar key={i} className="mx-2 text-2xl text-bg1" />
         ))}
       </div>
       <Link href={"#"} target="_blank" className="my-2">

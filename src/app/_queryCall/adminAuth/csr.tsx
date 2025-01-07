@@ -1,6 +1,7 @@
+"use client";
 import useAuthStore from "@/zustandStore/authStore";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export const ADMIN_LOGIN = gql`
