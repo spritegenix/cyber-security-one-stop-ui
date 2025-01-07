@@ -7,6 +7,7 @@ export const GET_ALL_CATEGORIES = gql`
       id
       name
       slug
+      description
       categoryImage
     }
   }
@@ -189,6 +190,7 @@ export const GET_ALL_BUSINESSES = gql`
           id
           name
           slug
+          description
         }
         tags {
           id
@@ -379,6 +381,7 @@ export const FILTER_BUSINESS = gql`
         reviewCount
         businessDetails {
           categories {
+            description
             slug
             name
             id
@@ -404,6 +407,7 @@ export const FILTER_BUSINESS = gql`
         id
         name
         slug
+        description
         categoryImage
       }
       total
