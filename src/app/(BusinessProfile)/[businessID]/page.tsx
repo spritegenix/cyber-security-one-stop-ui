@@ -53,11 +53,53 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
   // const { query } = await searchParams;
   // console.log(query);
   const business = await fetchBusinessById({ businessSlug: businessID });
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Business",
+    name: business?.getBusinessById?.name,
+    image: business?.getBusinessById?.businessDetails?.logo,
+    description: business?.getBusinessById?.businessDetails?.description,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: business?.getBusinessById?.businessDetails?.addresses[0]?.street || "",
+      addressLocality: business?.getBusinessById?.businessDetails?.addresses[0]?.city || "",
+      addressRegion: business?.getBusinessById?.businessDetails?.addresses[0]?.state || "",
+      postalCode: business?.getBusinessById?.businessDetails?.addresses[0]?.zipCode || "",
+      addressCountry: business?.getBusinessById?.businessDetails?.addresses[0]?.country || "",
+    },
+    telephone: business?.getBusinessById?.primaryContacts
+      ?.filter((contact: { type: string; value: string }) => contact.type === "PHONE")
+      ?.map((contact: { value: string }) => contact.value)
+      ?.join(", "),
+    email: business?.getBusinessById?.primaryContacts
+      ?.filter((contact: { type: string; value: string }) => contact.type === "EMAIL")
+      ?.map((contact: { value: string }) => contact.value)
+      ?.join(", "),
+    url: business?.getBusinessById?.businessDetails?.primaryWebsite || "",
+    openingHoursSpecification: business?.getBusinessById?.businessDetails?.operatingHours?.map(
+      (hours: { day: string; opens: string; closes: string }) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: hours.day,
+        opens: hours.opens,
+        closes: hours.closes,
+      }),
+    ),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: business?.getBusinessById?.averageRating || "0",
+      reviewCount: business?.getBusinessById?.reviewCount || "0",
+    },
+  };
+
   if (!business || !business.getBusinessById) {
     notFound();
   }
   return (
     <Layout headerStyle={1} footerStyle={1}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Wrapper isTop={true}>
         <Banner
           image={
