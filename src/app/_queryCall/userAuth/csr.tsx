@@ -57,7 +57,7 @@ export function useUserLogin() {
     }
   };
 
-  return { userLogin, data, loading, error };
+  return { userLogin, data: data?.userLogin, loading, error };
 }
 
 export const USER_SIGNUP = gql`
@@ -325,8 +325,8 @@ export const UPDATE_USER_DETAILS = gql`
     $hideDetails: Boolean
     $avatar: Upload
     $addresses: [UserAddressInput!]! #   "addresses": [
-    #     {
-  ) #     "toDelete": null,
+    #     "toDelete": null,
+  ) #     {
   #     "street": null,
   #     "state": null,
   #     "pincode": null,
