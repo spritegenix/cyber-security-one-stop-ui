@@ -42,7 +42,7 @@ export default function SignUp({ handleModelClose }: any) {
       email: data.email,
       phone: data.phoneNumber,
     });
-    if (result.response) {
+    if (result?.response) {
       // Navigate to the next page upon success
       const identifier = data.email || data.phoneNumber;
       const type = data.email ? "email" : "phone";
