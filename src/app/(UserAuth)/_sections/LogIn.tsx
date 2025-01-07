@@ -48,8 +48,7 @@ export default function LogIn({ handleModelClose }: any) {
       email: identifier.email,
       phone: identifier.phone,
     });
-    console.log(response);
-    // if (response?.response) handleModelClose();
+    if (response?.response) handleModelClose();
   };
   return (
     <div className="flex h-full flex-col items-center justify-center overflow-y-auto bg-white px-5 py-5">
