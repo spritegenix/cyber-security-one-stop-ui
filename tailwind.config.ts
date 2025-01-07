@@ -17,7 +17,7 @@ const config: Config = {
         bg3: '#FAE7D6', // light orange
       },
       backgroundImage: {
-        bgGradient1: "linear-gradient(90deg, hsl(20deg 91% 40%) 0%, hsl(22deg 88% 45%) 20%, hsl(24deg 87% 51%) 40%, hsl(24deg 87% 51%) 60%, hsl(22deg 88% 45%) 80%, hsl(20deg 91% 40%) 100%)",
+        bgGradient1: "linear-gradient(90deg, hsl(0deg 91% 40%) 0%, hsl(2deg 88% 45%) 20%, hsl(4deg 87% 51%) 40%, hsl(4deg 87% 51%) 60%, hsl(2deg 88% 45%) 80%, hsl(0deg 91% 40%) 100%)",
       },
       keyframes: {
         'slide-up': {

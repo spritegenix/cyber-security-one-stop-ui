@@ -40,7 +40,7 @@ export default function ListingSignUp() {
     if (result.response) {
       // Navigate to the next page upon success
       const input = identifier.email || identifier.phone;
-      router.push(`/listing-password-update-with-otp/${type}/${input}`);
+      router.push(`/listing-signup-with-otp-password/${type}/${input}`);
     } else {
       console.error("Signup Error:", result.error);
     }
