@@ -33,7 +33,9 @@ Note: use onTap instead of onClick and style={{}} instead of className in framer
 
 npm install react-hook-form @hookform/resolvers zod react-international-phone react-otp-input
 
+npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/modifiers
 
+business profile Image = 4:1
 
 
 Routes-

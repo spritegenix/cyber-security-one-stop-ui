@@ -1,9 +1,9 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CoverPhotoUploaderForm from "../../../../../components/elements/fileUploaders/CoverPhotoUploaderForm";
 import { useMutationBusinessFile } from "@/app/_queryCall/businessAuth/csr";
 
 export default function CoverPhotosForm({ data, refetchData }: any) {
-  const [backendData, setBackendData] = React.useState<any>();
+  const [backendData, setBackendData] = useState<any>();
   useEffect(() => {
     setBackendData(data);
   }, [data]);
@@ -67,18 +67,18 @@ export default function CoverPhotosForm({ data, refetchData }: any) {
     }
   }
   return (
-    backendData &&
-    backendData?.businessDetails && (
+    backendData && (
       <div className="space-y-3">
         <div>
           <h2 className="text-xl font-semibold">Cover Photos</h2>
           <p className="text-xs text-red-500">
-            Note: First Image will be shown as cover photo in Business Profile
+            <strong>Note:</strong> First Image will be shown as cover photo in Business Profile.{" "}
+            <strong>5:1 aspect ratio</strong> is recommended for cover photo.
           </p>
         </div>
         <CoverPhotoUploaderForm
           defaultData={
-            backendData?.businessDetails.coverImages?.map((item: any) => {
+            backendData?.businessDetails?.coverImages?.map((item: any) => {
               return { id: item?.id, url: item?.url, file: undefined, toDelete: false };
             }) || []
           }
@@ -86,29 +86,39 @@ export default function CoverPhotosForm({ data, refetchData }: any) {
           loading={CoverLoading}
           error={CoverError?.message}
           responseData={CoverData?.manageBusinessCoverImage?.map((item: any) => item?.message)}
-          aspectRatio={192 / 108}
+          aspectRatio={5 / 1}
         />
-        <h2 className="text-xl font-semibold">Ad Banners for Desktop</h2>
+        <div>
+          <h2 className="text-xl font-semibold">Ad Banners for Desktop</h2>
+          <p className="text-xs text-red-500">
+            <strong>Note:</strong> <strong>32:3 aspect ratio</strong> is recommended.
+          </p>
+        </div>
         <CoverPhotoUploaderForm
           defaultData={
             backendData?.businessDetails?.adBannerImages?.map((item: any) => {
               return { id: item?.id, url: item?.url, file: undefined, toDelete: false };
             }) || []
           }
-          aspectRatio={16 / 9}
+          aspectRatio={32 / 3}
           mutationHandler={handleDesktopBannerFunction}
           loading={DesktopLoading}
           error={DesktopError?.message}
           responseData={DesktopData?.manageBusinessAdBannerImage?.map((item: any) => item?.message)}
         />
-        <h2 className="text-xl font-semibold">Ad Banners for Mobile</h2>
+        <div>
+          <h2 className="text-xl font-semibold">Ad Banners for Mobile</h2>
+          <p className="text-xs text-red-500">
+            <strong>Note:</strong> <strong>3:2 aspect ratio</strong> is recommended.
+          </p>
+        </div>
         <CoverPhotoUploaderForm
           defaultData={
             backendData?.businessDetails?.mobileAdBannerImages?.map((item: any) => {
               return { id: item?.id, url: item?.url, file: undefined, toDelete: false };
             }) || []
           }
-          aspectRatio={9 / 16}
+          aspectRatio={3 / 2}
           mutationHandler={handleMobileBannerFunction}
           loading={MobileLoading}
           error={MobileError?.message}

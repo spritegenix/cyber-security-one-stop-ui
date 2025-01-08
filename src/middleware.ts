@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import Cookies from 'universal-cookie';
 
 // Define the protected and public routes
-const protectedRoutes = ["/user-profile", '/user-profile/:path*', "/listing-profile", '/listing-profile/:path*', '/admin/dashboard',];
+const protectedRoutes = ["/user-profile", '/user-profile/:path*', "/listing-profile", '/listing-profile/:path*', '/listing-verify', '/admin/dashboard',];
 const publicRoutes = ['/login', '/signup', '/listing-login', '/listing-signup', '/admin',];
 
 // Helper function to match dynamic routes
@@ -23,7 +23,7 @@ export default async function middleware(req: NextRequest) {
     // console.log({ userToken, firmToken, adminToken }, 'Cookies');
 
     const path = req.nextUrl.pathname;
-    console.log(path, "middleware path");
+    // console.log(path, "middleware path");
 
     const isProtectedRoute = isRouteMatching(path, protectedRoutes);
     const isPublicRoute = isRouteMatching(path, publicRoutes);

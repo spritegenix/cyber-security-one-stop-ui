@@ -27,25 +27,28 @@ export default function AuthButton() {
   );
 }
 
-function LoggedUser() {
+export function LoggedUser() {
   const { userData: loggedUser, loading, error, refetch } = useHeaderUser();
   return (
     <Link
       className="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border-4 border-white bg-bg1 shadow-lg"
       href={loggedUser?.slug ? `/listing-profile/${loggedUser?.slug}` : "#"}
     >
-      {loggedUser?.businessDetails?.logo !== null && !loading ? (
-        <Image
-          src={loggedUser?.businessDetails?.logo || ""}
-          alt="avatar"
-          width={100}
-          height={100}
-          className="h-full w-full object-cover"
-        />
-      ) : (
+      {(loggedUser?.businessDetails === null || loggedUser?.businessDetails?.logo === null) &&
+      !loading ? (
         <p className="cursor-pointer text-xl font-bold capitalize text-white">
-          {loggedUser?.name ? loggedUser?.name[0] : "C"}
+          {loggedUser?.name ? loggedUser?.name[0] : "F"}
         </p>
+      ) : (
+        loggedUser?.businessDetails?.logo && (
+          <Image
+            src={loggedUser?.businessDetails?.logo || ""}
+            alt="avatar"
+            width={100}
+            height={100}
+            className="h-full w-full object-cover"
+          />
+        )
       )}
     </Link>
   );

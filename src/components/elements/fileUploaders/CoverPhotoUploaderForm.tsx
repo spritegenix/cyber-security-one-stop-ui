@@ -67,7 +67,7 @@ const createCoverPhotoUploaderFormSchema = (maxFiles: number, maxFileSize: numbe
 export default function CoverPhotoUploaderForm({
   defaultData,
   maxFiles = 8,
-  aspectRatio = 192 / 108,
+  aspectRatio = 5 / 1,
   mutationHandler,
   loading = false,
   error,
@@ -475,6 +475,7 @@ export default function CoverPhotoUploaderForm({
       {cropperModalState.isOpen && cropperModalState.selectedIndex !== null && (
         <CroppingImageModal
           imgSrc={cachedImages[cropperModalState.selectedIndex]?.url}
+          scaleButton={false}
           setCroppedImage={setCroppedImage}
           isCircularCropBoolean={false}
           aspectButton={true}

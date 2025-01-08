@@ -10,7 +10,7 @@ import "react-international-phone/style.css";
 import { basicInfoSchema } from "./zodSchema";
 import { FaPhoneAlt } from "react-icons/fa";
 import { countries, indianStatesAndUTs } from "@/data/global";
-import { Reorder } from "framer-motion";
+import { AnimatePresence, Reorder } from "framer-motion";
 import { RxDragHandleDots1 } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -48,30 +48,36 @@ export default function BasicInformationForm({ data, refetchData }: any) {
     if (data) {
       // console.log(data, "BasicInformationForm");
       setIsEmailVerified(
-        data?.primaryContacts?.find((contact: any) => contact?.type === "EMAIL")?.isVerified,
+        (data?.primaryContacts.length > 0 &&
+          data?.primaryContacts?.find((contact: any) => contact?.type === "EMAIL")?.isVerified) ||
+          false,
       );
       setIsPhoneVerified(
-        data?.primaryContacts?.find((contact: any) => contact?.type === "PHONE")?.isVerified,
+        (data?.primaryContacts.length > 0 &&
+          data?.primaryContacts?.find((contact: any) => contact?.type === "PHONE")?.isVerified) ||
+          false,
       );
       const newAddresses =
-        data?.businessDetails &&
-        data?.businessDetails?.addresses.map((address: any) => ({
-          addressId: address?.id || "",
-          streetAddress: address?.street || "",
-          city: address?.city || "",
-          state: address?.state || "",
-          pincode: address?.pincode || "",
-          country: address?.country || "",
-          priority: address?.order || 0,
-          isDeleted: false,
-        }));
+        (data?.businessDetails &&
+          data?.businessDetails?.addresses.map((address: any) => ({
+            addressId: address?.id || "",
+            streetAddress: address?.street || "",
+            city: address?.city || "",
+            state: address?.state || "",
+            pincode: address?.pincode || "",
+            country: address?.country || "",
+            priority: address?.order || 0,
+            isDeleted: false,
+          }))) ||
+        [];
       setAddresses(newAddresses);
       reset({
         ...data,
-        name: data?.name,
-        email: data?.primaryContacts?.find((contact: any) => contact?.type === "EMAIL")?.value,
-        phoneNumber: data?.primaryContacts?.find((contact: any) => contact?.type === "PHONE")
-          ?.value,
+        name: data?.name || "",
+        email:
+          data?.primaryContacts?.find((contact: any) => contact?.type === "EMAIL")?.value || "",
+        phoneNumber:
+          data?.primaryContacts?.find((contact: any) => contact?.type === "PHONE")?.value || "",
         alternatePhoneNumbers: data?.additionalContacts?.map((contact: any) => contact) || [],
         addresses: newAddresses,
       });
@@ -86,7 +92,7 @@ export default function BasicInformationForm({ data, refetchData }: any) {
     move,
     swap,
     update,
-  } = useFieldArray({ control, name: "addresses" });
+  } = useFieldArray({ control, name: `addresses` });
 
   const phoneNumber = watch("phoneNumber");
   const email = watch("email");
@@ -97,25 +103,26 @@ export default function BasicInformationForm({ data, refetchData }: any) {
     // console.log("Form submitted:", formData);
     const addresses =
       formData.addresses && formData.addresses.length > 0
-        ? formData.addresses.map((address) => ({
+        ? formData.addresses.map((address, index) => ({
             addressId: address.addressId || undefined,
             street: address.streetAddress,
             city: address.city,
             state: address.state,
             pincode: address.pincode,
             country: address.country,
-            order: address.priority,
+            order: index + 1,
             toDelete: false,
           }))
         : [];
-    const deletedAddress = addressToBeDeleted.map((address) => ({
+    console.log(addresses);
+    const deletedAddress = addressToBeDeleted.map((address, index) => ({
       addressId: address.addressId || undefined,
       street: address.streetAddress,
       city: address.city,
       state: address.state,
       pincode: address.pincode,
       country: address.country,
-      order: address.priority,
+      order: index + 1,
       toDelete: true,
     }));
     const totalAddress = [...addresses, ...deletedAddress];
@@ -125,7 +132,7 @@ export default function BasicInformationForm({ data, refetchData }: any) {
         addresses: totalAddress,
         additionalContacts: formData.alternatePhoneNumbers,
       });
-      // console.log("Update successful");
+      refetchData();
     } catch (error) {
       console.error("Error in submission:", error);
     }
@@ -176,7 +183,7 @@ export default function BasicInformationForm({ data, refetchData }: any) {
               defaultCountry="in"
               onChange={(value) => setValue("phoneNumber", value)}
               value={phoneNumber}
-              disabled={isEmailVerified}
+              disabled={isPhoneVerified}
               inputStyle={{
                 width: "100%",
                 padding: "1.3rem",
@@ -261,106 +268,110 @@ export default function BasicInformationForm({ data, refetchData }: any) {
             }}
             className="space-y-4"
           >
-            {addressFields.map((field, index) => (
-              <Reorder.Item
-                key={field.id}
-                value={field}
-                className="flex items-center gap-2 max-md:flex-wrap"
-              >
-                <div className="relative mb-5 flex items-center gap-5 border-b pb-3">
-                  <h6 className="borderedText absolute left-5 top-0 select-none text-5xl font-bold">
-                    {index + 1}
-                  </h6>
-                  <RxDragHandleDots1 className="text-[4rem] text-bg1/80" />
-                  <div>
+            <AnimatePresence>
+              {addressFields.map((field, index) => (
+                <Reorder.Item
+                  key={field?.id}
+                  value={field}
+                  className="flex items-center gap-2 max-md:flex-wrap"
+                  id={field?.id}
+                  onDragStart={(e) => setActive(index)}
+                >
+                  <div className="relative mb-5 flex items-center gap-5 border-b pb-3">
+                    <h6 className="borderedText absolute left-5 top-0 select-none text-5xl font-bold">
+                      {index + 1}
+                    </h6>
+                    <RxDragHandleDots1 className="text-[4rem] text-bg1/80" />
                     <div>
-                      <Input
-                        {...register(`addresses.${index}.streetAddress`)}
-                        label="Street Address"
-                        placeholder=" "
-                      />
-                      {errors?.addresses?.[index]?.streetAddress && (
-                        <p className="text-xs text-red-500">
-                          {errors.addresses[index]?.streetAddress?.message}
-                        </p>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
                       <div>
                         <Input
-                          {...register(`addresses.${index}.pincode`)}
-                          label="Pincode"
+                          {...register(`addresses.${index}.streetAddress`)}
+                          label="Street Address"
                           placeholder=" "
                         />
-                        {errors?.addresses?.[index]?.pincode && (
+                        {errors?.addresses?.[index]?.streetAddress && (
                           <p className="text-xs text-red-500">
-                            {errors?.addresses[index]?.pincode?.message}
+                            {errors.addresses[index]?.streetAddress?.message}
                           </p>
                         )}
                       </div>
-                      <div>
-                        <select
-                          className="mt-5 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
-                          {...register(`addresses.${index}.state`)}
-                        >
-                          <option value="">State</option>
-                          {indianStatesAndUTs.map((state) => (
-                            <option className="capitalize" value={state} key={state}>
-                              {state}
-                            </option>
-                          ))}
-                        </select>
-                        {errors?.addresses?.[index]?.state && (
-                          <p className="text-xs text-red-500">
-                            {errors.addresses[index]?.state?.message}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <Input
-                          {...register(`addresses.${index}.city`)}
-                          label="City"
-                          placeholder=" "
-                        />
-                        {errors?.addresses?.[index]?.city && (
-                          <p className="text-xs text-red-500">
-                            {errors.addresses[index]?.city?.message}
-                          </p>
-                        )}
-                      </div>
-                      <div>
-                        <select
-                          className="mt-5 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
-                          {...register(`addresses.${index}.country`)}
-                        >
-                          <option value="">Country</option>
-                          {countries.map((country) => (
-                            <option className="capitalize" value={country} key={country}>
-                              {country}
-                            </option>
-                          ))}
-                        </select>
-                        {errors?.addresses?.[index]?.country && (
-                          <p className="text-xs text-red-500">
-                            {errors.addresses[index]?.country?.message}
-                          </p>
-                        )}
+                      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+                        <div>
+                          <Input
+                            {...register(`addresses.${index}.pincode`)}
+                            label="Pincode"
+                            placeholder=" "
+                          />
+                          {errors?.addresses?.[index]?.pincode && (
+                            <p className="text-xs text-red-500">
+                              {errors?.addresses[index]?.pincode?.message}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <select
+                            className="mt-5 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
+                            {...register(`addresses.${index}.state`)}
+                          >
+                            <option value="">State</option>
+                            {indianStatesAndUTs.map((state) => (
+                              <option className="capitalize" value={state} key={state}>
+                                {state}
+                              </option>
+                            ))}
+                          </select>
+                          {errors?.addresses?.[index]?.state && (
+                            <p className="text-xs text-red-500">
+                              {errors.addresses[index]?.state?.message}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <Input
+                            {...register(`addresses.${index}.city`)}
+                            label="City"
+                            placeholder=" "
+                          />
+                          {errors?.addresses?.[index]?.city && (
+                            <p className="text-xs text-red-500">
+                              {errors.addresses[index]?.city?.message}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <select
+                            className="mt-5 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
+                            {...register(`addresses.${index}.country`)}
+                          >
+                            <option value="">Country</option>
+                            {countries.map((country) => (
+                              <option className="capitalize" value={country} key={country}>
+                                {country}
+                              </option>
+                            ))}
+                          </select>
+                          {errors?.addresses?.[index]?.country && (
+                            <p className="text-xs text-red-500">
+                              {errors.addresses[index]?.country?.message}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAddressToBeDeleted([...addressToBeDeleted, field]);
+                        return removeAddress(index);
+                      }}
+                      className="text-xl text-red-500 transition-all duration-300 hover:scale-125 active:scale-95"
+                    >
+                      <RiDeleteBin6Line className="text-xl" />
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAddressToBeDeleted([...addressToBeDeleted, field]);
-                      return removeAddress(index);
-                    }}
-                    className="text-xl text-red-500 transition-all duration-300 hover:scale-125 active:scale-95"
-                  >
-                    <RiDeleteBin6Line className="text-xl" />
-                  </button>
-                </div>
-              </Reorder.Item>
-            ))}
+                </Reorder.Item>
+              ))}
+            </AnimatePresence>
           </Reorder.Group>
           <div
             onClick={() =>

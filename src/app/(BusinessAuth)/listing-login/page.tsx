@@ -6,7 +6,7 @@ import React from "react";
 export default function ListingLogInPage() {
   return (
     <Layout headerStyle={2} footerStyle={1}>
-      <Wrapper isTop2={true} className="mb-10 flex items-center justify-center">
+      <Wrapper isTop2={true} className="mb-10 flex h-screen justify-center">
         <ListingLogIn />
       </Wrapper>
     </Layout>

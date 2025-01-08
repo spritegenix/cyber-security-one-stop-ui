@@ -1,21 +1,18 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { banner, service1, user } from "@/assets";
 import SocialMediaIconFinder from "@/components/elements/SocialMediaIconFinder";
-import { RatingInput, StarRating } from "@/components/elements/StarRating";
 import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import { CoverPhotosSlider } from "@/app/(BusinessProfile)/[businessID]/_sections/CoverPhotosSlider";
 import { individualBusinessSample } from "@/data/listing";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaUserTie } from "react-icons/fa";
-import { IoEarthSharp, IoLocation } from "react-icons/io5";
+import { IoEarthSharp } from "react-icons/io5";
 import Reviews, { ReviewsCard } from "./_sections/Reviews";
 import Button from "@/components/elements/Button";
-import { VscVerifiedFilled } from "react-icons/vsc";
 import { fetchBusinessById } from "@/app/_queryCall/businessProfile/ssg";
 import { notFound } from "next/navigation";
+import Banner from "./_sections/Banner";
+import ReviewsSection from "./_sections/ReviewsSection";
 
 export const revalidate = 3600; // Rebuild the page every hour
 type Props = {
@@ -100,20 +97,13 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {/* Banner  */}
       <Wrapper isTop={true}>
         <Banner
-          image={
-            business?.getBusinessById?.businessDetails?.coverImages[0]?.url ||
-            individualBusinessSample?.coverPhoto
-          }
-          avatar={
-            business?.getBusinessById?.businessDetails?.logo || individualBusinessSample?.coverPhoto
-          }
+          image={business?.getBusinessById?.businessDetails?.coverImages[0]?.url}
+          avatar={business?.getBusinessById?.businessDetails?.logo}
           name={business?.getBusinessById?.name || individualBusinessSample?.name}
-          location={
-            `${business?.getBusinessById?.businessDetails?.addresses[0]?.city},${business?.getBusinessById?.businessDetails?.addresses[0]?.state}` ||
-            individualBusinessSample?.location
-          }
+          location={`${business?.getBusinessById?.businessDetails?.addresses[0]?.city || "Your City"}, ${business?.getBusinessById?.businessDetails?.addresses[0]?.state || "Your State"}`}
           rating={business?.getBusinessById?.averageRating}
           reviews={business?.getBusinessById?.reviewCount}
           verified={business?.getBusinessById?.isBusinessVerified || false}
@@ -122,8 +112,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
       {/* Description  */}
       <Wrapper className="my-5">
         <p className="whitespace-pre-line">
-          {business?.getBusinessById?.businessDetails?.description ||
-            individualBusinessSample?.description}
+          {business?.getBusinessById?.businessDetails?.description || "Update Your Description"}
         </p>
       </Wrapper>
       {/* Tabs  */}
@@ -131,103 +120,115 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
         {/* Main  */}
         <section className="space-y-5 md:col-span-8">
           {/* Years Of Experience  */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">Experience:</h6>
-            <p className="flex flex-wrap gap-2">
-              <span className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white">
-                {business?.getBusinessById?.businessDetails?.experience ||
-                  individualBusinessSample?.yearsOfExperience}
-                + years
-              </span>
-            </p>
-          </div>
-          {/* Cover Photos  */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">Cover Photos:</h6>
-            <div className="relative">
-              <CoverPhotosSlider
-                data={
-                  (business?.getBusinessById?.businessDetails?.coverImages).map(
-                    (image: any) => image?.url,
-                  ) || individualBusinessSample.coverPhotos
-                }
-              />
+          {business?.getBusinessById?.businessDetails?.experience && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Experience:</h6>
+              <p className="flex flex-wrap gap-2">
+                <span className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white">
+                  {business?.getBusinessById?.businessDetails?.experience}+ years
+                </span>
+              </p>
             </div>
-          </div>
+          )}
+          {/* Cover Photos  */}
+          {business?.getBusinessById?.businessDetails?.coverImages.length > 1 && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Cover Photos:</h6>
+              <div className="relative">
+                <CoverPhotosSlider
+                  data={
+                    (business?.getBusinessById?.businessDetails?.coverImages).map(
+                      (image: any) => image?.url,
+                    ) || individualBusinessSample.coverPhotos
+                  }
+                />
+              </div>
+            </div>
+          )}
           {/* Practice Areas  */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">Practice Areas:</h6>
-            <p className="flex flex-wrap gap-2">
-              {business?.getBusinessById?.businessDetails?.categories.map(
-                (category: { id: string; slug: string; name: string }) => (
-                  <span
-                    key={category.id}
-                    data-secondary-key={category.slug}
-                    className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
-                  >
-                    {category.name}
-                  </span>
-                ),
-              )}
-            </p>
-          </div>
+          {business?.getBusinessById?.businessDetails?.categories.length > 0 && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Practice Areas:</h6>
+              <p className="flex flex-wrap gap-2">
+                {business?.getBusinessById?.businessDetails?.categories.map(
+                  (category: { id: string; slug: string; name: string }) => (
+                    <span
+                      key={category?.id}
+                      data-secondary-key={category?.slug}
+                      className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
+                    >
+                      {category?.name}
+                    </span>
+                  ),
+                )}
+              </p>
+            </div>
+          )}
           {/* Practice Courts  */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">Practice Courts:</h6>
-            <p className="flex flex-wrap gap-2">
-              {business?.getBusinessById?.businessDetails?.courts.map(
-                (court: { id: string; slug: string; name: string }) => (
-                  <span
-                    key={court.id}
-                    data-secondary-key={court.slug}
-                    className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
-                  >
-                    {court.name}
-                  </span>
-                ),
-              )}
-            </p>
-          </div>
+          {business?.getBusinessById?.businessDetails?.courts.length > 0 && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Practice Courts:</h6>
+              <p className="flex flex-wrap gap-2">
+                {business?.getBusinessById?.businessDetails?.courts.map(
+                  (court: { id: string; slug: string; name: string }) => (
+                    <span
+                      key={court.id}
+                      data-secondary-key={court.slug}
+                      className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
+                    >
+                      {court.name}
+                    </span>
+                  ),
+                )}
+              </p>
+            </div>
+          )}
           {/* Language Proficiency  */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">Language Proficiency:</h6>
-            <p className="flex flex-wrap gap-2">
-              {business?.getBusinessById?.businessDetails?.languages.map(
-                (language: { id: string; slug: string; name: string }) => (
-                  <span
-                    key={language.id}
-                    data-secondary-key={language.slug}
-                    className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
-                  >
-                    {language.name}
-                  </span>
-                ),
-              )}
-            </p>
-          </div>
+          {business?.getBusinessById?.businessDetails?.languages.length > 0 && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Language Proficiency:</h6>
+              <p className="flex flex-wrap gap-2">
+                {business?.getBusinessById?.businessDetails?.languages.map(
+                  (language: { id: string; slug: string; name: string }) => (
+                    <span
+                      key={language.id}
+                      data-secondary-key={language.slug}
+                      className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
+                    >
+                      {language.name}
+                    </span>
+                  ),
+                )}
+              </p>
+            </div>
+          )}
           {/* Academic Degree  */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">Academic Degree:</h6>
-            <p className="flex flex-wrap gap-2">
-              {business?.getBusinessById?.businessDetails?.degrees.map(
-                (name: string, index: number) => (
-                  <span
-                    key={index}
-                    className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
-                  >
-                    {name}
-                  </span>
-                ),
-              )}
-            </p>
-          </div>
+          {business?.getBusinessById?.businessDetails?.degrees.length > 0 && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Academic Degree:</h6>
+              <p className="flex flex-wrap gap-2">
+                {business?.getBusinessById?.businessDetails?.degrees.map(
+                  (name: string, index: number) => (
+                    <span
+                      key={index}
+                      className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
+                    >
+                      {name}
+                    </span>
+                  ),
+                )}
+              </p>
+            </div>
+          )}
           {/* License/Bar Number */}
-          <div className="space-y-3">
-            <h6 className="text-2xl font-medium max-md:mb-2">License/Bar Number:</h6>
-            <p className="w-max rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white">
-              {business?.getBusinessById?.businessDetails?.license}
-            </p>
-          </div>
+          {business?.getBusinessById?.businessDetails?.license && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">License/Bar Number:</h6>
+              <p className="w-max rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white">
+                {business?.getBusinessById?.businessDetails?.license}
+              </p>
+            </div>
+          )}
           {/* Rating and Reviews */}
           <ReviewsSection
             className="hidden md:block"
@@ -256,7 +257,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
                     >
                       {contact.value}
                     </Link>
-                  ))}
+                  )) || ["+91 1234567890"]}
 
                 {/* Render additional phone numbers */}
                 {business?.getBusinessById?.additionalContacts
@@ -283,12 +284,12 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
                   .map((contact: any, index: any) => (
                     <Link
                       key={`primary-${index}`}
-                      href={`mailto:${contact.value}`}
+                      href={`mailto:${contact?.value}`}
                       className="w-max rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
                     >
-                      {contact.value}
+                      {contact?.value}
                     </Link>
-                  ))}
+                  )) || ["cybersecurity@email.com"]}
 
                 {/* Render additional email addresses from business data */}
                 {business?.getBusinessById?.additionalContacts
@@ -326,37 +327,22 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
               </div>
             )}
             {/* Social Media  */}
-            {(individualBusinessSample?.socials.length > 0 ||
-              business?.getBusinessById?.businessDetails?.websites?.length > 0) && (
+            {business?.getBusinessById?.businessDetails?.websites?.length > 0 && (
               <div>
                 <h6 className="mb-2 text-xl font-medium">Social Media:</h6>
                 <ul className="space-y-3">
-                  {/* Render individualBusinessSample socials */}
-                  {/* {individualBusinessSample?.socials.map((link: string, index: number) => (
-                    <div key={`individual-${index}`} className="flex items-center gap-3">
-                      <SocialMediaIconFinder url={link} className="min-w-6 text-2xl" />
-                      <Link
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-wrap text-blue-500 hover:underline"
-                      >
-                        {link}
-                      </Link>
-                    </div>
-                  ))} */}
                   {/* Render businessDetails websites */}
                   {business?.getBusinessById?.businessDetails?.websites?.map(
                     (website: any, index: number) => (
                       <div key={`business-${index}`} className="flex items-center gap-3">
                         <SocialMediaIconFinder url={website.url} className="min-w-6 text-2xl" />
                         <Link
-                          href={website.url}
+                          href={website?.url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-wrap text-blue-500 hover:underline"
                         >
-                          {website.url}
+                          {website?.url}
                         </Link>
                       </div>
                     ),
@@ -381,53 +367,8 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
   );
 }
 
-function Banner({ image, avatar, name, location, rating, reviews, verified }: any) {
-  return (
-    <div className="relative md:pb-28">
-      <div className="flex h-80 w-full justify-center overflow-hidden rounded-lg bg-zinc-300 max-sm:hidden">
-        <Image // 1536 X 320 / 25:5
-          src={image || banner}
-          alt="banner"
-          width={1536}
-          height={320}
-          className="h-full w-min object-cover md:object-contain"
-        />
-      </div>
-      <div className="bottom-0 left-10 flex gap-3 md:absolute md:gap-5">
-        {avatar ? (
-          <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-lg md:h-36 md:w-36">
-            <Image
-              src={avatar}
-              alt="avatar"
-              width={128}
-              height={128}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        ) : (
-          <div className="flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg md:h-36 md:w-36">
-            <FaUserTie className="text-5xl text-white" />
-          </div>
-        )}
-        <div className="my-auto">
-          <h2 className="mb-2 flex flex-wrap gap-2 text-3xl font-bold md:mt-9 md:text-4xl">
-            <span>{name}</span>
-            {verified && <VscVerifiedFilled className="text-green-500" />}
-          </h2>
-          <p className="flex items-center gap-2 text-zinc-500">
-            <IoLocation className="text-lg" /> {location}
-          </p>
-          <p className="flex items-center gap-2 text-zinc-500">
-            <StarRating totalStars={5} rating={rating} className="text-lg text-yellow-500" />(
-            {reviews} reviews)
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const isPhoneNumber = (value: string) => /^[0-9]{10,15}$/.test(value); // Simple phone number check (10-15 digits)
+const isPhoneNumber = (value: string) =>
+  /^(?:\+\d{1,3}|0\d{1,3}|00\d{1,2})?(?:\s?\(\d+\))?(?:[-\/\s.]|\d)+$/.test(value);
 const isEmail = (value: string) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
 
 const transformOperatingHours = (operatingHours: any[]) => {
@@ -452,8 +393,6 @@ const transformOperatingHours = (operatingHours: any[]) => {
 
   return timeSlots;
 };
-
-// Assuming `convertToWorkingHour` and `convertToDayTimingsDefaultValue` are imported
 
 const ConsultationTiming = ({ timeSlots }: any) => {
   const formatTime = (time: string) => {
@@ -494,30 +433,3 @@ const ConsultationTiming = ({ timeSlots }: any) => {
     </>
   );
 };
-
-function ReviewsSection({ className, reviews }: { className: string; reviews: any[] }) {
-  return (
-    <div className={`mt-5 space-y-3 ${className}`}>
-      <h6 className="text-2xl font-semibold max-md:mb-2">Write Your Review</h6>
-      <div className="space-y-3">
-        <Reviews />
-        {reviews && reviews.length > 0 ? (
-          reviews.map((review, index) => (
-            <ReviewsCard
-              key={review.id || index} // Use unique id if available, fallback to index
-              avatar={review.user?.avatar}
-              userName={review.user?.name || "Anonymous"} // Fallback to "Anonymous" if no name is provided
-              rating={review.rating || 0} // Default to 0 if no rating
-              reviewText={review.comment || "No comments provided"} // Fallback for missing comments
-            />
-          ))
-        ) : (
-          <p className="text-gray-500">No reviews available yet.</p>
-        )}
-      </div>
-      {reviews && reviews.length > 3 && (
-        <Button className="w-full max-w-screen-sm">Load More</Button>
-      )}
-    </div>
-  );
-}

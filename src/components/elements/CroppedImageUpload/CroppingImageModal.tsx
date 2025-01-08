@@ -1,5 +1,11 @@
 import React, { useState, useRef } from "react";
-import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from "react-image-crop";
+import ReactCrop, {
+  centerCrop,
+  makeAspectCrop,
+  Crop,
+  PixelCrop,
+  PercentCrop,
+} from "react-image-crop";
 import { useDebounceEffect } from "./useDebounceEffect";
 import "react-image-crop/dist/ReactCrop.css";
 import { canvasPreview } from "./canvasPreview";
@@ -22,7 +28,7 @@ interface CroppingImageModalProps {
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number): Crop {
   return centerCrop(
-    makeAspectCrop({ unit: "%", width: 90 }, aspect, mediaWidth, mediaHeight),
+    makeAspectCrop({ unit: "%", width: 100 }, aspect, mediaWidth, mediaHeight),
     mediaWidth,
     mediaHeight,
   );
@@ -35,7 +41,7 @@ export default function CroppingImageModal({
   aspectButton = true,
   cropDownloadButton = true,
   enableCircleButton = true,
-  defaultAspect = 1,
+  defaultAspect = 1 / 1,
   isCircularCropBoolean = true,
   handleClose,
 }: CroppingImageModalProps) {
@@ -186,7 +192,7 @@ export default function CroppingImageModal({
             <ReactCrop
               className=""
               crop={crop}
-              onChange={(_, percentCrop) => setCrop(percentCrop)}
+              onChange={(crop: PixelCrop, percentCrop: PercentCrop) => setCrop(crop)}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
               // minWidth={400}

@@ -6,6 +6,7 @@ import MenuMobile from "../MenuMobile";
 import Button from "@/components/elements/Button";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
+import FirmButton from "./FirmButton";
 export default function Header1({
   show,
   handleMobileMenu,
@@ -38,6 +39,7 @@ export default function Header1({
             />
           </ul>
           <AuthButton handleSidebar={handleSidebar} />
+          <FirmButton />
         </div>
       </Wrapper>
       {/* Lower Nav  */}
@@ -65,13 +67,14 @@ export default function Header1({
             <IoSearchOutline />
           </button>
           <AuthButton handleSidebar={handleSidebar} />
+          <FirmButton />
           {/* HamMenu Icon  */}
           <HamIcon isMobileMenuOpen={isMobileMenuOpen} handleMobileMenu={handleMobileMenu} />
         </div>
       </Wrapper>
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute left-0 top-20 w-full md:hidden">
+        <div className="absolute left-0 top-14 w-full md:hidden">
           <MenuMobile
             navItemsArray={upperNavItems}
             setIsMobileMenuOpen={handleMobileMenu}

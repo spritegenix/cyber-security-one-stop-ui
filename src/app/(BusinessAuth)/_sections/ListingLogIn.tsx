@@ -55,7 +55,7 @@ export default function ListingLogIn() {
     });
   };
   return (
-    <div className="flex flex-col items-center justify-center bg-white p-5">
+    <div className="flex h-max flex-col items-center justify-center rounded-md bg-white p-5">
       <h2 className="mb-5 text-2xl font-bold">LogIn Now</h2>
       <div>
         {/* Form  */}

@@ -67,7 +67,7 @@ export default function AdditionalInformationForm({ data, refetchData }: any) {
         ...data,
         profileImage: data?.businessDetails?.logo || "",
         bio: data?.businessDetails?.description || "",
-        websiteUrl: data?.businessDetails?.primaryWebsite,
+        websiteUrl: data?.businessDetails?.primaryWebsite || "",
         socialMediaLinks:
           data?.businessDetails?.websites
             ?.filter((website: any) => website?.type !== "website")

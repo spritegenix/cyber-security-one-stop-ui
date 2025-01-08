@@ -171,6 +171,7 @@ export default function ProfilePicture({
           imgSrc={imgSrc}
           setCroppedImage={setCroppedImage}
           isCircularCropBoolean={true}
+          scaleButton={false}
           aspectButton={false}
           cropDownloadButton={false}
           enableCircleButton={false}
