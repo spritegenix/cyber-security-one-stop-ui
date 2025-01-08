@@ -13,7 +13,6 @@ import { IoFilter } from "react-icons/io5";
 import Portal from "@/components/elements/Portal";
 import { useFilterBusiness } from "@/app/_queryCall/csr";
 import { AdBannerSlider } from "@/app/_sections/AdBannerSlider";
-import Categories from "@/app/_sections/Categories";
 
 type Props = {
   params: {
@@ -157,8 +156,8 @@ export default function IndividualService({ params }: Props) {
         <ul className="col-span-12 space-y-5 md:col-span-8">
           {filteredBusinesses?.businesses?.map((item: any, i: number) => (
             <ServiceCard
-              key={item?.id || i}
-              name={item?.name || ""}
+              key={item?.id}
+              name={item?.name}
               isVerified={item?.isBusinessVerified || ""}
               city={
                 (item?.businessDetails?.addresses > 0 &&
@@ -186,7 +185,7 @@ export default function IndividualService({ params }: Props) {
                 []
               }
               phoneNumber={
-                (item?.primaryContacts > 0 &&
+                (item?.primaryContacts.length > 0 &&
                   item?.primaryContacts?.map(
                     (item: any) => item?.type === "PHONE" && item?.value,
                   )) ||

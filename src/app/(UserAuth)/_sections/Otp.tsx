@@ -42,7 +42,7 @@ export default function Otp({ type, userIdentifier }: VerifyByOtpValue) {
     otp: "",
   });
   // Countdown timer hook
-  const { timeLeft, isRunning, resetTimer } = useCountdownTimer({ initialTime: 5 }); // seconds
+  const { timeLeft, isRunning, resetTimer } = useCountdownTimer({ initialTime: 60 }); // seconds
 
   const handleBackToEdit = () => {
     route.push("/signup");

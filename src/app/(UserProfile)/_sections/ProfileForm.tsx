@@ -19,7 +19,11 @@ const profileFormSchema = z.object({
     .string()
     .min(1, { message: "Name is required" })
     .max(50, { message: "Name cannot exceed 50 characters" }),
-  phoneNumber: z.string().regex(/^(\+91)[6-9]\d{9}$/, { message: "Invalid phone number format" }),
+  phoneNumber: z
+    .string()
+    .regex(/^(?:\+\d{1,3}|0\d{1,3}|00\d{1,2})?(?:\s?\(\d+\))?(?:[-\/\s.]|\d)+$/, {
+      message: "Invalid phone number format",
+    }),
   email: z.string().email({ message: "Invalid email format" }),
   addressId: z.string().optional(),
   streetAddress: z.string().max(100, { message: "Street Address cannot exceed 100 characters" }),
@@ -67,9 +71,12 @@ export function ProfileForm({ defaultValues }: any) {
       reset({
         ...defaultValues,
         name: defaultValues.name,
-        email: defaultValues?.contacts?.find((contact: any) => contact.type === "EMAIL")?.value,
-        phoneNumber: defaultValues?.contacts?.find((contact: any) => contact.type === "PHONE")
-          ?.value,
+        email:
+          defaultValues?.contacts &&
+          defaultValues?.contacts?.find((contact: any) => contact.type === "EMAIL")?.value,
+        phoneNumber:
+          defaultValues?.contacts &&
+          defaultValues?.contacts?.find((contact: any) => contact.type === "PHONE")?.value,
         addressId: defaultValues?.addresses[0]?.id,
         streetAddress: defaultValues?.addresses[0]?.street,
         pincode: defaultValues?.addresses[0]?.pincode,
