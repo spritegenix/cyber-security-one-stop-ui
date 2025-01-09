@@ -44,21 +44,26 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
       // console.log(data, "BasicInformationForm");
       reset({
         ...data,
-        registrationNumber: data?.businessDetails?.registrationNumber,
-        licenseNumber: data?.businessDetails?.license,
-        yearsOfExperience: data?.businessDetails?.experience?.toString(),
-        teamSize: data?.businessDetails?.teamSize?.toString(),
+        registrationNumber: data?.businessDetails?.registrationNumber || "",
+        licenseNumber: data?.businessDetails?.license || "",
+        yearsOfExperience: data?.businessDetails?.experience?.toString() || "",
+        teamSize: data?.businessDetails?.teamSize?.toString() || "",
         practiceCourts:
           data?.businessDetails?.courts?.map((item: any) => ({
             id: item?.id || "",
             name: item?.name,
           })) || [],
         practiceAreas:
-          data?.businessDetails.categories?.map((item: any) => ({
-            id: item?.id,
-            name: item?.name,
-          })) || [],
-        academicDegree: data?.businessDetails.degrees?.map((degree: any) => degree) || [],
+          (data?.businessDetails?.categories.length > 0 &&
+            data?.businessDetails?.categories?.map((item: any) => ({
+              id: item?.id,
+              name: item?.name,
+            }))) ||
+          [],
+        academicDegree:
+          (data?.businessDetails?.degrees.length > 0 &&
+            data?.businessDetails?.degrees?.map((degree: any) => degree)) ||
+          [],
         languageProficiency:
           data?.businessDetails?.languages?.map((item: any) => ({
             id: item?.id || "",

@@ -13,11 +13,13 @@ import { Input } from "@/components/elements/Input";
 import Button from "@/components/elements/Button";
 import { TextAccordion } from "@/components/elements/Accordions/TextAccordion";
 import { useUserLogin } from "@/app/_queryCall/userAuth/csr";
+import { useRouter } from "next/navigation";
 
 // Define TypeScript type for the form values based on Zod schema
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LogIn({ handleModelClose }: any) {
+  const router = useRouter();
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [loginCredentials, setLoginCredentials] = useLocalStorage("loginCredentials", {
     loginIdentifier: "",
@@ -38,8 +40,6 @@ export default function LogIn({ handleModelClose }: any) {
   const onSubmit = async (formData: LoginFormValues) => {
     // console.log("Form data submitted:", formData);
     setLoginCredentials({ loginIdentifier: formData.loginIdentifier });
-
-    // const type = formData.loginIdentifier.includes("@") ? "email" : "phone";
     const identifier = formData.loginIdentifier.includes("@")
       ? { email: formData.loginIdentifier || undefined }
       : { phone: formData.loginIdentifier || undefined };
@@ -48,7 +48,9 @@ export default function LogIn({ handleModelClose }: any) {
       email: identifier.email,
       phone: identifier.phone,
     });
+
     if (response?.response) handleModelClose();
+    router.push("/");
   };
   return (
     <div className="flex h-full flex-col items-center justify-center overflow-y-auto bg-white px-5 py-5">

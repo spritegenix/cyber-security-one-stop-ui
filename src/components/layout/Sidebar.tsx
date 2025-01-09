@@ -9,6 +9,7 @@ import { VscVerifiedFilled } from "react-icons/vsc";
 import Link from "next/link";
 import useAuthStore from "@/zustandStore/authStore";
 import { useHeaderUser } from "@/app/_queryCall/userAuth/csr";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Sidebar({ isSidebar, handleSidebar }: any) {
   const { userData: loggedUser, loading, error, refetch } = useHeaderUser();
@@ -78,11 +79,13 @@ export default function Sidebar({ isSidebar, handleSidebar }: any) {
 
 function LogoutButton({ handleSidebarClose }: any) {
   const { clearUserTokens } = useAuthStore();
+  const router = useRouter();
   return (
     <Button
       onClick={() => {
         clearUserTokens();
         handleSidebarClose();
+        router.push("/");
       }}
     >
       Logout

@@ -50,10 +50,10 @@ export default function ServiceCard({
               <span>{Number(rating).toFixed(1)}</span>
               <span>({review} reviews)</span>
             </div>
-            <div className="flex items-center gap-2">
+            {yearsOfExperience &&<div className="flex items-center gap-2">
               <SiExpensify className="text-bg1" />
               <span>{yearsOfExperience} Years of Experience</span>
-            </div>
+            </div>}
           </div>
           <div className="flex flex-wrap">
             {tags?.map((tag: string) => (

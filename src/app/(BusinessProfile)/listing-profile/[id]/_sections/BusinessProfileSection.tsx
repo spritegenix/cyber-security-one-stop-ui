@@ -12,6 +12,7 @@ import VerificationDocumentsForm from "./VerificationDocumentsForm";
 import { useGetBusinessDetails } from "@/app/_queryCall/businessAuth/csr";
 import { FramerMotionAccordion } from "@/components/elements/Accordions/FramerMotionAccordion";
 import { FaCircleDot } from "react-icons/fa6";
+import AdminNotification from "./AdminNotification";
 
 export default function BusinessProfile() {
   const { userData: loggedUser, loading, error, refetch } = useGetBusinessDetails();
@@ -25,6 +26,7 @@ export default function BusinessProfile() {
   if (!hydrated) return null; // Avoid rendering mismatched UI during hydration
   return (
     <div className="w-full md:col-span-11">
+      <AdminNotification />
       {isMobile ? (
         <div className="space-y-2">
           {!!loggedUser?.isBusinessVerified ? (
@@ -78,7 +80,7 @@ export default function BusinessProfile() {
             <Tab tabs={FirmDashboard?.tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
             {!loggedUser?.isBusinessVerified && (
               <p className="ml-4 text-sm text-red-500">
-                Note: Please complete your profile to get verified
+                <strong>Note:</strong> Please complete your profile to get verified by Support Team.
               </p>
             )}
           </ul>
@@ -93,7 +95,7 @@ export default function BusinessProfile() {
 
 function TabContent({ activeTab }: any) {
   const { userData: loggedUser, loading, error, refetch } = useGetBusinessDetails();
-  console.log(loggedUser, "loggedUser");
+  // console.log(loggedUser, "loggedUser");
   return (
     <>
       {activeTab === "Basic Information" && (

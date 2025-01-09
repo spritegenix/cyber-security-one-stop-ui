@@ -83,16 +83,18 @@ export function convertToDayTimingsDefaultValue(
   };
 
   // Map working hours to the appropriate days
-  workingHour.forEach(({ dayOfWeek, openingTime, closingTime }) => {
-    const dayKey = daysMap[dayOfWeek];
-    if (dayKey) {
-      dayTimings[dayKey] = {
-        start: openingTime,
-        end: closingTime,
-        checked: true,
-      };
-    }
-  });
+  workingHour &&
+    workingHour.length > 0 &&
+    workingHour.forEach(({ dayOfWeek, openingTime, closingTime }) => {
+      const dayKey = daysMap[dayOfWeek];
+      if (dayKey) {
+        dayTimings[dayKey] = {
+          start: openingTime,
+          end: closingTime,
+          checked: true,
+        };
+      }
+    });
 
   return dayTimings;
 }

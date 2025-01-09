@@ -37,7 +37,7 @@ function LoggedUser({ handleSidebar }: any) {
         />
       ) : (
         <p className="cursor-pointer text-xl font-bold capitalize text-white">
-          {loggedUser?.name ? loggedUser?.name[0] : "C"}
+          {loggedUser?.name && loggedUser?.name > 0 ? loggedUser?.name[0] : "C"}
         </p>
       )}
     </div>

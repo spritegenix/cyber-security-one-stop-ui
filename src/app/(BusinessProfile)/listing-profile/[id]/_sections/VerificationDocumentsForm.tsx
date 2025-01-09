@@ -24,6 +24,7 @@ export default function VerificationDocumentsForm({ data, refetchData }: any) {
     }));
     try {
       await handleUpdate({ documents: docs });
+      refetchData();
     } catch (e) {
       console.error("Error updating documents", e);
     }
