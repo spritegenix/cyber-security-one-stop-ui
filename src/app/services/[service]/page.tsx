@@ -63,7 +63,7 @@ export default function IndividualService({ params }: Props) {
         console.log(searchResults?.businesses);
         // setFilteredBusinesses(searchResults?.businesses);
         setFilteredBusinesses({
-          CategoryName: searchResults?.categories[0]?.name,
+          CategoryName: searchResults?.categories > 0 && searchResults?.categories[0]?.name,
           businesses: searchResults?.businesses,
         });
       }
@@ -157,24 +157,48 @@ export default function IndividualService({ params }: Props) {
         <ul className="col-span-12 space-y-5 md:col-span-8">
           {filteredBusinesses?.businesses?.map((item: any, i: number) => (
             <ServiceCard
-              key={item?.id}
-              name={item?.name}
-              isVerified={item?.isBusinessVerified}
-              city={item?.businessDetails?.addresses[0].city}
-              state={item?.businessDetails?.addresses[0].state}
-              country={item?.businessDetails?.addresses[0].country}
-              rating={item?.averageRating}
-              review={item?.reviewCount}
-              yearsOfExperience={item?.businessDetails?.experience}
-              sliderImages={item?.businessDetails?.coverImages?.map((item: any) => item?.url)}
-              slug={item?.slug}
-              tags={item?.businessDetails.categories?.map((item: any) => item?.name)}
-              phoneNumber={item?.primaryContacts?.map(
-                (item: any) => item?.type === "PHONE" && item?.value,
-              )}
-              whatsAppNumber={item?.primaryContacts?.map(
-                (item: any) => item?.type === "PHONE" && item?.value,
-              )}
+              key={item?.id || i}
+              name={item?.name || ""}
+              isVerified={item?.isBusinessVerified || ""}
+              city={
+                (item?.businessDetails?.addresses > 0 &&
+                  item?.businessDetails?.addresses[0].city) ||
+                ""
+              }
+              state={
+                (item?.businessDetails?.addresses > 0 &&
+                  item?.businessDetails?.addresses[0].state) ||
+                ""
+              }
+              country={
+                (item?.businessDetails?.addresses > 0 &&
+                  item?.businessDetails?.addresses[0].country) ||
+                ""
+              }
+              rating={item?.averageRating || ""}
+              review={item?.reviewCount || ""}
+              yearsOfExperience={item?.businessDetails?.experience || ""}
+              sliderImages={item?.businessDetails?.coverImages?.map((item: any) => item?.url) || []}
+              slug={item?.slug || ""}
+              tags={
+                (item?.businessDetails?.categories?.length > 0 &&
+                  item?.businessDetails?.categories?.map((item: any) => item?.name)) ||
+                []
+              }
+              phoneNumber={
+                (item?.primaryContacts > 0 &&
+                  item?.primaryContacts?.map(
+                    (item: any) => item?.type === "PHONE" && item?.value,
+                  )) ||
+                []
+              }
+              whatsAppNumber={
+                (item?.primaryContacts.length > 0 &&
+                  item?.primaryContacts?.map(
+                    (item: any) => item?.type === "PHONE" && item?.value,
+                  )) ||
+                ""
+              }
             />
           ))}
         </ul>

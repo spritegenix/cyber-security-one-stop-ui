@@ -13,8 +13,8 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import useIsMobile from "@/customHooks/useIsMobile";
 import { useFetchAllAdBanners } from "../_queryCall/csr";
 export const AdBannerSlider = ({
-  mobileHeight = "h-52",
-  desktopHeight = "h-36",
+  mobileHeight = "",
+  desktopHeight = "",
   onlyMobile = false,
 }: any) => {
   const uniqueId = "adBanner123";
@@ -91,8 +91,8 @@ function AdCard({ href, image }: { href?: string; image?: string }) {
         <Image
           src={image}
           alt="Advertisement Banner"
-          width={764}
-          height={144}
+          width={1500}
+          height={200}
           className="mx-auto h-full w-full object-cover"
           priority
         />

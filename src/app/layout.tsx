@@ -38,14 +38,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "Cyber Security",
     description: "One stop Solution",
-    images: [
-      {
-        url: "/api/og-image/route.ts",
-        width: 1200,
-        height: 600,
-        alt: "Cyber Security - One Stop Solution",
-      },
-    ],
+    // images: [
+    //   {
+    //     url: "/api/og-image/route.ts",
+    //     width: 1200,
+    //     height: 600,
+    //     alt: "Cyber Security - One Stop Solution",
+    //   },
+    // ],
   },
   icons: {
     shortcut: "/favicon.ico",

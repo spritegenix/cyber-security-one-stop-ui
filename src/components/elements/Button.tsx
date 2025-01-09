@@ -30,7 +30,7 @@ export default function Button({
       case "green":
         return "bg-green-500 text-white hover:bg-green-500/80";
       case "orange-gradient":
-        return "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-500";
+        return "bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-500";
       case "white":
         return "bg-white text-black hover:bg-gray-100/80 border border-gray-300";
       default:

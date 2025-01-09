@@ -87,9 +87,7 @@ export function SignUpWithPasswordByOtp({ type, userIdentifier }: ChangePassword
         onClick={handleBackToEdit}
       >
         <FiEdit className="text-lg" />
-        <span>
-          {type === "phone" && "+91"} {userIdentifier}
-        </span>
+        <span>{userIdentifier}</span>
       </button>
       <div className="otp mb-5 flex flex-col justify-center">
         <OTPInput

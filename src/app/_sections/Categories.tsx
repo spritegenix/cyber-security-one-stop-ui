@@ -15,7 +15,7 @@ export default function Categories({ categories }: any) {
             key={category?.id || undefined}
             id={category?.id || undefined}
             label={category?.name || undefined}
-            href={category?.slug || undefined}
+            href={`/services/${category?.slug}` || undefined}
             icon={category?.categoryImage || undefined}
             desc={category?.description || undefined}
           />

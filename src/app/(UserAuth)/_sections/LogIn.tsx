@@ -48,7 +48,7 @@ export default function LogIn({ handleModelClose }: any) {
       email: identifier.email,
       phone: identifier.phone,
     });
-    if (response) handleModelClose();
+    if (response?.response) handleModelClose();
   };
   return (
     <div className="flex h-full flex-col items-center justify-center overflow-y-auto bg-white px-5 py-5">
@@ -94,7 +94,7 @@ export default function LogIn({ handleModelClose }: any) {
             Sign In
           </Button>
           {error && <p className="text-xs text-red-500">{error?.message}</p>}
-          {data && <p className="text-xs text-green-500">{data?.userLogin?.message}</p>}
+          {data && <p className="text-xs text-green-500">{data?.message}</p>}
         </form>
         <TextAccordion
           items={[
@@ -107,8 +107,8 @@ export default function LogIn({ handleModelClose }: any) {
                     className="text-sm text-blue-500 hover:underline"
                     href="/forgot-password/email"
                     onClick={(e) => {
-                      e.preventDefault(); // Prevent the default SPA navigation
-                      window.location.href = "/forgot-password/email"; // Use a full reload
+                      e.preventDefault();
+                      window.location.href = "/forgot-password/email";
                     }}
                   >
                     Recover Password by Email
@@ -118,8 +118,8 @@ export default function LogIn({ handleModelClose }: any) {
                     className="text-sm text-blue-500 hover:underline"
                     href="/forgot-password/phone"
                     onClick={(e) => {
-                      e.preventDefault(); // Prevent the default SPA navigation
-                      window.location.href = "/forgot-password/phone"; // Use a full reload
+                      e.preventDefault();
+                      window.location.href = "/forgot-password/phone";
                     }}
                   >
                     Recover Password by Phone Number
