@@ -70,7 +70,7 @@ export default function BasicInformationForm({ data, refetchData }: any) {
             isDeleted: false,
           }))) ||
         [];
-      setAddresses(newAddresses);
+      setAddresses(newAddresses.sort((a: any, b: any) => a.priority - b.priority));
       reset({
         ...data,
         name: data?.name || "",

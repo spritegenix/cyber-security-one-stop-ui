@@ -1,5 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSortable } from "@dnd-kit/sortable";
+import Image from "next/image";
 import {
   DndContext,
   closestCenter,
@@ -14,8 +17,10 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { SortableItem } from "./SortableItem"; // Custom component defined below
 import { CSS } from "@dnd-kit/utilities";
+import { Input, TextareaAutoGrowing } from "@/components/elements/Input";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import Button from "@/components/elements/Button";
 
 type Category = {
   id: string;
@@ -26,6 +31,7 @@ type Category = {
 
 type FormInputs = {
   name: string;
+  shortDescription: string;
   icon: FileList;
 };
 
@@ -41,6 +47,7 @@ const CategoryForm = () => {
   );
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    console.log(data, "category");
     const newCategory: Category = {
       id: Date.now().toString(), // Unique ID
       name: data.name,
@@ -66,30 +73,29 @@ const CategoryForm = () => {
   };
 
   return (
-    <div className="mx-auto max-w-lg p-4">
+    <div className="mx-auto max-w-sm p-4">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded bg-white p-4 shadow">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Category Name</label>
-          <input
-            type="text"
-            {...register("name", { required: true })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Category Icon</label>
-          <input
-            type="file"
-            {...register("icon")}
-            className="mt-1 block w-full cursor-pointer rounded-lg border border-gray-300 text-sm text-gray-900 focus:outline-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
+        <Input label="Category Name" type="text" {...register("name", { required: true })} />
+        <TextareaAutoGrowing
+          label="Short Description"
+          {...register("shortDescription", { required: true })}
+        />
+        {/* Icon Image Upload  */}
+        <label
+          htmlFor="uploadFile1"
+          className="mx-auto flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed border-bg1 bg-bg1 bg-opacity-5 font-semibold text-bg1"
         >
+          <IoCloudUploadOutline className="text-5xl" />
+          Upload file
+          <p className="mt-2 text-xs font-medium text-gray-400">
+            PNG, JPG SVG, WEBP, and GIF are Allowed.
+          </p>
+          <input type="file" id="uploadFile1" {...register("icon")} className="hidden" />
+        </label>
+
+        <Button type="submit" className="w-full">
           Add Category
-        </button>
+        </Button>
       </form>
 
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -123,12 +129,7 @@ const CategoryForm = () => {
   );
 };
 
-// SortableItem Component
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import Image from "next/image";
-
-export const SortableItem: React.FC<{ id: string }> = ({ id, children }) => {
+const SortableItem: React.FC<{ id: string; children: React.ReactNode }> = ({ id, children }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
