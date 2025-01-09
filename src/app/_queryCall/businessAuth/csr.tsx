@@ -118,6 +118,8 @@ export const VERIFY_BUSINESS_PRIMARY_CONTACT = gql`
   mutation Mutation($otp: String!, $email: String, $password: String, $phone: String) {
     verifyBusinessPrimaryContact(otp: $otp, email: $email, password: $password, phone: $phone) {
       business {
+        id
+        name
         slug
       }
       message
