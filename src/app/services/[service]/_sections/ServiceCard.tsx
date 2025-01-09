@@ -33,7 +33,7 @@ export default function ServiceCard({
         <div className="space-y-2">
           <Link
             href={`/${slug || "#"} `}
-            className="cursor-pointer text-2xl font-bold duration-300 hover:text-bg1"
+            className="flex cursor-pointer text-2xl font-bold duration-300 hover:text-bg1"
           >
             <span>{name}</span>{" "}
             {isVerified && <VscVerifiedFilled className="text-3xl text-green-500" />}
@@ -50,10 +50,12 @@ export default function ServiceCard({
               <span>{Number(rating).toFixed(1)}</span>
               <span>({review} reviews)</span>
             </div>
-            {yearsOfExperience &&<div className="flex items-center gap-2">
-              <SiExpensify className="text-bg1" />
-              <span>{yearsOfExperience} Years of Experience</span>
-            </div>}
+            {yearsOfExperience && (
+              <div className="flex items-center gap-2">
+                <SiExpensify className="text-bg1" />
+                <span>{yearsOfExperience} Years of Experience</span>
+              </div>
+            )}
           </div>
           <div className="flex flex-wrap">
             {tags?.map((tag: string) => (
