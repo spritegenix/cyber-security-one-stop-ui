@@ -47,9 +47,9 @@ export default async function middleware(req: NextRequest) {
         if ((path.startsWith('/login') || path.startsWith('/signup')) && userToken)
             return NextResponse.redirect(new URL('/', req.nextUrl));
         if ((path.startsWith('/listing-login') || path.startsWith('/listing-signup')) && firmToken)
-            return NextResponse.redirect(new URL('/', req.nextUrl));
+            return NextResponse.redirect(new URL('/listing-profile/firm-user', req.nextUrl));
         if (path.startsWith('/admin') && adminToken)
-            return NextResponse.redirect(new URL('/', req.nextUrl));
+            return NextResponse.redirect(new URL('/admin/dashboard', req.nextUrl));
     }
 
     // Allow the request to continue if no special handling is required

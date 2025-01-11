@@ -30,7 +30,7 @@ export default function IndividualService({ params }: Props) {
     verify: false,
     rating: 0,
     sortBy: "alphabetical",
-    order: "desc",
+    order: "asc",
     page: 1,
   });
   const [filteredBusinesses, setFilteredBusinesses] = useState<{

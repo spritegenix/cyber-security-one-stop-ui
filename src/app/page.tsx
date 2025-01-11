@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <Layout headerStyle={1} footerStyle={1}>
       <HomeHero />
-      <Categories categories={categories.allCategories} />
+      <Categories categories={categories?.allCategories} />
       {/* AdBannerSlider  */}
       <Wrapper className="swiperStyle2 relative">
         <AdBannerSlider />
