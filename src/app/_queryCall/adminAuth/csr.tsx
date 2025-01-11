@@ -1440,49 +1440,30 @@ export const ADMIN_GET_ALL_CATEGORIES = gql`
       name
       slug
       description
-      createdAt
-      deletedAt
       categoryImage
-      updatedAt
-      businessesDetails {
-        business {
-          id
-          slug
-          name
-        }
-      }
-      message
-      token
+      order
     }
   }
 `;
 
 export function useAdminGetAllCategories() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
-
-  // Set the token type to 'admin' on mount
   useEffect(() => {
     setTokenType("admin");
   }, [setTokenType]);
 
   // Use Apollo's useQuery hook to fetch categories
-  const { data, loading, error } = useQuery(ADMIN_GET_ALL_CATEGORIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched categories successfully:", data);
-    },
+  const { data, loading, error, refetch } = useQuery(ADMIN_GET_ALL_CATEGORIES, {
+    // onCompleted: (data: any) => {
+    //   console.log("Fetched categories successfully:", data?.adminGetAllCategories);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching categories:", err);
     },
   });
 
-  return {
-    data: data?.adminGetAllCategories, // Return the fetched categories
-    loading, // Loading state
-    error, // Error state
-  };
+  return { data: data?.adminGetAllCategories, loading, error, refetch };
 }
 
 export const ADMIN_MANAGE_CATEGORIES = gql`
@@ -1492,19 +1473,9 @@ export const ADMIN_MANAGE_CATEGORIES = gql`
       name
       slug
       description
-      createdAt
-      deletedAt
+      order
       categoryImage
-      updatedAt
-      businessesDetails {
-        business {
-          id
-          name
-          slug
-        }
-      }
       message
-      token
     }
   }
 `;
@@ -1535,18 +1506,13 @@ export function useAdminManageCategories() {
       const response = await manageCategories({
         variables: { categories },
       });
-      return { response: response.data, error: null };
+      return { response: response?.data, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
   };
 
-  return {
-    adminManageCategories,
-    data: data?.adminManageCategories,
-    loading,
-    error,
-  };
+  return { adminManageCategories, data: data?.adminManageCategories, loading, error };
 }
 
 export const ADMIN_GET_ALL_LANGUAGES = gql`

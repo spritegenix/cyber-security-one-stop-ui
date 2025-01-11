@@ -62,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${font1.variable} relative scroll-smooth bg-slate-100 antialiased`}
+        className={`${roboto.variable} ${font1.variable} relative scroll-smooth bg-bg1/5 antialiased`}
       >
         <ApolloWrapper>
           {/*  modal portal */}

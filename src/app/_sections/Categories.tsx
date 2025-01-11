@@ -10,14 +10,14 @@ export default function Categories({ categories }: any) {
     <Wrapper className="my-16 overflow-hidden">
       <h2 className="mb-5 text-3xl font-bold text-bg1">Categories</h2>
       <ul className="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 lg:gap-10 xl:grid-cols-8">
-        {categories?.map((category: any) => (
+        {categories?.map((category: any, index: number) => (
           <CategoryCard
-            key={category?.id || undefined}
-            id={category?.id || undefined}
-            label={category?.name || undefined}
-            href={`/services/${category?.slug}` || undefined}
-            icon={category?.categoryImage || undefined}
-            desc={category?.description || undefined}
+            key={category?.id || index}
+            id={category?.id || index}
+            label={category?.name || "Category Name"}
+            href={category?.slug ? `/services/${category?.slug}` : "#"}
+            icon={category?.categoryImage || search}
+            desc={category?.description || "Category Description"}
           />
         ))}
         <Link href={"#"} className="group w-full cursor-pointer transition-all duration-300">
