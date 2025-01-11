@@ -141,9 +141,11 @@ export function useResendUserOtp() {
 export const VERIFY_USER_CONTACT = gql`
   mutation Mutation($email: String, $phone: String, $otp: String!) {
     verifyUserContact(email: $email, phone: $phone, otp: $otp) {
-      id
-      name
-      slug
+      user {
+        id
+        name
+        slug
+      }
       token
       message
     }

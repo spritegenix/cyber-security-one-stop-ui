@@ -30,7 +30,7 @@ interface VerifyByOtpValue {
 
 export default function Otp({ type, userIdentifier }: VerifyByOtpValue) {
   const route = useRouter();
-  const { verifyUserContact, data, loading, error } = useVerifyUserContact();
+  const { verifyUserContact, error } = useVerifyUserContact();
   const {
     resendOtp,
     data: resendOtpData,

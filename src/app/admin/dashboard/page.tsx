@@ -3,12 +3,15 @@ import Wrapper from "@/components/elements/Wrappers";
 import React, { useEffect } from "react";
 import CategoryForm from "../_sections/CategoryForm";
 import { useAdminGetAllCategories } from "@/app/_queryCall/adminAuth/csr";
+import UserManagementList from "../_sections/UserManagementList";
+import { useAdminAllUsers } from "@/app/_queryCall/adminAuth/user";
 
 export default function AdminDashboardPage() {
-  const { data: allCategories, loading, error, refetch } = useAdminGetAllCategories();
+  const { data: allCategories, refetch: allCategoriesFetch } = useAdminGetAllCategories();
+  const { adminAllUsers, data, loading, error, refetch: adminAllUsersRefetch } = useAdminAllUsers();
   return (
     <>
-      <Wrapper>
+      <Wrapper className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         <CategoryForm
           data={
             allCategories &&
@@ -24,8 +27,9 @@ export default function AdminDashboardPage() {
               }))
               .sort((a: any, b: any) => a.priority - b.priority)
           }
-          refetchData={refetch}
+          refetchData={allCategoriesFetch}
         />
+        <UserManagementList />
       </Wrapper>
     </>
   );

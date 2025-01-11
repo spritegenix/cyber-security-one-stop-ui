@@ -206,7 +206,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
   }
   return (
     <>
-      <div className="max-w-sm p-4">
+      <div className="max-w-md p-4">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded bg-white p-4 shadow">
           <h2 className="text-lg font-semibold">Categories</h2>
           <Input
