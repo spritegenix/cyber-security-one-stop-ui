@@ -110,7 +110,6 @@ export const useSearchAutoSuggestion = () => {
     limit?: number;
   }) => {
     try {
-      // Execute the query with variables
       await fetchSuggestions({
         variables: {
           search,

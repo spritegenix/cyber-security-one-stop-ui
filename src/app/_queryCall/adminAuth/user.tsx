@@ -61,22 +61,37 @@ export const ADMIN_ALL_USERS = gql`
 
 export function useAdminAllUsers() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
+
+  // Set the token type to "admin" when the hook is used
   useEffect(() => {
     setTokenType("admin");
-  }, []);
+  }, [setTokenType]);
+
+  // Apollo lazy query hook
   const [fetchAllUsers, { data, loading, error, refetch }] = useLazyQuery(ADMIN_ALL_USERS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched users successfully:", data);
-    },
-    onError: (err: any) => {
-      // Handle error response
+    // onCompleted: (data) => {
+    //   console.log("Fetched users successfully:", data);
+    // },
+    onError: (err) => {
       console.error("Error fetching users:", err);
     },
   });
 
-  const adminAllUsers = async (variables: {
+  // API function to call the query
+  const adminAllUsers = async ({
+    name = undefined,
+    email = undefined,
+    phone = undefined,
+    subscriptionId = undefined,
+    hasSubscription = undefined,
+    isVerified = undefined,
+    createdAtStart = undefined,
+    createdAtEnd = undefined,
+    page = 1,
+    limit = 5,
+    sortBy = undefined,
+    sortOrder = undefined,
+  }: {
     name?: string;
     email?: string;
     phone?: string;
@@ -87,18 +102,33 @@ export function useAdminAllUsers() {
     createdAtEnd?: string;
     page?: number;
     limit?: number;
-    sortBy?: string;
-    sortOrder?: string;
+    sortBy?: "alphabetical" | "createdAt" | "updatedAt";
+    sortOrder?: "asc" | "desc";
   }) => {
     try {
-      const response = await fetchAllUsers({ variables });
-      return { response: response.data, error: null };
+      const response = await fetchAllUsers({
+        variables: {
+          name,
+          email,
+          phone,
+          subscriptionId,
+          hasSubscription,
+          isVerified,
+          createdAtStart,
+          createdAtEnd,
+          page,
+          limit,
+          sortBy,
+          sortOrder,
+        },
+      });
+      return { response: response?.data?.adminAllUsers, error: null, refetch };
     } catch (err) {
-      return { response: null, error: err };
+      return { response: null, error: err, loading: false };
     }
   };
 
-  return { adminAllUsers, data: data?.adminAllUsers, loading, error, refetch };
+  return { adminAllUsers, data: data?.adminAllUsers || null, loading, error, refetch };
 }
 
 export const ADMIN_GET_USER_BY_ID = gql`
@@ -226,19 +256,21 @@ export function useAdminGetUserById() {
     setTokenType("admin");
   }, []);
   const [fetchUserById, { data, loading, error }] = useLazyQuery(ADMIN_GET_USER_BY_ID, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched user successfully:", data);
-    },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching user:", err);
     },
   });
 
-  const adminGetUserById = async (variables: { userId?: string; userSlug?: string }) => {
+  const adminGetUserById = async ({
+    userId = undefined,
+    userSlug = undefined,
+  }: {
+    userId?: string;
+    userSlug?: string;
+  }) => {
     try {
-      const response = await fetchUserById({ variables });
+      const response = await fetchUserById({ variables: { userId: userId, userSlug: userSlug } });
       return { response: response.data, error: null };
     } catch (err) {
       return { response: null, error: err };
@@ -266,26 +298,23 @@ export const ADMIN_BLOCK_USERS = gql`
 `;
 
 export function useAdminBlockUsers() {
-  const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
+  const setTokenType = useAuthStore((state: any) => state.setTokenType);
   useEffect(() => {
     setTokenType("admin");
-  }, []);
+  }, [setTokenType]);
+
+  // Apollo Client's useMutation
   const [blockUsers, { data, loading, error }] = useMutation(ADMIN_BLOCK_USERS, {
-    onCompleted: (data: any) => {
-      // Handle successful mutation
-      console.log("Users blocked successfully:", data);
-    },
     onError: (err: any) => {
-      // Handle mutation error
       console.error("Error blocking users:", err);
     },
   });
 
-  const adminBlockUsers = async (variables: { users: { id: string }[] }) => {
+  // Mutation function
+  const adminBlockUsers = async (userIds: string[]) => {
     try {
-      const response = await blockUsers({ variables });
-      return { response: response.data, error: null };
+      const response = await blockUsers({ variables: { users: userIds } });
+      return { response: response.data?.adminBlockUsers, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
