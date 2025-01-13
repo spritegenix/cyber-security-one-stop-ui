@@ -431,7 +431,6 @@ const ALL_TESTIMONIALS_QUERY = gql`
       deletedAt
       updatedAt
       message
-      token
     }
   }
 `;

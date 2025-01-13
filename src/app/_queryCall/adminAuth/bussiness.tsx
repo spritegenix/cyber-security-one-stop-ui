@@ -145,7 +145,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
         updatedAt
         deletedAt
         message
-        token
       }
       additionalContacts
       isBusinessVerified
@@ -165,7 +164,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
         updatedAt
         deletedAt
         message
-        token
       }
       averageRating
       reviewCount
@@ -196,7 +194,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       feedbacks {
         id
@@ -218,7 +215,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       businessSupportingDocuments {
         id
@@ -229,7 +225,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
         updatedAt
         deletedAt
         message
-        token
       }
       businessDetails {
         id
@@ -247,7 +242,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         primaryWebsite
         coverImages {
@@ -259,7 +253,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         adBannerImages {
           id
@@ -270,7 +263,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         mobileAdBannerImages {
           id
@@ -281,7 +273,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         operatingHours {
           id
@@ -293,7 +284,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           closingTime
           businessDetailsId
           message
-          token
         }
         latitude
         longitude
@@ -306,7 +296,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         proficiencies {
           id
@@ -316,7 +305,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         courts {
           id
@@ -326,7 +314,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         gstNumber
         categories {
@@ -339,7 +326,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           categoryImage
           updatedAt
           message
-          token
         }
         tags {
           id
@@ -348,7 +334,6 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         addresses {
           id
@@ -363,18 +348,15 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           pincode
           state
           message
-          token
         }
         logo
         createdAt
         updatedAt
         deletedAt
         message
-        token
       }
       price
       message
-      token
       bookings {
         id
         date

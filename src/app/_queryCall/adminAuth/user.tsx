@@ -120,7 +120,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         updatedAt
         deletedAt
         message
-        token
       }
       hideDetails
       isBlocked
@@ -145,7 +144,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         pincode
         state
         message
-        token
       }
       bookings {
         id
@@ -166,7 +164,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       reviews {
         id
@@ -188,7 +185,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       feedbacks {
         id
@@ -199,7 +195,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       subscription {
         id
@@ -214,7 +209,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         message
       }
       message
-      token
     }
   }
 `;

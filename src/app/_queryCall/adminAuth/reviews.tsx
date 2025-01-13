@@ -37,7 +37,6 @@ export const ADMIN_SEARCH_ALL_FEEDBACKS = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       total
       page

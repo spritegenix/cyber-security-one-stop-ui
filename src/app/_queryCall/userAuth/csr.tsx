@@ -412,7 +412,6 @@ export const GET_USER_ME = gql`
         order
         verifiedAt
         message
-        token
         user {
           id
           slug
@@ -442,7 +441,6 @@ export const GET_USER_ME = gql`
         pincode
         state
         message
-        token
         user {
           slug
           id
@@ -463,7 +461,6 @@ export const GET_USER_ME = gql`
         deletedAt
         updatedAt
         message
-        token
         user {
           id
           slug
@@ -490,7 +487,6 @@ export const GET_USER_ME = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       feedbacks {
         id

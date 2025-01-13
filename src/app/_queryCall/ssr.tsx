@@ -204,18 +204,15 @@ export const GET_ALL_BUSINESSES = gql`
           pincode
           state
           message
-          token
         }
         logo
         createdAt
         updatedAt
         deletedAt
         message
-        token
       }
       price
       message
-      token
     }
   }
 `;
