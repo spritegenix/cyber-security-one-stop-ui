@@ -43,6 +43,7 @@ export const ADMIN_ALL_BUSINESSES = gql`
         id
         name
         slug
+        isBusinessVerified
         primaryContacts {
           type
           value
