@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { service1 } from "@/assets";
 import Filters from "@/components/elements/Filters";
 import Layout from "@/components/layout/Layout";
 import ServiceCard from "@/app/services/[service]/_sections/ServiceCard";
@@ -13,10 +12,11 @@ import { IoFilter } from "react-icons/io5";
 import Portal from "@/components/elements/Portal";
 import { useFilterBusiness } from "@/app/_queryCall/csr";
 import { AdBannerSlider } from "@/app/_sections/AdBannerSlider";
+import { banner } from "@/assets";
 
 type Props = {
   params: {
-    service: String;
+    service: string;
   };
 };
 
@@ -33,13 +33,8 @@ export default function IndividualService({ params }: Props) {
     order: "asc",
     page: 1,
   });
-  const [filteredBusinesses, setFilteredBusinesses] = useState<{
-    CategoryName: string;
-    businesses: any[];
-  }>({
-    CategoryName: "",
-    businesses: [],
-  });
+  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+  const [filteredBusinessesCategory, setFilteredBusinessesCategory] = useState("");
   // Queries
   const {
     getAllRelatedBusinesses,
@@ -48,34 +43,28 @@ export default function IndividualService({ params }: Props) {
     error,
     refetch,
   } = useFilterBusiness();
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      const { searchResults } = await getAllRelatedBusinesses({
-        categorySlug: serviceSlug,
-        verified: filtersApplied?.verify || false,
-        minRating: filtersApplied?.rating,
-        sortBy: filtersApplied?.sortBy,
-        order: filtersApplied?.order,
-        page: filtersApplied?.page,
-      });
-      if (searchResults) {
-        console.log(searchResults?.businesses);
-        // setFilteredBusinesses(searchResults?.businesses);
-        setFilteredBusinesses({
-          CategoryName: searchResults?.categories > 0 && searchResults?.categories[0]?.name,
-          businesses: searchResults?.businesses,
-        });
-      }
-      console.log(error);
-    };
-    fetchInitialData();
-  }, [filtersApplied]);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     refetch();
-  //   }
-  // }, [error]);
+  useEffect(() => {
+    console.log(businessData, "businessData");
+    setFilteredBusinessesCategory(businessData?.search?.categories[0]?.name);
+    setFilteredBusinesses(businessData?.search.businesses || []);
+  }, [businessData]);
+
+  useEffect(() => {
+    async function fetchFilteredData() {
+      await getAllRelatedBusinesses({
+        categorySlug: serviceSlug,
+        verified: filtersApplied.verify,
+        minRating: filtersApplied.rating,
+        sortBy: filtersApplied.sortBy,
+        order: filtersApplied.order,
+        page: filtersApplied.page,
+      });
+    }
+    if (filtersApplied) {
+      fetchFilteredData();
+    }
+  }, [filtersApplied]);
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -110,7 +99,7 @@ export default function IndividualService({ params }: Props) {
 
   return (
     <Layout headerStyle={1} footerStyle={1}>
-      <Wrapper isTop={true} className="swiperStyle2 relative">
+      <Wrapper isTop={true}>
         <AdBannerSlider />
       </Wrapper>
       {/* Sorting and Filters */}
@@ -146,43 +135,54 @@ export default function IndividualService({ params }: Props) {
       </Wrapper>
 
       <Wrapper className="mb-16 grid grid-cols-12 gap-5">
-        {filteredBusinesses?.CategoryName && (
-          <h2 className="col-span-12 text-2xl font-semibold">
-            <span>Category: </span>
-            <span className="text-bg1">{`"${filteredBusinesses?.CategoryName}"`}</span>
-          </h2>
+        {filteredBusinessesCategory && (
+          <div className="col-span-12">
+            <h2 className="text-2xl font-semibold">
+              <span>Category: </span>
+              <span className="text-bg1">{`"${filteredBusinessesCategory}"`}</span>
+            </h2>
+            <p className="text-sm text-zinc-600">Showing {businessData?.search?.total} results</p>
+          </div>
         )}
         {/* Service Cards  */}
         <ul className="col-span-12 space-y-5 md:col-span-8">
-          {filteredBusinesses?.businesses?.map((item: any, i: number) => (
+          {filteredBusinesses?.map((item: any, i: number) => (
             <ServiceCard
               key={item?.id}
               name={item?.name}
               isVerified={item?.isBusinessVerified || ""}
               city={
-                (item?.businessDetails?.addresses > 0 &&
-                  item?.businessDetails?.addresses[0].city) ||
-                ""
+                item?.businessDetails?.addresses.length > 0 &&
+                item?.businessDetails?.addresses[0]?.city
               }
               state={
-                (item?.businessDetails?.addresses > 0 &&
-                  item?.businessDetails?.addresses[0].state) ||
-                ""
+                item?.businessDetails?.addresses?.length > 0 &&
+                item?.businessDetails?.addresses[0]?.state
               }
               country={
-                (item?.businessDetails?.addresses > 0 &&
-                  item?.businessDetails?.addresses[0].country) ||
-                ""
+                item?.businessDetails?.addresses?.length > 0 &&
+                item?.businessDetails?.addresses[0]?.country
               }
               rating={item?.averageRating || ""}
               review={item?.reviewCount || ""}
               yearsOfExperience={item?.businessDetails?.experience || ""}
-              sliderImages={item?.businessDetails?.coverImages?.map((item: any) => item?.url) || []}
+              sliderImages={
+                (item?.businessDetails?.coverImages?.length > 0 &&
+                  item?.businessDetails?.coverImages?.map((item: any) => item?.url)) || [
+                  banner,
+                  banner,
+                ]
+              }
               slug={item?.slug || ""}
               tags={
-                (item?.businessDetails?.categories?.length > 0 &&
-                  item?.businessDetails?.categories?.map((item: any) => item?.name)) ||
-                []
+                item?.businessDetails?.categories?.length > 0
+                  ? [
+                      ...item.businessDetails.categories
+                        .slice(0, 4)
+                        .map((category: any) => category?.name),
+                      "Many More",
+                    ]
+                  : []
               }
               phoneNumber={
                 (item?.primaryContacts.length > 0 &&
@@ -206,7 +206,7 @@ export default function IndividualService({ params }: Props) {
           <div className="sticky top-48">
             {/* AdBannerSlider  */}
             <div className="swiperStyle2 relative">
-              <AdBannerSlider mobileHeight="h-52" onlyMobile={true} />
+              <AdBannerSlider onlyMobile={true} />
             </div>
           </div>
           {/* <ChatBox /> */}

@@ -7,7 +7,7 @@ import React from "react";
 
 export default function Categories({ categories }: any) {
   return (
-    <Wrapper className="my-16 overflow-hidden">
+    <Wrapper className="my-16">
       <h2 className="mb-5 text-3xl font-bold text-bg1">Categories</h2>
       <ul className="grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 lg:gap-10 xl:grid-cols-8">
         {categories?.map((category: any, index: number) => (

@@ -70,7 +70,7 @@ export default function UserListPage() {
     async function fetchData() {
       if (selectedUserId) {
         const response = await adminGetBusinessById({ businessId: selectedUserId });
-        console.log(response?.response?.adminGetBusinessById);
+        // console.log(response?.response?.adminGetBusinessById);
         setSelectedUserData(response?.response?.adminGetBusinessById);
       }
     }

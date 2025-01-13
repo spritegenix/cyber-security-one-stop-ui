@@ -2,11 +2,12 @@
 import Button from "@/components/elements/Button";
 import React, { useState } from "react";
 import { FaPhone, FaStar } from "react-icons/fa";
-import { IoChatbubblesOutline, IoLocationOutline, IoLogoWhatsapp } from "react-icons/io5";
+import { IoLocationOutline, IoLogoWhatsapp } from "react-icons/io5";
 import { SiExpensify } from "react-icons/si";
 import { ServiceCardSlider } from "./ServiceCardSlider";
 import Link from "next/link";
 import { VscVerifiedFilled } from "react-icons/vsc";
+import useAuthStore from "@/zustandStore/authStore";
 
 export default function ServiceCard({
   name,
@@ -24,10 +25,11 @@ export default function ServiceCard({
   whatsAppNumber,
 }: any) {
   const [isPhoneDisplay, setIsPhoneDisplay] = useState(false);
+  const isLoggedIn = useAuthStore((state) => state?.userToken);
   return (
     <li className="relative grid w-full grid-cols-1 gap-5 rounded-lg bg-white p-3 shadow-xl md:grid-cols-12">
       <div className="swiperStyle2 relative col-span-1 max-h-52 md:col-span-4">
-        <ServiceCardSlider images={sliderImages} />
+        <ServiceCardSlider id={slug} images={sliderImages} />
       </div>
       <div className="col-span-1 flex flex-col justify-between gap-2 md:col-span-8">
         <div className="space-y-2">
@@ -68,18 +70,29 @@ export default function ServiceCard({
         <div className="flex flex-col gap-2 md:flex-row">
           <Button
             onClick={() => {
-              setIsPhoneDisplay(true);
-              isPhoneDisplay && window.open(`tel:${phoneNumber}`);
+              if (!isPhoneDisplay) {
+                setIsPhoneDisplay(true);
+              } else if (isPhoneDisplay) {
+                if (isLoggedIn) {
+                  window.open(`tel:${phoneNumber}`);
+                } else {
+                  window.location.href = "/login";
+                }
+              }
             }}
             variant="green"
             leftIcon={<FaPhone className="scale-x-[-1] transform duration-300" />}
           >
-            {isPhoneDisplay ? phoneNumber : "Show Number"}
+            {isPhoneDisplay && isLoggedIn ? phoneNumber : "Show Number"}
           </Button>
           <Button
-            as="a"
-            target="_blank"
-            href={`https://wa.me/${whatsAppNumber}`}
+            onClick={() => {
+              if (isLoggedIn) {
+                window.open(`https://wa.me/${whatsAppNumber}`, "_blank");
+              } else {
+                window.location.href = "/login";
+              }
+            }}
             variant="white"
             leftIcon={<IoLogoWhatsapp className="transform text-xl text-green-500 duration-300" />}
           >
@@ -93,6 +106,43 @@ export default function ServiceCard({
           >
             Chat Directly
           </Button> */}
+        </div>
+      </div>
+    </li>
+  );
+}
+
+export function ServiceCardSkeleton() {
+  return (
+    <li className="relative grid w-full animate-pulse grid-cols-1 gap-5 rounded-lg bg-gray-200 p-3 shadow-xl md:grid-cols-12">
+      <div className="swiperStyle2 relative col-span-1 max-h-52 rounded-lg bg-gray-300 md:col-span-4"></div>
+      <div className="col-span-1 flex flex-col justify-between gap-2 md:col-span-8">
+        <div className="space-y-2">
+          <div className="h-6 w-3/4 rounded-md bg-gray-300"></div>
+          <div className="flex items-center gap-2">
+            <div className="h-5 w-5 rounded-full bg-gray-300"></div>
+            <div className="h-4 w-1/2 rounded-md bg-gray-300"></div>
+          </div>
+          <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <div className="h-5 w-5 rounded-full bg-gray-300"></div>
+              <div className="h-4 w-10 rounded-md bg-gray-300"></div>
+              <div className="h-4 w-16 rounded-md bg-gray-300"></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-5 w-5 rounded-full bg-gray-300"></div>
+              <div className="h-4 w-32 rounded-md bg-gray-300"></div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <div className="h-6 w-16 rounded-md bg-gray-300"></div>
+            <div className="h-6 w-20 rounded-md bg-gray-300"></div>
+            <div className="h-6 w-12 rounded-md bg-gray-300"></div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row">
+          <div className="h-10 w-32 rounded-md bg-gray-300"></div>
+          <div className="h-10 w-32 rounded-md bg-gray-300"></div>
         </div>
       </div>
     </li>

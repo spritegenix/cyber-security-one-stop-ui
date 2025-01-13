@@ -11,8 +11,8 @@ import Link from "next/link";
 import { servicesListingAdBanners } from "@/data/global";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import useIsMobile from "@/customHooks/useIsMobile";
-export const ServiceCardSlider = ({ images }: any) => {
-  const uniqueId = "ServiceCardSlider123";
+export const ServiceCardSlider = ({ images, id }: any) => {
+  const uniqueId = id || "ServiceCardSlider123";
 
   const swiperOptions = {
     slidesPerView: 1,
