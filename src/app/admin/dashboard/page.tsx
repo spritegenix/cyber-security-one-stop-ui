@@ -3,12 +3,16 @@ import Wrapper from "@/components/elements/Wrappers";
 import React, { useEffect } from "react";
 import CategoryForm from "../_sections/CategoryForm";
 import { useAdminGetAllCategories } from "@/app/_queryCall/adminAuth/csr";
+import PageTabs from "../_sections/PageTabs";
 
 export default function AdminDashboardPage() {
   const { data: allCategories, refetch: allCategoriesFetch } = useAdminGetAllCategories();
 
   return (
     <>
+      <Wrapper className="py-5">
+        <PageTabs />
+      </Wrapper>
       <Wrapper className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         <CategoryForm
           data={

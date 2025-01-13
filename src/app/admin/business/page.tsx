@@ -67,9 +67,9 @@ export default function UserListPage() {
   // ------------------------------------------------------------------- //
 
   return (
-    <Wrapper className="grid grid-cols-1 gap-5 py-10 lg:grid-cols-12">
+    <Wrapper className="grid grid-cols-1 gap-5 py-10 lg:grid-cols-2">
       {/* Left Side  */}
-      <div className="col-span-7">
+      <div>
         <h2 className="mb-5 text-2xl font-bold">Users On Platform</h2>
         {/* User Search Bar */}
         <div className="grid grid-cols-12 items-center gap-1 rounded bg-white px-2 shadow">
@@ -155,7 +155,6 @@ export default function UserListPage() {
                     email={user?.contacts?.find((c: any) => c?.type === "EMAIL")?.value}
                     phone={user?.contacts?.find((c: any) => c?.type === "PHONE")?.value}
                     isBlock={user?.isBlocked}
-                    isVerified={user?.isVerified}
                     selectedUserId={selectedUserId}
                     setSelectedUserId={setSelectedUserId}
                     refetchData={adminAllUsersRefetch}
@@ -176,7 +175,7 @@ export default function UserListPage() {
         )}
       </div>
       {/* Right Side  */}
-      <div className="col-span-5 mt-12">
+      <div className="mt-12">
         <IndividualUserData userData={selectedUserData} />
       </div>
     </Wrapper>

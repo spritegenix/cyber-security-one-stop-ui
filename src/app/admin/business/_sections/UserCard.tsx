@@ -11,7 +11,6 @@ export default function UserCard({
   name,
   email,
   phone,
-  isVerified,
   isBlock,
   selectedUserId,
   setSelectedUserId,
@@ -32,7 +31,7 @@ export default function UserCard({
     refetchData();
   }
   return (
-    <div className="text-wrap rounded bg-white p-4 shadow">
+    <div className="rounded bg-white p-4 shadow">
       <div className="grid grid-cols-12">
         <h6
           onClick={() => setSelectedUserId(id)}
@@ -41,17 +40,10 @@ export default function UserCard({
           {selectedUserId === id ? <FaCircleArrowRight className="text-2xl" /> : ""}
           {name}
         </h6>
-        <div className="col-span-4">
+        <div className="col-span-6">
           <p>{email}</p>
           <p>{phone}</p>
         </div>
-        <p className="col-span-2">
-          {isVerified ? (
-            <strong className="text-green-500">Verified User</strong>
-          ) : (
-            <strong className="text-red-500">Unverified User</strong>
-          )}
-        </p>
         {isBlock !== null && (
           <Button
             variant={isBlock ? "white" : "orange"}
