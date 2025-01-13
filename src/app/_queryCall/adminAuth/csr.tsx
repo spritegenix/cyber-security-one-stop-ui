@@ -446,18 +446,20 @@ export function useAdminGetBusinessById() {
   useEffect(() => {
     setTokenType("admin");
   }, []);
-  const [fetchAdminGetBusinessById, { data, loading, error }] = useLazyQuery(
-    ADMIN_GET_BUSINESS_BY_ID,
-    {
-      onCompleted: (data: any) => {
-        // console.log("Business details fetched successfully:", data);
-      },
-    },
-  );
+  const [fetchAdminGetBusinessById, { data, loading, error }] =
+    useLazyQuery(ADMIN_GET_BUSINESS_BY_ID);
 
-  const adminGetBusinessById = async (businessSlug: string) => {
+  const adminGetBusinessById = async ({
+    businessSlug = undefined,
+    businessId = undefined,
+  }: {
+    businessSlug?: string;
+    businessId?: string;
+  }) => {
     try {
-      const response = await fetchAdminGetBusinessById({ variables: { businessSlug } });
+      const response = await fetchAdminGetBusinessById({
+        variables: { businessSlug: businessSlug, businessId: businessId },
+      });
       return { response: response.data, error: null };
     } catch (err) {
       return { response: null, error: err };

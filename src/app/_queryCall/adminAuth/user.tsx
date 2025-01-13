@@ -310,8 +310,12 @@ export function useAdminBlockUsers() {
     },
   });
 
+  interface userProps {
+    userId: string;
+    block: boolean;
+  }
   // Mutation function
-  const adminBlockUsers = async (userIds: string[]) => {
+  const adminBlockUsers = async (userIds: userProps[]) => {
     try {
       const response = await blockUsers({ variables: { users: userIds } });
       return { response: response.data?.adminBlockUsers, error: null };

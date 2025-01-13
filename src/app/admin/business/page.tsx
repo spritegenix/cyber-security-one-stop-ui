@@ -1,12 +1,15 @@
 "use client";
-import { useAdminAllUsers, useAdminGetUserById } from "@/app/_queryCall/adminAuth/user";
 import Wrapper from "@/components/elements/Wrappers";
 import React, { use, useEffect, useState } from "react";
 import { Input } from "@/components/elements/Input";
 import Button from "@/components/elements/Button";
 import { FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
-import UserCard from "./_sections/UserCard";
 import { useDebounce } from "@/utils/debounce";
+import {
+  useAdminAllBusinesses,
+  useAdminGetBusinessById,
+} from "@/app/_queryCall/adminAuth/business";
+import BusinessCard from "./_sections/BusinessCard";
 
 export default function UserListPage() {
   const [usersList, setUsersList] = useState<any[]>([]);
@@ -16,12 +19,19 @@ export default function UserListPage() {
     phone: undefined,
     page: 1,
     limit: 5,
-    isVerified: false,
+    isBusinessVerified: undefined,
+    hasSubscription: undefined,
     sortBy: "createdAt",
     sortOrder: "asc",
   });
   const [debouncedFilters, setDebouncedFilters] = useState(filtersApplied);
-  const { adminAllUsers, data, loading, error, refetch: adminAllUsersRefetch } = useAdminAllUsers();
+  const {
+    adminAllBusinesses,
+    data,
+    loading,
+    error,
+    refetch: adminAllUsersRefetch,
+  } = useAdminAllBusinesses();
 
   // Debounced function using custom hook
   const debouncedUpdateFilters = useDebounce((newFilters: any) => {
@@ -35,14 +45,15 @@ export default function UserListPage() {
 
   // Fetch users whenever debounced filters change
   useEffect(() => {
-    adminAllUsers(debouncedFilters);
+    adminAllBusinesses(debouncedFilters);
   }, [debouncedFilters]);
 
   useEffect(() => {
+    console.log("data", data);
     if (debouncedFilters.page === 1) {
-      setUsersList(data?.users || []);
+      setUsersList(data?.businesses || []);
     } else if (data?.users?.length > 0) {
-      setUsersList((prev: any[]) => [...prev, ...data?.users]);
+      setUsersList((prev: any[]) => [...prev, ...data?.businesses]);
     }
   }, [data]);
 
@@ -53,13 +64,13 @@ export default function UserListPage() {
   // ------------------------------------------------------------------ //
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>(undefined);
   const [selectedUserData, setSelectedUserData] = useState<any>(undefined);
-  const { adminGetUserById } = useAdminGetUserById();
+  const { adminGetBusinessById } = useAdminGetBusinessById();
   useEffect(() => {
     async function fetchData() {
       if (selectedUserId) {
-        const response = await adminGetUserById({ userId: selectedUserId });
-        // console.log(response?.response?.adminGetUserById);
-        setSelectedUserData(response?.response?.adminGetUserById);
+        const response = await adminGetBusinessById({ businessId: selectedUserId });
+        // console.log(response?.response?.adminGetBusinessById);
+        setSelectedUserData(response?.response?.adminGetBusinessById);
       }
     }
     fetchData();
@@ -70,8 +81,8 @@ export default function UserListPage() {
     <Wrapper className="grid grid-cols-1 gap-5 py-10 lg:grid-cols-2">
       {/* Left Side  */}
       <div>
-        <h2 className="mb-5 text-2xl font-bold">Users On Platform</h2>
-        {/* User Search Bar */}
+        <h2 className="mb-5 text-2xl font-bold">Experts/ Firms On Platform</h2>
+        {/* Firm Search Bar */}
         <div className="grid grid-cols-12 items-center gap-1 rounded bg-white px-2 shadow">
           <div className="col-span-4">
             <Input
@@ -98,15 +109,46 @@ export default function UserListPage() {
           <Button
             variant="white"
             className="col-span-4 h-min"
-            onClick={() =>
+            onClick={() => {
+              const sortOptions = [undefined, true, false];
+              const currentIndex = sortOptions.findIndex(
+                (option) => option === filtersApplied?.isBusinessVerified,
+              );
+              const nextIndex = (currentIndex + 1) % sortOptions.length;
               setFiltersApplied({
                 ...filtersApplied,
-                isVerified: !filtersApplied?.isVerified,
+                isBusinessVerified: sortOptions[nextIndex],
                 page: 1,
-              })
-            }
+              });
+            }}
           >
-            {filtersApplied?.isVerified ? "Verified Users" : "All Users"}
+            {filtersApplied?.isBusinessVerified === undefined
+              ? "All Verified/ Non Verified Users"
+              : filtersApplied?.isBusinessVerified
+                ? "Verified Users"
+                : "Non Verified Users"}
+          </Button>
+          <Button
+            variant="white"
+            className="col-span-4 h-min"
+            onClick={() => {
+              const sortOptions = [undefined, true, false];
+              const currentIndex = sortOptions.findIndex(
+                (option) => option === filtersApplied?.hasSubscription,
+              );
+              const nextIndex = (currentIndex + 1) % sortOptions.length;
+              setFiltersApplied({
+                ...filtersApplied,
+                hasSubscription: sortOptions[nextIndex],
+                page: 1,
+              });
+            }}
+          >
+            {filtersApplied?.hasSubscription === undefined
+              ? "All Paid/ Free Users"
+              : filtersApplied?.hasSubscription
+                ? "Paid Users"
+                : "Free Users"}
           </Button>
           <Button
             variant="white"
@@ -140,21 +182,22 @@ export default function UserListPage() {
           </Button>
           <p className="col-span-4">Total Result: {data?.total || "not found"}</p>
         </div>
-        {/* Filtered Users List */}
+        {/* Filtered Firm List */}
         {loading ? (
           "Loading..."
         ) : (
           <ul className="mt-2 space-y-2">
             {usersList?.length > 0
               ? usersList?.map((user: any) => (
-                  <UserCard
+                  <BusinessCard
                     key={user?.id}
                     id={user?.id}
                     slug={user?.slug}
                     name={user?.name}
-                    email={user?.contacts?.find((c: any) => c?.type === "EMAIL")?.value}
-                    phone={user?.contacts?.find((c: any) => c?.type === "PHONE")?.value}
+                    email={user?.primaryContacts?.find((c: any) => c?.type === "EMAIL")?.value}
+                    phone={user?.primaryContacts?.find((c: any) => c?.type === "PHONE")?.value}
                     isBlock={user?.isBlocked}
+                    isVerified={user?.isVerified}
                     selectedUserId={selectedUserId}
                     setSelectedUserId={setSelectedUserId}
                     refetchData={adminAllUsersRefetch}

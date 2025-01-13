@@ -28,12 +28,12 @@ export default function UserCard({
     setAddAdminNote(false);
   }
   async function handleBlockUser() {
-    await adminBlockUsers([id]);
+    await adminBlockUsers([{ userId: id, block: !isBlock }]);
     refetchData();
   }
   return (
     <div className="text-wrap rounded bg-white p-4 shadow">
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 gap-1">
         <h6
           onClick={() => setSelectedUserId(id)}
           className="col-span-3 flex cursor-pointer items-center gap-2 font-medium text-bg1"
@@ -41,21 +41,17 @@ export default function UserCard({
           {selectedUserId === id ? <FaCircleArrowRight className="text-2xl" /> : ""}
           {name}
         </h6>
-        <div className="col-span-4">
+        <div className="col-span-5">
           <p>{email}</p>
           <p>{phone}</p>
         </div>
-        <p className="col-span-2">
-          {isVerified ? (
-            <strong className="text-green-500">Verified User</strong>
-          ) : (
-            <strong className="text-red-500">Unverified User</strong>
-          )}
-        </p>
+        <Button variant={isVerified ? "orange" : "white"} className="col-span-2 my-auto h-min">
+          {isVerified ? " Verified User" : " Unverified User"}
+        </Button>
         {isBlock !== null && (
           <Button
             variant={isBlock ? "white" : "orange"}
-            className="col-span-3 my-auto h-min"
+            className="col-span-2 my-auto h-min"
             onClick={handleBlockUser}
           >
             {isBlock ? "Blocked User" : "Active User"}
