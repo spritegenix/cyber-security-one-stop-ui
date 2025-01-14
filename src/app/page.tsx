@@ -10,6 +10,8 @@ import { fetchCategoriesSSR, fetchTestimonialsSSR } from "./_queryCall/ssr";
 // export const revalidate = 3600; // Rebuild the page every hour
 
 export default async function Home() {
+  // Checking Loading Page
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
   const categories = await fetchCategoriesSSR();
   const testimonials = await fetchTestimonialsSSR({ type: "REVIEW", page: 1, limit: 10 });
 
