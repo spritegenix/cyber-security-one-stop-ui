@@ -11,7 +11,7 @@ type Props = {
 export default function forgetPasswordPage({ params }: Props) {
   const passwordChangeBy = params?.type;
   return (
-    <Layout headerStyle={1} footerStyle={1}>
+    <Layout headerStyle={2} footerStyle={1}>
       <Wrapper isTop={true} className="mb-10 flex items-center justify-center p-2">
         <ListingForgotPassword type={passwordChangeBy} />
       </Wrapper>

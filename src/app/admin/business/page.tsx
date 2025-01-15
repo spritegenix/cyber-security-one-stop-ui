@@ -11,6 +11,7 @@ import {
 } from "@/app/_queryCall/adminAuth/business";
 import BusinessCard from "./_sections/BusinessCard";
 import PageTabs from "../_sections/PageTabs";
+import IndividualBusinessData from "./_sections/IndividualBusinessData";
 
 export default function UserListPage() {
   const [usersList, setUsersList] = useState<any[]>([]);
@@ -50,10 +51,10 @@ export default function UserListPage() {
   }, [debouncedFilters]);
 
   useEffect(() => {
-    console.log("data", data);
+    // console.log("data", data);
     if (debouncedFilters.page === 1) {
       setUsersList(data?.businesses || []);
-    } else if (data?.users?.length > 0) {
+    } else if (data?.businesses?.length > 0) {
       setUsersList((prev: any[]) => [...prev, ...data?.businesses]);
     }
   }, [data]);
@@ -230,28 +231,10 @@ export default function UserListPage() {
         </div>
         {/* Right Side  */}
         <div className="mt-12">
-          <IndividualUserData userData={selectedUserData} />
+          <IndividualBusinessData business={selectedUserData} />
         </div>
       </Wrapper>
     </>
-  );
-}
-
-function IndividualUserData({ userData }: any) {
-  if (!userData) {
-    return (
-      <div className="rounded bg-white p-4 shadow">
-        <p className="text-gray-500">Click on a User Name to see details</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="rounded bg-white p-4 shadow">
-      <pre className="whitespace-pre-wrap break-words text-sm text-gray-800">
-        {JSON.stringify(userData, null, 2)}
-      </pre>
-    </div>
   );
 }
 

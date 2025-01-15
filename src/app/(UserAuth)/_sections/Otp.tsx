@@ -1,14 +1,8 @@
 "use client";
 import React, { use, useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { FaRegEdit } from "react-icons/fa";
 import Button from "@/components/elements/Button";
-import {
-  useAddUserContact,
-  useResendUserOtp,
-  useVerifyUserContact,
-} from "@/app/_queryCall/userAuth/csr";
+import { useResendUserOtp, useVerifyUserContact } from "@/app/_queryCall/userAuth/csr";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
@@ -26,11 +20,17 @@ interface VerifyByOtpValue {
   type?: "email" | "phone";
   userIdentifier?: string;
   backToEdit?: () => void;
+  requestId?: string;
 }
 
-export default function Otp({ type, userIdentifier }: VerifyByOtpValue) {
+export default function Otp({ type, userIdentifier, requestId }: VerifyByOtpValue) {
   const route = useRouter();
-  const { verifyUserContact, error } = useVerifyUserContact();
+  const {
+    verifyUserContact,
+    data: verifyUserContactData,
+    loading,
+    error: verifyUserContactError,
+  } = useVerifyUserContact();
   const {
     resendOtp,
     data: resendOtpData,
@@ -48,20 +48,13 @@ export default function Otp({ type, userIdentifier }: VerifyByOtpValue) {
     route.push("/signup");
   };
 
-  const {
-    addUserContact,
-    data: addUserContactData,
-    loading: addUserContactLoading,
-    error: addUserContactError,
-  } = useAddUserContact();
-
   const handleResendOTP = async () => {
     let queryInput = {
       email: type === "email" ? userIdentifier : undefined,
       phone: type === "phone" ? userIdentifier : undefined,
     };
 
-    const result = await resendOtp(queryInput.email, queryInput.phone);
+    await resendOtp(queryInput.email, queryInput.phone);
     setUserOtp("");
     resetTimer();
   };
@@ -76,10 +69,11 @@ export default function Otp({ type, userIdentifier }: VerifyByOtpValue) {
         email: type === "email" ? userIdentifier : undefined,
         phone: type === "phone" ? userIdentifier : undefined,
       };
-      const result = await verifyUserContact({
+      await verifyUserContact({
         otp: queryInput.otp,
         email: queryInput.email,
         phone: queryInput.phone,
+        requestId: requestId,
       });
     } else {
       const fieldErrors: any = {};
@@ -139,15 +133,17 @@ export default function Otp({ type, userIdentifier }: VerifyByOtpValue) {
       >
         {isRunning ? `Resend OTP in ${formatTime(timeLeft)}` : "Resend OTP"}
       </p>
-      {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
+      {verifyUserContactError && (
+        <p className="text-center text-xs text-red-500">{verifyUserContactError?.message}</p>
+      )}
       {resendOtpError && (
         <p className="text-center text-xs text-red-500">{resendOtpError?.message}</p>
       )}
-      {addUserContactError && (
-        <p className="text-center text-xs text-red-500">{addUserContactError?.message}</p>
+      {resendOtpData && (
+        <p className="text-center text-xs text-green-500">{resendOtpData?.message}</p>
       )}
-      {addUserContactData && (
-        <p className="text-center text-xs text-green-500">{addUserContactData?.message}</p>
+      {verifyUserContactData && (
+        <p className="text-center text-xs text-green-500">{verifyUserContactData?.message}</p>
       )}
     </>
   );

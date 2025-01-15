@@ -28,7 +28,7 @@ export default function ServiceCard({
   const isLoggedIn = useAuthStore((state) => state?.userToken);
   return (
     <li className="relative grid w-full grid-cols-1 gap-5 rounded-lg bg-white p-3 shadow-xl md:grid-cols-12">
-      <div className="swiperStyle2 relative col-span-1 max-h-52 md:col-span-4">
+      <div className="swiperStyle2 relative col-span-1 max-h-52 min-h-48 md:col-span-4">
         <ServiceCardSlider id={slug} images={sliderImages} />
       </div>
       <div className="col-span-1 flex flex-col justify-between gap-2 md:col-span-8">

@@ -13,6 +13,7 @@ import Portal from "@/components/elements/Portal";
 import { useFilterBusiness } from "@/app/_queryCall/csr";
 import { AdBannerSlider } from "@/app/_sections/AdBannerSlider";
 import { banner } from "@/assets";
+import { useDebounce } from "@/utils/debounce";
 
 type Props = {
   params: {
@@ -33,7 +34,9 @@ export default function IndividualService({ params }: Props) {
     order: "asc",
     page: 1,
   });
-  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+  const [debouncedFilters, setDebouncedFilters] = useState(filtersApplied);
+
+  const [filteredBusinesses, setFilteredBusinesses] = useState<any[]>([]);
   const [filteredBusinessesCategory, setFilteredBusinessesCategory] = useState("");
   // Queries
   const {
@@ -44,27 +47,36 @@ export default function IndividualService({ params }: Props) {
     refetch,
   } = useFilterBusiness();
 
+  // Debounced function using custom hook
+  const debouncedUpdateFilters = useDebounce((newFilters: any) => {
+    setDebouncedFilters(newFilters);
+  }, 300);
+
+  // Effect to debounce filter updates
+  useEffect(() => {
+    debouncedUpdateFilters(filtersApplied);
+  }, [filtersApplied]);
+
+  useEffect(() => {
+    getAllRelatedBusinesses({
+      categorySlug: serviceSlug,
+      verified: debouncedFilters.verify,
+      minRating: debouncedFilters.rating,
+      sortBy: debouncedFilters.sortBy,
+      order: debouncedFilters.order,
+      page: debouncedFilters.page,
+    });
+  }, [debouncedFilters]);
+
   useEffect(() => {
     console.log(businessData, "businessData");
     setFilteredBusinessesCategory(businessData?.search?.categories[0]?.name);
-    setFilteredBusinesses(businessData?.search.businesses || []);
+    if (debouncedFilters.page === 1) {
+      setFilteredBusinesses(businessData?.search?.businesses || []);
+    } else if (businessData?.search?.businesses?.length > 0) {
+      setFilteredBusinesses((prev: any[]) => [...prev, ...businessData?.search?.businesses]);
+    }
   }, [businessData]);
-
-  useEffect(() => {
-    async function fetchFilteredData() {
-      await getAllRelatedBusinesses({
-        categorySlug: serviceSlug,
-        verified: filtersApplied.verify,
-        minRating: filtersApplied.rating,
-        sortBy: filtersApplied.sortBy,
-        order: filtersApplied.order,
-        page: filtersApplied.page,
-      });
-    }
-    if (filtersApplied) {
-      fetchFilteredData();
-    }
-  }, [filtersApplied]);
 
   const controlNavbar = () => {
     if (typeof window !== "undefined") {
@@ -96,6 +108,10 @@ export default function IndividualService({ params }: Props) {
       };
     }
   }, [lastScrollY]);
+
+  function handleLordMore() {
+    setFiltersApplied({ ...filtersApplied, page: (filtersApplied.page as number) + 1 });
+  }
 
   return (
     <Layout headerStyle={1} footerStyle={1}>
@@ -146,60 +162,74 @@ export default function IndividualService({ params }: Props) {
         )}
         {/* Service Cards  */}
         <ul className="col-span-12 space-y-5 md:col-span-8">
-          {filteredBusinesses?.map((item: any, i: number) => (
-            <ServiceCard
-              key={item?.id}
-              name={item?.name}
-              isVerified={item?.isBusinessVerified || ""}
-              city={
-                item?.businessDetails?.addresses.length > 0 &&
-                item?.businessDetails?.addresses[0]?.city
-              }
-              state={
-                item?.businessDetails?.addresses?.length > 0 &&
-                item?.businessDetails?.addresses[0]?.state
-              }
-              country={
-                item?.businessDetails?.addresses?.length > 0 &&
-                item?.businessDetails?.addresses[0]?.country
-              }
-              rating={item?.averageRating || ""}
-              review={item?.reviewCount || ""}
-              yearsOfExperience={item?.businessDetails?.experience || ""}
-              sliderImages={
-                (item?.businessDetails?.coverImages?.length > 0 &&
-                  item?.businessDetails?.coverImages?.map((item: any) => item?.url)) || [
-                  banner,
-                  banner,
-                ]
-              }
-              slug={item?.slug || ""}
-              tags={
-                item?.businessDetails?.categories?.length > 0
-                  ? [
-                      ...item.businessDetails.categories
-                        .slice(0, 4)
-                        .map((category: any) => category?.name),
-                      "Many More",
-                    ]
-                  : []
-              }
-              phoneNumber={
-                (item?.primaryContacts.length > 0 &&
-                  item?.primaryContacts?.map(
-                    (item: any) => item?.type === "PHONE" && item?.value,
-                  )) ||
-                []
-              }
-              whatsAppNumber={
-                (item?.primaryContacts.length > 0 &&
-                  item?.primaryContacts?.map(
-                    (item: any) => item?.type === "PHONE" && item?.value,
-                  )) ||
-                ""
-              }
-            />
-          ))}
+          {filteredBusinesses?.length > 0 ? (
+            filteredBusinesses?.map((item: any, i: number) => (
+              <ServiceCard
+                key={item?.id}
+                name={item?.name}
+                isVerified={item?.isBusinessVerified || ""}
+                city={
+                  item?.businessDetails?.addresses.length > 0 &&
+                  item?.businessDetails?.addresses[0]?.city
+                }
+                state={
+                  item?.businessDetails?.addresses?.length > 0 &&
+                  item?.businessDetails?.addresses[0]?.state
+                }
+                country={
+                  item?.businessDetails?.addresses?.length > 0 &&
+                  item?.businessDetails?.addresses[0]?.country
+                }
+                rating={item?.averageRating || ""}
+                review={item?.reviewCount || ""}
+                yearsOfExperience={item?.businessDetails?.experience || ""}
+                sliderImages={
+                  (item?.businessDetails?.coverImages?.length > 0 &&
+                    item?.businessDetails?.coverImages?.map((item: any) => item?.url)) || [
+                    banner,
+                    banner,
+                  ]
+                }
+                slug={item?.slug || ""}
+                tags={
+                  item?.businessDetails?.categories?.length > 0
+                    ? [
+                        ...item.businessDetails.categories
+                          .slice(0, 4)
+                          .map((category: any) => category?.name),
+                        "Many More",
+                      ]
+                    : []
+                }
+                phoneNumber={
+                  (item?.primaryContacts.length > 0 &&
+                    item?.primaryContacts?.map(
+                      (item: any) => item?.type === "PHONE" && item?.value,
+                    )) ||
+                  []
+                }
+                whatsAppNumber={
+                  (item?.primaryContacts.length > 0 &&
+                    item?.primaryContacts?.map(
+                      (item: any) => item?.type === "PHONE" && item?.value,
+                    )) ||
+                  ""
+                }
+              />
+            ))
+          ) : (
+            <p className="text-xl font-medium text-zinc-700">No Result Found</p>
+          )}
+          {businessData?.search?.total > filteredBusinesses?.length && (
+            <Button
+              variant="orange-gradient"
+              className="mt-5 w-full"
+              disabled={loading}
+              onClick={() => handleLordMore()}
+            >
+              {loading ? "Loading..." : "Load More"}
+            </Button>
+          )}
         </ul>
         {/* Ad Cards  */}
         <div className="space-y-5 max-md:hidden md:col-span-4">

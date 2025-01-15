@@ -8,16 +8,19 @@ type Props = {
     type: "email" | "phone";
     input: string;
   };
+  searchParams: {
+    requestId?: string;
+  };
 };
 
-export default function BusinessVerifyPage({ params }: Props) {
+export default function BusinessVerifyPage({ params, searchParams }: Props) {
   const input = decodeURIComponent(params.input);
   const type = params.type;
   return (
     <Layout headerStyle={2} footerStyle={1}>
       <Wrapper isTop={true} className="mb-10 flex items-center justify-center p-2">
         <div className="rounded-lg bg-white p-5 shadow-lg">
-          <VerifyByOtp type={type} userIdentifier={input} />
+          <VerifyByOtp type={type} userIdentifier={input} requestId={searchParams?.requestId} />
         </div>
       </Wrapper>
     </Layout>

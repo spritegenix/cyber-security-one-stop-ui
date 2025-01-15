@@ -24,9 +24,10 @@ interface VerifyByOtpValue {
   type?: "email" | "phone";
   userIdentifier?: string;
   backToEdit?: () => void;
+  requestId?: string;
 }
 
-export function VerifyByOtp({ type, userIdentifier }: VerifyByOtpValue) {
+export function VerifyByOtp({ type, userIdentifier, requestId }: VerifyByOtpValue) {
   const route = useRouter();
   const { verifyContact, data, loading, error } = useVerifyBusinessContact();
   const {
@@ -40,7 +41,7 @@ export function VerifyByOtp({ type, userIdentifier }: VerifyByOtpValue) {
     otp: "",
   });
   // Countdown timer hook
-  const { timeLeft, isRunning, resetTimer } = useCountdownTimer({ initialTime: 5 }); // seconds
+  const { timeLeft, isRunning, resetTimer } = useCountdownTimer({ initialTime: 60 }); // seconds
 
   const handleBackToEdit = () => {
     route.back();
@@ -60,7 +61,7 @@ export function VerifyByOtp({ type, userIdentifier }: VerifyByOtpValue) {
       phone: type === "phone" ? userIdentifier : undefined,
     };
 
-    const result = await addBusinessPrimaryContact(queryInput.email, queryInput.phone);
+    await resendOtp(queryInput.email, queryInput.phone);
     setUserOtp("");
     resetTimer();
   };
@@ -74,7 +75,12 @@ export function VerifyByOtp({ type, userIdentifier }: VerifyByOtpValue) {
         email: type === "email" ? userIdentifier : undefined,
         phone: type === "phone" ? userIdentifier : undefined,
       };
-      const result = await verifyContact(queryInput.otp, queryInput.email, queryInput.phone);
+      await verifyContact({
+        otp: queryInput.otp,
+        email: queryInput.email,
+        phone: queryInput.phone,
+        requestId: requestId,
+      });
     } else {
       const fieldErrors: any = {};
       parsedData.error.errors.forEach((error) => {
@@ -134,6 +140,9 @@ export function VerifyByOtp({ type, userIdentifier }: VerifyByOtpValue) {
         {isRunning ? `Resend OTP in ${formatTime(timeLeft)}` : "Resend OTP"}
       </p>
       {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
+      {resendOtpData && (
+        <p className="text-center text-xs text-green-500">{resendOtpData?.message}</p>
+      )}
       {resendOtpError && (
         <p className="text-center text-xs text-red-500">{resendOtpError?.message}</p>
       )}

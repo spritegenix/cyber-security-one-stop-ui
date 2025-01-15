@@ -42,16 +42,16 @@ export default function SignUp({ handleModelClose }: any) {
       email: data.email,
       phone: data.phoneNumber,
     });
-    if (result?.response) {
-      // Navigate to the next page upon success
-      const identifier = data.email || data.phoneNumber;
-      const type = data.email ? "email" : "phone";
-      router.push(`/user-verify/${type}/${identifier}`);
-      // router.prefetch(`/user-verify/${type}/${identifier}`);
-      window.location.href = `/user-verify/${type}/${identifier}`;
-    } else {
-      console.error("Signup Error:", result.error);
-    }
+    // if (result?.response) {
+    //   // Navigate to the next page upon success
+    //   const identifier = data.email || data.phoneNumber;
+    //   const type = data.email ? "email" : "phone";
+    //   router.push(`/user-verify/${type}/${identifier}`);
+    //   // router.prefetch(`/user-verify/${type}/${identifier}`);
+    //   window.location.href = `/user-verify/${type}/${identifier}`;
+    // } else {
+    //   console.error("Signup Error:", result.error);
+    // }
   };
 
   return (
@@ -105,23 +105,11 @@ export default function SignUp({ handleModelClose }: any) {
           </span>
         </div>
         {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
-
-        {/* <Input
-          {...register("confirmPassword")}
-          type="password"
-          label="Confirm Password"
-          placeholder=" "
-        />
-        {errors.confirmPassword && (
-          <p className="text-xs text-red-500">
-            {errors.confirmPassword.message}
-          </p>
-        )} */}
-
         <Button className="mt-5 w-full" type="submit">
           Generate OTP
         </Button>
       </form>
+      {data && <p className="text-xs text-green-500">{data.message}</p>}
       {error && <p className="text-xs text-red-500">{error.message}</p>}
       <Link
         href={"/login"}

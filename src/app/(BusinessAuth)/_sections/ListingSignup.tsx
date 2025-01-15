@@ -36,14 +36,7 @@ export default function ListingSignUp() {
       ? { email: data.loginIdentifier || undefined }
       : { phone: data.loginIdentifier || undefined };
 
-    const result = await businessSignup(identifier.email, identifier.phone);
-    if (result.response) {
-      // Navigate to the next page upon success
-      const input = identifier.email || identifier.phone;
-      router.push(`/listing-signup-with-otp-password/${type}/${input}`);
-    } else {
-      console.error("Signup Error:", result.error);
-    }
+    await businessSignup(identifier.email, identifier.phone);
   };
 
   return (

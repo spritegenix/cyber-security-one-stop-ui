@@ -5,6 +5,9 @@ import React from "react";
 export default function PageTabs() {
   return (
     <div className="flex flex-wrap gap-5">
+      <Button as={Link} href="/admin/dashboard" variant="orange">
+        Dashboard
+      </Button>
       <Button as={Link} href="/admin/user" variant="orange">
         Manage Users
       </Button>

@@ -13,9 +13,14 @@ interface ChangePasswordByOtpValue {
   type?: "email" | "phone";
   userIdentifier?: string;
   backToEdit?: () => void;
+  requestId?: string;
 }
 
-export function SignUpWithPasswordByOtp({ type, userIdentifier }: ChangePasswordByOtpValue) {
+export function SignUpWithPasswordByOtp({
+  type,
+  userIdentifier,
+  requestId,
+}: ChangePasswordByOtpValue) {
   const { verifyContact, data, loading, error } = useVerifyBusinessContact();
   useEffect(() => {
     console.log("data", data);
@@ -55,19 +60,13 @@ export function SignUpWithPasswordByOtp({ type, userIdentifier }: ChangePassword
       };
 
       try {
-        const { response, error } = await verifyContact(
+        await verifyContact(
           queryInput.otp,
           queryInput.email,
           queryInput.phone,
           queryInput.password,
+          requestId,
         );
-
-        if (response) {
-          console.log("Password changed successfully:", response.response);
-          router.push("/listing-login"); // Redirect to login or appropriate page
-        } else {
-          console.error("Error changing password:", error);
-        }
       } catch (err) {
         console.error("Unexpected error:", err);
       }

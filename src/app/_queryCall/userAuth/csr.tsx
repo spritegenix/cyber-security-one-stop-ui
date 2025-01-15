@@ -64,6 +64,8 @@ export const USER_SIGNUP = gql`
   mutation Mutation($name: String!, $password: String!, $email: String, $phone: String) {
     userSignup(name: $name, password: $password, email: $email, phone: $phone) {
       message
+      requestId
+      value
     }
   }
 `;
@@ -72,7 +74,15 @@ export const USER_SIGNUP = gql`
 export function useUserSignup() {
   const [signupMutation, { data, loading, error }] = useMutation(USER_SIGNUP, {
     onCompleted: (data: any) => {
-      // console.log("User signup completed:", data);
+      const value = data?.userSignup?.value || "";
+      const type = value.includes("@") ? "email" : value ? "phone" : "";
+
+      if (type && data?.userSignup?.requestId) {
+        const requestId = data.userSignup.requestId;
+        window.location.href = `/user-verify/${type}/${value.trim().replace(/\s/g, "")}?requestId=${requestId.trim().replace(/\s/g, "")}`;
+      } else {
+        console.error("Invalid data: Unable to redirect for user verification.");
+      }
     },
   });
 
@@ -104,19 +114,28 @@ export const RESEND_USER_OTP = gql`
   mutation ResendUserOtp($email: String, $phone: String) {
     resendUserOtp(email: $email, phone: $phone) {
       message
+      requestId
+      value
     }
   }
 `;
 
 export function useResendUserOtp() {
-  const route = useRouter();
-  const { setUserToken, setFirmToken, setTokenType } = useAuthStore();
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("user");
+  }, []);
   const [resendOtpMutation, { data, loading, error }] = useMutation(RESEND_USER_OTP, {
     onCompleted: (data: any) => {
-      // console.log("Resend OTP completed:", data);
-      if (data?.resendUserOtp) {
-        // Handle the message response or show a success message
-        alert(data.resendUserOtp.message);
+      console.log(data, "userSignup data");
+      const value = data?.resendUserOtp?.value || "";
+      const type = value.includes("@") ? "email" : value ? "phone" : "";
+
+      if (type && data?.resendUserOtp?.requestId) {
+        const requestId = data.resendUserOtp?.requestId;
+        window.location.href = `/user-verify/${type}/${value.trim().replace(/\s/g, "")}?requestId=${requestId.trim().replace(/\s/g, "")}`;
+      } else {
+        console.error("Invalid data: Unable to redirect for user verification.");
       }
     },
   });
@@ -139,8 +158,8 @@ export function useResendUserOtp() {
 }
 
 export const VERIFY_USER_CONTACT = gql`
-  mutation Mutation($email: String, $phone: String, $otp: String!) {
-    verifyUserContact(email: $email, phone: $phone, otp: $otp) {
+  mutation Mutation($email: String, $phone: String, $otp: String!, $requestId: String!) {
+    verifyUserContact(email: $email, phone: $phone, otp: $otp, requestId: $requestId) {
       user {
         id
         name
@@ -173,14 +192,21 @@ export function useVerifyUserContact() {
     email,
     phone,
     otp,
+    requestId,
   }: {
     email: string | undefined;
     phone: string | undefined;
     otp: string;
+    requestId?: string;
   }) => {
     try {
       const { data } = await verifyMutation({
-        variables: { email: email || undefined, phone: phone || undefined, otp },
+        variables: {
+          email: email || undefined,
+          phone: phone || undefined,
+          otp,
+          requestId: requestId || undefined,
+        },
       });
       return { response: data, error: null };
     } catch (err) {
@@ -195,15 +221,29 @@ export const ADD_USER_CONTACT = gql`
   mutation Mutation($email: String, $phone: String) {
     addUserContact(email: $email, phone: $phone) {
       message
+      value
+      requestId
     }
   }
 `;
 
 // Add User Contact with Email or Phone
 export function useAddUserContact() {
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("user");
+  }, []);
   const [addContactMutation, { data, loading, error }] = useMutation(ADD_USER_CONTACT, {
     onCompleted: (data: any) => {
-      // console.log("User contact added:", data);
+      const value = data?.addUserContact?.value || "";
+      const type = value.includes("@") ? "email" : value ? "phone" : "";
+
+      if (type && data?.addUserContact?.requestId) {
+        const requestId = data.addUserContact.requestId;
+        window.location.href = `/user-verify/${type}/${value.trim().replace(/\s/g, "")}?requestId=${requestId.trim().replace(/\s/g, "")}`;
+      } else {
+        console.error("Invalid data: Unable to redirect for user verification.");
+      }
     },
   });
 
@@ -225,15 +265,16 @@ export const FORGET_USER_PASSWORD = gql`
   mutation ForgetUserPassword($email: String, $phone: String) {
     forgetUserPassword(email: $email, phone: $phone) {
       message
+      requestId
     }
   }
 `;
 
 export function useForgetUserPassword() {
   const [forgetPasswordMutation, { data, loading, error }] = useMutation(FORGET_USER_PASSWORD, {
-    onCompleted: (data: any) => {
-      // console.log("Forgot password completed:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   console.log("Forgot password completed:", data);
+    // },
   });
 
   const forgetUserPassword = async ({ email, phone }: { email?: string; phone?: string }) => {
@@ -251,8 +292,20 @@ export function useForgetUserPassword() {
 }
 
 export const CHANGE_USER_PASSWORD = gql`
-  mutation ChangeUserPassword($password: String!, $otp: String!, $phone: String, $email: String) {
-    changeUserPassword(password: $password, otp: $otp, phone: $phone, email: $email) {
+  mutation ChangeUserPassword(
+    $password: String!
+    $otp: String!
+    $phone: String
+    $email: String
+    $requestId: String!
+  ) {
+    changeUserPassword(
+      password: $password
+      otp: $otp
+      phone: $phone
+      email: $email
+      requestId: $requestId
+    ) {
       token
       slug
       id
@@ -262,9 +315,12 @@ export const CHANGE_USER_PASSWORD = gql`
 `;
 
 export function useChangeUserPassword() {
+  const router = useRouter();
   const [changePasswordMutation, { data, loading, error }] = useMutation(CHANGE_USER_PASSWORD, {
     onCompleted: (data: any) => {
-      // console.log("Password changed successfully:", data);
+      if (data) {
+        window.location.href = `/login`;
+      }
     },
   });
 
@@ -273,15 +329,23 @@ export function useChangeUserPassword() {
     otp,
     phone,
     email,
+    requestId,
   }: {
     password: string;
     otp: string;
     phone?: string;
     email?: string;
+    requestId?: string;
   }) => {
     try {
       const response = await changePasswordMutation({
-        variables: { password, otp, phone: phone || undefined, email: email || undefined },
+        variables: {
+          password,
+          otp,
+          phone: phone || undefined,
+          email: email || undefined,
+          requestId: requestId,
+        },
       });
       return { response: response.data, error: null };
     } catch (err) {
@@ -327,8 +391,8 @@ export const UPDATE_USER_DETAILS = gql`
     $hideDetails: Boolean
     $avatar: Upload
     $addresses: [UserAddressInput!]! #   "addresses": [
-    #     "toDelete": null,
-  ) #     {
+    #     {
+  ) #     "toDelete": null,
   #     "street": null,
   #     "state": null,
   #     "pincode": null,
@@ -412,7 +476,6 @@ export const GET_USER_ME = gql`
         order
         verifiedAt
         message
-        token
         user {
           id
           slug
@@ -442,7 +505,6 @@ export const GET_USER_ME = gql`
         pincode
         state
         message
-        token
         user {
           slug
           id
@@ -463,7 +525,6 @@ export const GET_USER_ME = gql`
         deletedAt
         updatedAt
         message
-        token
         user {
           id
           slug
@@ -490,7 +551,6 @@ export const GET_USER_ME = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       feedbacks {
         id

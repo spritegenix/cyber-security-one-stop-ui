@@ -19,7 +19,7 @@ type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 export default function ForgotPassword({ type }: Type) {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [userIdentifier, setUserIdentifier] = useState("");
-  const { forgetUserPassword, loading, error } = useForgetUserPassword(); // Use the hook
+  const { forgetUserPassword, data, loading, error } = useForgetUserPassword(); // Use the hook
 
   const {
     register,
@@ -89,6 +89,7 @@ export default function ForgotPassword({ type }: Type) {
           type={type}
           userIdentifier={userIdentifier}
           backToEdit={() => setIsOtpSent(false)}
+          requestId={data?.requestId}
         />
       )}
 

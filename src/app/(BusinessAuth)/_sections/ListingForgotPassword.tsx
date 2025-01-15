@@ -83,11 +83,14 @@ export default function ListingForgotPassword({ type }: Type) {
           <Button className="mt-5 w-full" type="submit">
             Send OTP
           </Button>
+          {data && <p className="text-center text-xs text-green-500">{data?.message}</p>}
+          {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
         </form>
       ) : (
         <ChangePasswordByOtp
           type={type}
           userIdentifier={userIdentifier}
+          requestId={data?.requestId}
           backToEdit={() => setIsOtpSent(false)}
         />
       )}
