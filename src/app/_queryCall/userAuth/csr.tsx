@@ -315,7 +315,6 @@ export const CHANGE_USER_PASSWORD = gql`
 `;
 
 export function useChangeUserPassword() {
-  const router = useRouter();
   const [changePasswordMutation, { data, loading, error }] = useMutation(CHANGE_USER_PASSWORD, {
     onCompleted: (data: any) => {
       if (data) {
@@ -391,8 +390,8 @@ export const UPDATE_USER_DETAILS = gql`
     $hideDetails: Boolean
     $avatar: Upload
     $addresses: [UserAddressInput!]! #   "addresses": [
-    #     {
-  ) #     "toDelete": null,
+    #     "toDelete": null,
+  ) #     {
   #     "street": null,
   #     "state": null,
   #     "pincode": null,

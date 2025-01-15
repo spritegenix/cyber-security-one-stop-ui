@@ -60,13 +60,13 @@ export function SignUpWithPasswordByOtp({
       };
 
       try {
-        await verifyContact(
-          queryInput.otp,
-          queryInput.email,
-          queryInput.phone,
-          queryInput.password,
-          requestId,
-        );
+        await verifyContact({
+          otp: queryInput.otp,
+          email: queryInput.email,
+          phone: queryInput.phone,
+          requestId: requestId,
+          password: queryInput.password,
+        });
       } catch (err) {
         console.error("Unexpected error:", err);
       }
