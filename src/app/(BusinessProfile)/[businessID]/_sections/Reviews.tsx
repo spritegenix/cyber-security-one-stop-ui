@@ -42,7 +42,7 @@ export default function Reviews() {
   });
   const rating = watch("rating") || 0;
   const onSubmit = (data: ReviewFormData) => {
-    if (!loggedUser.jwt) {
+    if (!isLogin) {
       router.push("/login");
       return;
     }
@@ -56,7 +56,7 @@ export default function Reviews() {
     setValue("rating", rating, { shouldValidate: true });
   };
 
-  if (!loggedUser.jwt && loggedUser.review) {
+  if (!isLogin) {
     return (
       <div className="max-w-screen-sm space-y-5">
         <p className="text-xl">You must log in to provide a review.</p>
