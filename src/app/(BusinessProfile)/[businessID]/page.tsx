@@ -231,6 +231,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
           )}
           {/* Rating and Reviews */}
           <ReviewsSection
+            businessSlug={businessID}
             className="hidden md:block"
             reviews={business?.getBusinessById?.reviews || []}
           />
@@ -361,7 +362,11 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
           </div>
         </aside>
         {/* Rating and Reviews */}
-        <ReviewsSection className="md:hidden" reviews={business?.getBusinessById?.reviews || []} />
+        <ReviewsSection
+          className="md:hidden"
+          reviews={business?.getBusinessById?.reviews || []}
+          businessSlug={businessID}
+        />
       </Wrapper>
     </Layout>
   );

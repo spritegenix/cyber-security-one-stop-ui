@@ -50,7 +50,7 @@ export default function Reviews({ userType }: any) {
   } = useGetUserFirmFeedback({ userType });
   useEffect(() => {
     if (feedbackData) {
-      console.log(feedbackData, "feedbackData");
+      // console.log(feedbackData, "feedbackData");
       reset({
         ...feedbackData,
         id: feedbackData?.feedbacks[0]?.id,
@@ -61,10 +61,6 @@ export default function Reviews({ userType }: any) {
   }, [feedbackData, reset]);
   const { submitFeedback, data, loading, error } = useFeedbackMutation({ userType });
 
-  useEffect(() => {
-    console.log(data, "data");
-    console.log(error, "error");
-  }, [data, error]);
   const onSubmit = async (data: ReviewFormData) => {
     if (!isLogin) {
       router.push(userType === "firm" ? "/listing-login" : "/login");

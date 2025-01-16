@@ -109,14 +109,16 @@ function ReviewsCard({
           </div>
         )}
         <div className="space-y-2">
-          <h6 className="text-lg font-medium">{userName}</h6>
+          <Link href={slug ? `/${slug}` : "#"} className="text-lg font-medium hover:text-bg1">
+            {userName}
+          </Link>
           <RatingInput totalStars={5} initialRating={rating} className="text-2xl" disabled />
         </div>
       </div>
       <p className="mt-3">{reviewText}</p>
       {/* Edit Button */}
       <Link
-        href={`/${slug} || "#`}
+        href={slug ? `/${slug}` : "#"}
         type="button"
         className="absolute right-1 top-1 flex size-8 items-center justify-center rounded-full p-1 text-2xl text-bg1 transition-all duration-300 hover:bg-bg1 hover:text-white"
       >
