@@ -13,8 +13,8 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import useIsMobile from "@/customHooks/useIsMobile";
 import { useFetchAllAdBanners } from "../_queryCall/csr";
 export const AdBannerSlider = ({
-  mobileHeight = "",
-  desktopHeight = "",
+  mobileHeight = "min-h-44",
+  desktopHeight = "min-h-32",
   onlyMobile = false,
 }: any) => {
   const uniqueId = "adBanner123";
@@ -38,7 +38,7 @@ export const AdBannerSlider = ({
   };
   const isMobile = useIsMobile();
   return (
-    <>
+    <div className="swiperStyle2 relative">
       {!loading ? (
         <Swiper
           {...swiperOptions}
@@ -59,7 +59,7 @@ export const AdBannerSlider = ({
               ))}
         </Swiper>
       ) : (
-        <AdCardSkeleton className={`${isMobile ? mobileHeight : desktopHeight} w-full`} />
+        <AdCardSkeleton className={`${isMobile ? mobileHeight : desktopHeight}`} />
       )}
       {/* Add navigation buttons */}
       {!loading && (
@@ -76,7 +76,7 @@ export const AdBannerSlider = ({
           <GrPrevious />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
@@ -110,8 +110,8 @@ function AdCardSkeleton({ className }: any) {
     <div
       className={`flex ${className} w-full animate-pulse justify-center overflow-hidden rounded-xl bg-gray-100`}
     >
-      <div className="flex h-full w-full items-center justify-center bg-gray-300">
-        <div className="h-full w-3/4 bg-gray-200"></div>
+      <div className={`flex ${className} w-full items-center justify-center bg-gray-300`}>
+        <div className={`${className} w-3/4 bg-gray-200`}></div>
       </div>
     </div>
   );

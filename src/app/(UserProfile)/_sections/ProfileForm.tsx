@@ -61,7 +61,7 @@ export function ProfileForm({ defaultValues }: any) {
 
   useEffect(() => {
     if (defaultValues) {
-      console.log(defaultValues, "BasicInformationForm");
+      // console.log(defaultValues, "BasicInformationForm");
       setIsEmailVerified(
         defaultValues?.contacts?.find((contact: any) => contact?.type === "EMAIL")?.isVerified,
       );
@@ -118,19 +118,11 @@ export function ProfileForm({ defaultValues }: any) {
   } = useAddUserContact();
 
   const handlePrimaryContact = async (contact: any) => {
-    const type = contact.includes("@") ? "email" : "phone";
     const identifier = contact.includes("@")
       ? { email: contact || undefined }
       : { phone: contact || undefined };
 
-    const result = await addUserContact(identifier.email, identifier.phone);
-    if (result.response) {
-      // Navigate to the next page upon success
-      const input = identifier.email || identifier.phone;
-      router.push(`/user-verify/${type}/${input}`);
-    } else {
-      console.error("Signup Error:", result.error);
-    }
+    await addUserContact(identifier.email, identifier.phone);
   };
 
   return (
@@ -160,13 +152,14 @@ export function ProfileForm({ defaultValues }: any) {
             <VerifyButton
               isVerified={isPhoneVerified}
               onClick={() => handlePrimaryContact(phoneNumber)}
-              // href={`/user-verify/phone/${phoneNumber}`}
               disabledValidation={phoneNumber === "" || phoneNumber === undefined}
             />
           </div>
           {errors.phoneNumber && (
             <p className="text-xs text-red-500">{errors.phoneNumber.message}</p>
           )}
+          {addContactError && <p className="text-xs text-red-500">{addContactError?.message}</p>}
+          {addContactData && <p className="text-xs text-green-500">{addContactData?.message}</p>}
         </div>
         {/* Email  */}
         <div>

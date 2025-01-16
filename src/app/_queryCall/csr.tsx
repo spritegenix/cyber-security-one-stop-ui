@@ -110,7 +110,6 @@ export const useSearchAutoSuggestion = () => {
     limit?: number;
   }) => {
     try {
-      // Execute the query with variables
       await fetchSuggestions({
         variables: {
           search,
@@ -323,21 +322,32 @@ export const useFilterBusiness = () => {
   const { location } = useLocationStore();
 
   const [fetchSuggestions, { data, loading, error, refetch }] = useLazyQuery(FILTER_BUSINESS, {
-    fetchPolicy: "network-only",
+    // onCompleted: (data) => {
+    //   console.log(data, "Businesses fetched successfully:");
+    // },
   });
 
   const getAllRelatedBusinesses = async ({
-    categorySlug,
-    verified,
-    minRating,
+    categorySlug = undefined,
+    verified = false,
+    minRating = undefined,
     sortBy = "alphabetical",
     order = "desc",
     page = 1,
     limit = 10,
-  }: any) => {
+  }: {
+    categorySlug?: string;
+    verified?: boolean;
+    minRating?: number;
+    sortBy?: string;
+    order?: string;
+    page?: number;
+    limit?: number;
+  }) => {
     try {
       await fetchSuggestions({
         variables: {
+          categorySlug,
           page,
           limit,
           city: location?.city,
@@ -348,17 +358,8 @@ export const useFilterBusiness = () => {
           minRating,
           sortBy,
           order,
-          categorySlug,
         },
       });
-
-      // Check if data is undefined and refetch if needed
-      if (!data) {
-        console.warn("Data is undefined. Attempting refetch...");
-        const refetchedData = await refetch();
-        return { searchResults: refetchedData?.data?.search, loading, error: null, refetch };
-      }
-
       return { searchResults: data?.search, loading, error, refetch };
     } catch (err) {
       console.error("Error fetching suggestions:", err);

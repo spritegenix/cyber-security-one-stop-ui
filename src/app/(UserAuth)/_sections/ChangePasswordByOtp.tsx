@@ -13,12 +13,14 @@ interface ChangePasswordByOtpValue {
   type?: "email" | "phone";
   userIdentifier?: string;
   backToEdit?: () => void;
+  requestId?: string;
 }
 
 export function ChangePasswordByOtp({
   type,
   userIdentifier,
   backToEdit,
+  requestId,
 }: ChangePasswordByOtpValue) {
   const [userOtp, setUserOtp] = useState("");
   const [password, setPassword] = useState({
@@ -32,7 +34,7 @@ export function ChangePasswordByOtp({
     confirmPassword: "",
   });
 
-  const { changeUserPassword, loading, error } = useChangeUserPassword();
+  const { changeUserPassword, data, loading, error } = useChangeUserPassword();
 
   const handleSubmit = async () => {
     const parsedData = changePasswordSchema.safeParse({
@@ -48,6 +50,7 @@ export function ChangePasswordByOtp({
           password: parsedData.data.password,
           email: type === "email" ? userIdentifier : undefined,
           phone: type === "phone" ? userIdentifier : undefined,
+          requestId: requestId,
         });
 
         if (response) {
@@ -126,9 +129,11 @@ export function ChangePasswordByOtp({
       />
       {errors.confirmPassword && <p className="text-xs text-red-500">{errors.confirmPassword}</p>}
 
-      <Button className="mt-5 w-full" onClick={handleSubmit}>
-        Update Password
+      <Button className="mt-5 w-full" onClick={handleSubmit} loading={loading} disabled={loading}>
+        {loading ? "Updating Password..." : "Update Password"}
       </Button>
+      {data && <p className="text-center text-xs text-green-500">{data?.message}</p>}
+      {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
     </>
   );
 }

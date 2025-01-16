@@ -11,6 +11,7 @@ export const BUSINESS_SIGNUP = gql`
     businessSignup(email: $email, phone: $phone) {
       value
       message
+      requestId
     }
   }
 `;
@@ -19,7 +20,15 @@ export const BUSINESS_SIGNUP = gql`
 export function useBusinessSignup() {
   const [signupMutation, { data, loading, error }] = useMutation(BUSINESS_SIGNUP, {
     onCompleted: (data: any) => {
-      // console.log("Business signup completed:", data);
+      const value = data?.businessSignup?.value || "";
+      const type = value.includes("@") ? "email" : value ? "phone" : "";
+
+      if (type && data?.businessSignup?.requestId) {
+        const requestId = data.businessSignup.requestId;
+        window.location.href = `/listing-signup-with-otp-password/${type}/${value.trim().replace(/\s/g, "")}?requestId=${requestId.trim().replace(/\s/g, "")}`;
+      } else {
+        console.error("Invalid data: Unable to redirect for user verification.");
+      }
     },
   });
   const businessSignup = async (email: string | undefined, phone: string | undefined) => {
@@ -40,6 +49,8 @@ export const ADD_BUSINESS_PRIMARY_CONTACT = gql`
   mutation Mutation($email: String, $phone: String) {
     addBusinessPrimaryContact(email: $email, phone: $phone) {
       message
+      requestId
+      value
     }
   }
 `;
@@ -48,9 +59,17 @@ export function useAddBusinessPrimaryContact() {
   const [addBusinessPrimaryContactMutation, { data, loading, error }] = useMutation(
     ADD_BUSINESS_PRIMARY_CONTACT,
     {
-      // onCompleted: (data: any) => {
-      //   console.log("Business signup completed:", data);
-      // },
+      onCompleted: (data: any) => {
+        const value = data?.addBusinessPrimaryContact?.value || "";
+        const type = value.includes("@") ? "email" : value ? "phone" : "";
+
+        if (type && data?.addBusinessPrimaryContact?.requestId) {
+          const requestId = data.addBusinessPrimaryContact.requestId;
+          window.location.href = `/listing-verify/${type}/${value.trim().replace(/\s/g, "")}?requestId=${requestId.trim().replace(/\s/g, "")}`;
+        } else {
+          console.error("Invalid data: Unable to redirect for user verification.");
+        }
+      },
     },
   );
   const addBusinessPrimaryContact = async (
@@ -74,6 +93,8 @@ export const RESEND_BUSINESS_OTP = gql`
   mutation ResendBusinessOtp($email: String, $phone: String) {
     resendBusinessOtp(email: $email, phone: $phone) {
       message
+      requestId
+      value
     }
   }
 `;
@@ -88,9 +109,13 @@ export function useResendBusinessOtp() {
     RESEND_BUSINESS_OTP, // Define this GraphQL mutation in your query file
     {
       onCompleted: (data: any) => {
-        console.log("OTP resend completed:", data);
-        if (data && data?.resendBusinessOtp) {
-          // Handle any side effects after OTP resend, like showing a success message
+        const value = data?.resendBusinessOtp?.value || "";
+        const type = value.includes("@") ? "email" : value ? "phone" : "";
+        if (type && data?.resendBusinessOtp?.requestId) {
+          const requestId = data.resendBusinessOtp?.requestId;
+          window.location.href = `/listing-verify/${type}/${value.trim().replace(/\s/g, "")}?requestId=${requestId.trim().replace(/\s/g, "")}`;
+        } else {
+          console.error("Invalid data: Unable to redirect for user verification.");
         }
       },
     },
@@ -115,8 +140,20 @@ export function useResendBusinessOtp() {
 }
 
 export const VERIFY_BUSINESS_PRIMARY_CONTACT = gql`
-  mutation Mutation($otp: String!, $email: String, $password: String, $phone: String) {
-    verifyBusinessPrimaryContact(otp: $otp, email: $email, password: $password, phone: $phone) {
+  mutation Mutation(
+    $otp: String!
+    $email: String
+    $password: String
+    $phone: String
+    $requestId: String!
+  ) {
+    verifyBusinessPrimaryContact(
+      otp: $otp
+      email: $email
+      password: $password
+      phone: $phone
+      requestId: $requestId
+    ) {
       business {
         id
         name
@@ -131,12 +168,12 @@ export const VERIFY_BUSINESS_PRIMARY_CONTACT = gql`
 // After signup, verify contact and get token
 export function useVerifyBusinessContact() {
   const route = useRouter();
-  const { setUserToken, setFirmToken, setTokenType } = useAuthStore();
+  const { setFirmToken, setTokenType } = useAuthStore();
   const [verifyContactMutation, { data, loading, error }] = useMutation(
     VERIFY_BUSINESS_PRIMARY_CONTACT,
     {
       onCompleted: (data: any) => {
-        console.log("Business signup completed:", data);
+        // console.log("Business signup completed:", data);
         if (data && data?.verifyBusinessPrimaryContact) {
           const token = data?.verifyBusinessPrimaryContact?.token;
           setFirmToken(token);
@@ -148,15 +185,29 @@ export function useVerifyBusinessContact() {
     },
   );
 
-  const verifyContact = async (
-    otp: string,
-    email: string | undefined = undefined,
-    phone: string | undefined = undefined,
-    password: string | undefined = undefined,
-  ) => {
+  const verifyContact = async ({
+    otp,
+    email = undefined,
+    phone = undefined,
+    requestId = undefined,
+    password = undefined,
+  }: {
+    otp: string;
+    email?: string | undefined;
+    phone?: string | undefined;
+    requestId?: string | undefined;
+    password?: string | undefined;
+  }) => {
     try {
+      console.log(requestId, "verifyContact");
       const { data } = await verifyContactMutation({
-        variables: { otp, email, phone, password },
+        variables: {
+          otp: otp,
+          email: email,
+          phone: phone,
+          password: password,
+          requestId: requestId,
+        },
       });
 
       return { response: data, error: null };
@@ -277,7 +328,6 @@ export const UPDATE_BUSINESS_DETAILS = gql`
     manageBusinessWebsite(websites: $websites) {
       id
       message
-      token
     }
     manageBusinessOperatingHours(operatingHours: $operatingHours) {
       id
@@ -598,6 +648,7 @@ export const FORGET_BUSINESS_PASSWORD = gql`
   mutation ForgetBusinessPassword($email: String, $phone: String) {
     forgetBusinessPassword(email: $email, phone: $phone) {
       message
+      requestId
     }
   }
 `;
@@ -647,8 +698,15 @@ export const CHANGE_BUSINESS_PASSWORD = gql`
     $otp: String!
     $email: String
     $phone: String
+    $requestId: String!
   ) {
-    changeBusinessPassword(password: $password, otp: $otp, email: $email, phone: $phone) {
+    changeBusinessPassword(
+      password: $password
+      otp: $otp
+      email: $email
+      phone: $phone
+      requestId: $requestId
+    ) {
       token
       slug
       id
@@ -665,8 +723,9 @@ export function useChangeBusinessPassword() {
   }, []);
   const [changePasswordMutation, { data, loading, error }] = useMutation(CHANGE_BUSINESS_PASSWORD, {
     onCompleted: (data: any) => {
-      // Optional: Add logic here for what to do when the mutation is successful
-      // console.log("Change business password completed:", data);
+      if (data) {
+        window.location.href = `/listing-login`;
+      }
     },
   });
 
@@ -675,11 +734,13 @@ export function useChangeBusinessPassword() {
     otp,
     email,
     phone,
+    requestId,
   }: {
     password: string;
     otp: string;
     email?: string;
     phone?: string;
+    requestId?: string;
   }) => {
     try {
       const response = await changePasswordMutation({
@@ -688,6 +749,7 @@ export function useChangeBusinessPassword() {
           otp,
           email: email || undefined,
           phone: phone || undefined,
+          requestId: requestId,
         },
       });
       return { response: response?.data, error: null };

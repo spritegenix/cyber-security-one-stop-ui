@@ -33,7 +33,7 @@ export default function ListingForgotPassword({ type }: Type) {
     const identifier = type === "email" ? data.email : data.phoneNumber;
 
     if (identifier) {
-      console.log("Form data submitted:", identifier);
+      // console.log("Form data submitted:", identifier);
 
       // Call the forgetBusinessPassword mutation
       const { response, error } = await forgetBusinessPassword({
@@ -42,7 +42,7 @@ export default function ListingForgotPassword({ type }: Type) {
       });
 
       if (response) {
-        console.log("OTP sent successfully:", response.message);
+        // console.log("OTP sent successfully:", response.message);
         setUserIdentifier(identifier);
         setIsOtpSent(true);
       } else {
@@ -83,11 +83,14 @@ export default function ListingForgotPassword({ type }: Type) {
           <Button className="mt-5 w-full" type="submit">
             Send OTP
           </Button>
+          {data && <p className="text-center text-xs text-green-500">{data?.message}</p>}
+          {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
         </form>
       ) : (
         <ChangePasswordByOtp
           type={type}
           userIdentifier={userIdentifier}
+          requestId={data?.requestId}
           backToEdit={() => setIsOtpSent(false)}
         />
       )}

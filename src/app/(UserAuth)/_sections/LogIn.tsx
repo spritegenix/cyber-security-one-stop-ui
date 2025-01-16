@@ -43,15 +43,18 @@ export default function LogIn({ handleModelClose }: any) {
     const identifier = formData.loginIdentifier.includes("@")
       ? { email: formData.loginIdentifier || undefined }
       : { phone: formData.loginIdentifier || undefined };
-    const response: any = await userLogin({
+    await userLogin({
       password: formData.password,
       email: identifier.email,
       phone: identifier.phone,
     });
-
-    if (response?.response) handleModelClose();
     router.push("/");
   };
+
+  useEffect(() => {
+    if (data) handleModelClose();
+  }, [data]);
+
   return (
     <div className="flex h-full flex-col items-center justify-center overflow-y-auto bg-white px-5 py-5">
       <h2 className="mb-5 text-2xl font-bold">LogIn Now</h2>

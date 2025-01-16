@@ -157,14 +157,7 @@ export default function BasicInformationForm({ data, refetchData }: any) {
       ? { email: contact || undefined }
       : { phone: contact || undefined };
 
-    const result = await addBusinessPrimaryContact(identifier.email, identifier.phone);
-    if (result.response) {
-      // Navigate to the next page upon success
-      const input = identifier.email || identifier.phone;
-      router.push(`/listing-verify/${type}/${input}`);
-    } else {
-      console.error("Signup Error:", result.error);
-    }
+    await addBusinessPrimaryContact(identifier.email, identifier.phone);
   };
 
   return (
@@ -199,6 +192,9 @@ export default function BasicInformationForm({ data, refetchData }: any) {
               disabledValidation={phoneNumber === "" || phoneNumber === undefined}
             />
           </div>
+          {addBusinessPrimaryContactData && (
+            <p className="text-xs text-green-500">{addBusinessPrimaryContactData?.message}</p>
+          )}
           {errors.phoneNumber && (
             <p className="text-xs text-red-500">{errors.phoneNumber.message}</p>
           )}

@@ -43,6 +43,7 @@ export const ADMIN_ALL_BUSINESSES = gql`
         id
         name
         slug
+        isBusinessVerified
         primaryContacts {
           type
           value
@@ -82,21 +83,40 @@ export const ADMIN_ALL_BUSINESSES = gql`
 
 export function useAdminAllBusinesses() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
   useEffect(() => {
     setTokenType("admin");
   }, []);
-  const [fetchAdminAllBusinesses, { data, loading, error }] = useLazyQuery(ADMIN_ALL_BUSINESSES, {
-    onCompleted: (data: any) => {
+  const [fetchAdminAllBusinesses, { data, loading, error, refetch }] = useLazyQuery(
+    ADMIN_ALL_BUSINESSES,
+    {
+      // onCompleted: (data: any) => {
       // console.log("Businesses fetched successfully:", data);
+      // },
     },
-  });
+  );
 
-  const adminAllBusinesses = async (variables: {
+  const adminAllBusinesses = async ({
+    name = undefined,
+    email = undefined,
+    phone = undefined,
+    isBusinessVerified = undefined,
+    subscriptionId = undefined,
+    hasSubscription = undefined,
+    categoryId = undefined,
+    averageRatingMin = undefined,
+    averageRatingMax = undefined,
+    isListed = undefined,
+    createdAtStart = undefined,
+    createdAtEnd = undefined,
+    page = 1,
+    limit = 5,
+    sortBy = undefined,
+    sortOrder = undefined,
+  }: {
     name?: string;
     email?: string;
     phone?: string;
-    isBusinessVerified?: boolean;
+    isBusinessVerified?: boolean | undefined;
     subscriptionId?: string;
     hasSubscription?: boolean;
     categoryId?: string;
@@ -107,12 +127,31 @@ export function useAdminAllBusinesses() {
     createdAtEnd?: string;
     page?: number;
     limit?: number;
-    sortBy?: string;
-    sortOrder?: string;
+    sortBy?: "alphabetical" | "createdAt" | "updatedAt";
+    sortOrder?: "asc" | "desc";
   }) => {
     try {
-      const response = await fetchAdminAllBusinesses({ variables });
-      return { response: response.data, error: null };
+      const response = await fetchAdminAllBusinesses({
+        variables: {
+          name,
+          email,
+          phone,
+          isBusinessVerified,
+          subscriptionId,
+          hasSubscription,
+          categoryId,
+          averageRatingMin,
+          averageRatingMax,
+          isListed,
+          createdAtStart,
+          createdAtEnd,
+          page,
+          limit,
+          sortBy,
+          sortOrder,
+        },
+      });
+      return { response: response?.data, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
@@ -123,12 +162,13 @@ export function useAdminAllBusinesses() {
     data: data?.adminAllBusinesses,
     loading,
     error,
+    refetch,
   };
 }
 
 export const ADMIN_GET_BUSINESS_BY_ID = gql`
-  query AdminGetBusinessById($businessSlug: ID) {
-    adminGetBusinessById(businessSlug: $businessSlug) {
+  query AdminGetBusinessById($businessSlug: ID, $businessId: ID) {
+    adminGetBusinessById(businessSlug: $businessSlug, businessId: $businessId) {
       id
       name
       slug
@@ -388,19 +428,21 @@ export function useAdminGetBusinessById() {
   useEffect(() => {
     setTokenType("admin");
   }, []);
-  const [fetchAdminGetBusinessById, { data, loading, error }] = useLazyQuery(
-    ADMIN_GET_BUSINESS_BY_ID,
-    {
-      onCompleted: (data: any) => {
-        // console.log("Business details fetched successfully:", data);
-      },
-    },
-  );
+  const [fetchAdminGetBusinessById, { data, loading, error }] =
+    useLazyQuery(ADMIN_GET_BUSINESS_BY_ID);
 
-  const adminGetBusinessById = async (businessSlug: string) => {
+  const adminGetBusinessById = async ({
+    businessId = undefined,
+    businessSlug = undefined,
+  }: {
+    businessId?: string;
+    businessSlug?: string;
+  }) => {
     try {
-      const response = await fetchAdminGetBusinessById({ variables: { businessSlug } });
-      return { response: response.data, error: null };
+      const response = await fetchAdminGetBusinessById({
+        variables: { businessId: businessId, businessSlug: businessSlug },
+      });
+      return { response: response?.data, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
@@ -433,17 +475,18 @@ export function useAdminBlockBusinesses() {
     setTokenType("admin");
   }, []);
   const [blockBusinessesMutation, { data, loading, error }] = useMutation(ADMIN_BLOCK_BUSINESSES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Businesses blocked successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   console.log("Businesses blocked successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error blocking businesses:", err);
     },
   });
 
-  const adminBlockBusinesses = async (businesses: Array<{ id: string; isBlocked: boolean }>) => {
+  const adminBlockBusinesses = async (
+    businesses: Array<{ businessId: string; block: boolean }>,
+  ) => {
     try {
       const response = await blockBusinessesMutation({
         variables: { businesses },
@@ -483,10 +526,9 @@ export function useAdminVerifyBusinesses() {
   const [verifyBusinessesMutation, { data, loading, error }] = useMutation(
     ADMIN_VERIFY_BUSINESSES,
     {
-      onCompleted: (data: any) => {
-        // Handle successful response
-        console.log("Businesses verified successfully:", data);
-      },
+      // onCompleted: (data: any) => {
+      //   console.log("Businesses verified successfully:", data);
+      // },
       onError: (err: any) => {
         // Handle error response
         console.error("Error verifying businesses:", err);
@@ -495,13 +537,13 @@ export function useAdminVerifyBusinesses() {
   );
 
   const adminVerifyBusinesses = async (
-    businesses: Array<{ id: string; isBusinessVerified: boolean }>,
+    businesses: Array<{ businessId: string; verify: boolean }>,
   ) => {
     try {
       const response = await verifyBusinessesMutation({
         variables: { businesses },
       });
-      return { response: response.data, error: null };
+      return { response: response?.data, error: null };
     } catch (err) {
       return { response: null, error: err };
     }

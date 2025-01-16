@@ -16,16 +16,11 @@ interface ChangePasswordByOtpValue {
   type?: "email" | "phone";
   userIdentifier?: string;
   backToEdit?: () => void;
+  requestId?: string;
 }
 
-export function ChangePasswordByOtp({ type, userIdentifier }: ChangePasswordByOtpValue) {
+export function ChangePasswordByOtp({ type, userIdentifier, requestId }: ChangePasswordByOtpValue) {
   const { changeBusinessPassword, data, loading, error } = useChangeBusinessPassword();
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
   const router = useRouter();
   const [userOtp, setUserOtp] = useState("");
   const [password, setPassword] = useState({
@@ -58,19 +53,13 @@ export function ChangePasswordByOtp({ type, userIdentifier }: ChangePasswordByOt
       };
 
       try {
-        const { response, error } = await changeBusinessPassword({
+        await changeBusinessPassword({
           password: queryInput.password,
           otp: queryInput.otp,
           email: queryInput.email,
           phone: queryInput.phone,
+          requestId: requestId,
         });
-
-        if (response) {
-          console.log("Password changed successfully:", response.response);
-          router.push("/listing-login"); // Redirect to login or appropriate page
-        } else {
-          console.error("Error changing password:", error);
-        }
       } catch (err) {
         console.error("Unexpected error:", err);
       }
@@ -142,10 +131,11 @@ export function ChangePasswordByOtp({ type, userIdentifier }: ChangePasswordByOt
       />
       {errors.confirmPassword && <p className="text-xs text-red-500">{errors.confirmPassword}</p>}
 
-      <Button className="mt-5 w-full" onClick={handleSubmit}>
-        Update Password
+      <Button className="mt-5 w-full" onClick={handleSubmit} disabled={loading}>
+        {loading ? "Changing Password..." : "Change Password"}
       </Button>
       {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
+      {data && <p className="text-center text-xs text-green-500">{data?.message}</p>}
     </>
   );
 }

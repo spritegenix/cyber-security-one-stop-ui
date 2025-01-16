@@ -9,16 +9,20 @@ type Props = {
     type: "email" | "phone";
     input: string;
   };
+  searchParams: {
+    requestId?: string;
+  };
 };
 
-export default function UserVerifyPage({ params }: Props) {
+export default function UserVerifyPage({ params, searchParams }: Props) {
   const input = decodeURIComponent(params.input);
+  // console.log(searchParams, "input");
   const type = params.type;
   return (
     <Layout headerStyle={1} footerStyle={1}>
       <Wrapper isTop={true} className="mb-10 flex items-center justify-center p-2">
         <div className="rounded-lg bg-white p-5 shadow-lg">
-          <Otp type={type} userIdentifier={input} />
+          <Otp type={type} userIdentifier={input} requestId={searchParams?.requestId} />
         </div>
       </Wrapper>
     </Layout>

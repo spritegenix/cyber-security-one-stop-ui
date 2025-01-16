@@ -61,7 +61,7 @@ export default function GlobalTypeHead() {
 
       // Fetch search results
       const { searchResults } = await getSuggestions({ search: query });
-
+      console.log("searchResults", searchResults);
       // Handle errors
       if (error) {
         console.error("Failed to fetch suggestions:", error);

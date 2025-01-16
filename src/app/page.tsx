@@ -3,13 +3,17 @@ import Layout from "@/components/layout/Layout";
 import { TestimonialSlider } from "@/app/_sections/TestimonialSlider";
 import HomeHero from "@/app/_sections/HomeHero";
 import Categories from "@/app/_sections/Categories";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AdBannerSlider } from "./_sections/AdBannerSlider";
 import { fetchCategoriesSSR, fetchTestimonialsSSR } from "./_queryCall/ssr";
 
 // export const revalidate = 3600; // Rebuild the page every hour
 
 export default async function Home() {
+  // Checking Loading Page
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+  // Checking Error Page
+  // throw new Error("This is a test error!");
   const categories = await fetchCategoriesSSR();
   const testimonials = await fetchTestimonialsSSR({ type: "REVIEW", page: 1, limit: 10 });
 

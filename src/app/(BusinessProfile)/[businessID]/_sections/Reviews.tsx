@@ -10,9 +10,11 @@ import { useRouter } from "next/navigation";
 import { loggedUser } from "@/data/global";
 import Image from "next/image";
 import { PiNotePencilBold } from "react-icons/pi";
+import useAuthStore from "@/zustandStore/authStore";
 
 // Define Zod schema
 const reviewSchema = z.object({
+  id: z.string().optional(),
   rating: z.number().min(1, "Rating is required").max(5, "Invalid rating"),
   reviewText: z
     .string()
@@ -23,25 +25,24 @@ const reviewSchema = z.object({
 type ReviewFormData = z.infer<typeof reviewSchema>;
 
 export default function Reviews() {
+  const isLogin = useAuthStore((state) => state?.userToken);
+
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   const {
     register,
     setValue,
+    watch,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<ReviewFormData>({
     resolver: zodResolver(reviewSchema),
-    defaultValues: {
-      rating: loggedUser.review?.rating || 0,
-      reviewText: loggedUser.review?.reviewText || "",
-    },
   });
-
+  const rating = watch("rating") || 0;
   const onSubmit = (data: ReviewFormData) => {
-    if (!loggedUser.jwt) {
+    if (!isLogin) {
       router.push("/login");
       return;
     }
@@ -55,7 +56,7 @@ export default function Reviews() {
     setValue("rating", rating, { shouldValidate: true });
   };
 
-  if (!loggedUser.jwt && loggedUser.review) {
+  if (!isLogin) {
     return (
       <div className="max-w-screen-sm space-y-5">
         <p className="text-xl">You must log in to provide a review.</p>
@@ -114,7 +115,12 @@ export default function Reviews() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-screen-sm space-y-5">
       <div>
-        <RatingInput totalStars={5} initialRating={loggedUser.review?.rating || 0} onRate={handleRating} className="text-2xl" />
+        <RatingInput
+          totalStars={5}
+          initialRating={loggedUser.review?.rating || 0}
+          onRate={handleRating}
+          className="text-2xl"
+        />
         {errors.rating && <p className="text-sm text-red-500">{errors.rating.message}</p>}
       </div>
 
@@ -147,36 +153,41 @@ export default function Reviews() {
   );
 }
 
-export function ReviewsCard({avatar, userName, rating, reviewText}: {avatar: any, userName: string, rating: number, reviewText: string}) {
+export function ReviewsCard({
+  avatar,
+  userName,
+  rating,
+  reviewText,
+}: {
+  avatar: any;
+  userName: string;
+  rating: number;
+  reviewText: string;
+}) {
   return (
     <div className="relative max-w-screen-sm rounded-lg border border-gray-300 bg-white p-2">
-    <div className="flex items-center gap-3">
-      {avatar ? (
-        <div className="size-20 overflow-hidden rounded-full border-4 border-white shadow-lg">
-          <Image
-            src={avatar}
-            alt="avatar"
-            width={500}
-            height={500}
-            className="h-full w-full object-cover"
-          />
+      <div className="flex items-center gap-3">
+        {avatar ? (
+          <div className="size-20 overflow-hidden rounded-full border-4 border-white shadow-lg">
+            <Image
+              src={avatar}
+              alt="avatar"
+              width={500}
+              height={500}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg md:h-36 md:w-36">
+            <p className="caption-bottom text-5xl text-white">{userName[0]}</p>
+          </div>
+        )}
+        <div className="space-y-2">
+          <h6 className="text-lg font-medium">{userName}</h6>
+          <RatingInput totalStars={5} initialRating={rating} className="text-2xl" disabled />
         </div>
-      ) : (
-        <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg md:h-36 md:w-36">
-          <p className="caption-bottom text-5xl text-white">{userName[0]}</p>
-        </div>
-      )}
-      <div className="space-y-2">
-        <h6 className="text-lg font-medium">{userName}</h6>
-        <RatingInput
-          totalStars={5}
-          initialRating={rating}
-          className="text-2xl"
-          disabled
-        />
       </div>
+      <p className="mt-3">{reviewText}</p>
     </div>
-    <p className="mt-3">{reviewText}</p>
-  </div>
   );
 }
