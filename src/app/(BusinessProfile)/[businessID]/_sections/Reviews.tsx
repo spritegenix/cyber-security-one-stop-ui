@@ -45,9 +45,16 @@ export default function Reviews({ businessSlug }: any) {
     resolver: zodResolver(reviewSchema),
   });
   const rating = watch("rating") || 0;
-  const { data: loggedUserReview, refetch: loggedUserReviewRefetch } = useGetReviewWithId({
+  const {
+    data: loggedUserReview,
+    loading: loggedUserReviewLoading,
+    error: loggedUserReviewError,
+    fetchReview,
+    refetch: loggedUserReviewRefetch,
+  } = useGetReviewWithId({
     businessSlug,
   });
+
   useEffect(() => {
     if (loggedUserReview) {
       console.log(loggedUserReview, "loggedUserReview");
@@ -55,14 +62,14 @@ export default function Reviews({ businessSlug }: any) {
         ...loggedUserReview,
         id: loggedUserReview?.id,
         rating: loggedUserReview?.rating,
-        reviewText: loggedUserReview?.comment,
+        reviewText: loggedUserReview?.comment || "",
       });
     }
   }, [loggedUserReview, reset]);
 
   useEffect(() => {
-    console.log(loggedUserReview, "loggedUserReview");
-  }, [loggedUserReview]);
+    fetchReview();
+  }, []);
 
   const { reviewBusiness, data, loading, error } = useReviewBusinessMutation();
   const onSubmit = async (data: ReviewFormData) => {
@@ -81,8 +88,10 @@ export default function Reviews({ businessSlug }: any) {
 
     console.log("Submitted Data:", newReviewData);
     await reviewBusiness(newReviewData);
-    await loggedUserReviewRefetch();
-    setIsEditing(false);
+    if (!error) {
+      await loggedUserReviewRefetch();
+      setIsEditing(false);
+    }
   };
 
   const handleRating = (rating: number) => {
@@ -115,8 +124,8 @@ export default function Reviews({ businessSlug }: any) {
               />
             </div>
           ) : (
-            <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg md:h-36 md:w-36">
-              <p className="caption-bottom text-5xl text-white">
+            <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg">
+              <p className="caption-bottom text-5xl capitalize text-white">
                 {loggedUserReview?.user?.name[0]}
               </p>
             </div>
@@ -136,7 +145,6 @@ export default function Reviews({ businessSlug }: any) {
         <button
           type="button"
           onClick={() => {
-            reset(loggedUserReview?.comment);
             setIsEditing(true);
           }}
           className="absolute right-1 top-1 flex size-8 items-center justify-center rounded-full p-1 text-2xl text-bg1 transition-all duration-300 hover:bg-bg1 hover:text-white"
@@ -152,7 +160,7 @@ export default function Reviews({ businessSlug }: any) {
       <div>
         <RatingInput
           totalStars={5}
-          initialRating={loggedUserReview?.rating || 0}
+          initialRating={rating}
           onRate={handleRating}
           className="text-2xl"
         />

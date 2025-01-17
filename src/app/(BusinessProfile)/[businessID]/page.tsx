@@ -7,8 +7,6 @@ import { individualBusinessSample } from "@/data/listing";
 import Link from "next/link";
 import React from "react";
 import { IoEarthSharp } from "react-icons/io5";
-import Reviews, { ReviewsCard } from "./_sections/Reviews";
-import Button from "@/components/elements/Button";
 import { fetchBusinessById } from "@/app/_queryCall/businessProfile/ssg";
 import { notFound } from "next/navigation";
 import Banner from "./_sections/Banner";

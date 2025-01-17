@@ -59,9 +59,9 @@ export default function ServiceCard({
               </div>
             )}
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-1">
             {tags?.map((tag: string) => (
-              <span key={tag} className="mr-2 rounded-md border border-gray-300 px-3 py-1 text-sm">
+              <span key={tag} className="rounded-md border border-gray-300 px-3 py-1 text-sm">
                 {tag}
               </span>
             ))}

@@ -93,33 +93,41 @@ export const GET_REVIEW_WITH_ID = gql`
 
 export const useGetReviewWithId = ({
   businessSlug,
-  businessId = undefined,
+  businessId,
 }: {
   businessSlug: string;
   businessId?: string;
 }) => {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state) => state?.userToken);
+
   useEffect(() => {
     setTokenType("user");
   }, []);
+
   const [getReviewWithIdQuery, { data, loading, error, refetch }] =
     useLazyQuery(GET_REVIEW_WITH_ID);
 
-  async () => {
+  const fetchReview = async () => {
     try {
       const response = await getReviewWithIdQuery({
         variables: {
-          businessSlug: businessSlug,
-          businessId: businessId,
+          businessSlug,
+          businessId,
         },
       });
-      return { response: response?.data, error: null };
+      // console.log("Review fetched successfully:", response?.data?.getReviewWithId);
+      return { response: response?.data?.getReviewWithId, error: null };
     } catch (err) {
       console.error("Error fetching review:", err);
       return { response: null, error: err };
     }
   };
 
-  return { data: data?.getReviewWithId, loading, error, refetch };
+  return {
+    data: data?.getReviewWithId,
+    loading,
+    error,
+    refetch,
+    fetchReview,
+  };
 };

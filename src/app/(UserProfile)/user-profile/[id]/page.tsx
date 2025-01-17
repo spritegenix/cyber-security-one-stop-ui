@@ -10,9 +10,14 @@ import Link from "next/link";
 import { PiNotePencilBold } from "react-icons/pi";
 import { useUpdateUserDetails, useUserMe } from "@/app/_queryCall/userAuth/csr";
 import { ProfileForm } from "../../_sections/ProfileForm";
+import { useEffect } from "react";
 
 export default function UserProfile() {
   const { userData, loading, error, refetch } = useUserMe();
+
+  useEffect(() => {
+    console.log("User data:", userData);
+  }, [userData]);
   const {
     updateUserDetails: handleUpdateLogo,
     queryResponse: mutationLogoResult,

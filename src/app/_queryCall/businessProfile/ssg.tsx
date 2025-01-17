@@ -20,7 +20,6 @@ const GET_BUSINESS_BY_ID = gql`
         updatedAt
         deletedAt
         message
-        token
       }
       additionalContacts
       isBusinessVerified
@@ -50,7 +49,6 @@ const GET_BUSINESS_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       businessDetails {
         id
@@ -69,7 +67,6 @@ const GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         coverImages {
           id
@@ -80,7 +77,6 @@ const GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         adBannerImages {
           id
@@ -91,7 +87,6 @@ const GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         mobileAdBannerImages {
           id
@@ -102,7 +97,6 @@ const GET_BUSINESS_BY_ID = gql`
           updatedAt
           businessDetailsId
           message
-          token
         }
         operatingHours {
           id
@@ -114,7 +108,6 @@ const GET_BUSINESS_BY_ID = gql`
           closingTime
           businessDetailsId
           message
-          token
         }
         latitude
         longitude
@@ -127,7 +120,6 @@ const GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         proficiencies {
           id
@@ -137,7 +129,6 @@ const GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         courts {
           id
@@ -147,7 +138,6 @@ const GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         gstNumber
         categories {
@@ -160,7 +150,6 @@ const GET_BUSINESS_BY_ID = gql`
           categoryImage
           updatedAt
           message
-          token
         }
         tags {
           id
@@ -169,7 +158,6 @@ const GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           message
-          token
         }
         addresses {
           id
@@ -184,18 +172,15 @@ const GET_BUSINESS_BY_ID = gql`
           pincode
           state
           message
-          token
         }
         logo
         createdAt
         updatedAt
         deletedAt
         message
-        token
       }
       price
       message
-      token
     }
   }
 `;
