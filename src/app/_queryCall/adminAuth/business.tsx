@@ -229,6 +229,9 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           id
           slug
           name
+          contacts {
+            value
+          }
         }
         createdAt
         deletedAt
@@ -427,7 +430,7 @@ export function useAdminGetBusinessById() {
   useEffect(() => {
     setTokenType("admin");
   }, []);
-  const [fetchAdminGetBusinessById, { data, loading, error }] =
+  const [fetchAdminGetBusinessById, { data, loading, error, refetch }] =
     useLazyQuery(ADMIN_GET_BUSINESS_BY_ID);
 
   const adminGetBusinessById = async ({
@@ -452,6 +455,7 @@ export function useAdminGetBusinessById() {
     data: data?.adminGetBusinessById,
     loading,
     error,
+    refetch,
   };
 }
 

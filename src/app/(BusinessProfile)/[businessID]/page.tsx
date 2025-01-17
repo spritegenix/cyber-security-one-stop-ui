@@ -143,10 +143,10 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
               </div>
             </div>
           )}
-          {/* Practice Areas  */}
+          {/* Service Areas  */}
           {business?.getBusinessById?.businessDetails?.categories.length > 0 && (
             <div className="space-y-3">
-              <h6 className="text-2xl font-medium max-md:mb-2">Practice Areas:</h6>
+              <h6 className="text-2xl font-medium max-md:mb-2">Service Areas:</h6>
               <p className="flex flex-wrap gap-2">
                 {business?.getBusinessById?.businessDetails?.categories.map(
                   (category: { id: string; slug: string; name: string }) => (
@@ -163,7 +163,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
             </div>
           )}
           {/* Practice Courts  */}
-          {business?.getBusinessById?.businessDetails?.courts.length > 0 && (
+          {/* {business?.getBusinessById?.businessDetails?.courts.length > 0 && (
             <div className="space-y-3">
               <h6 className="text-2xl font-medium max-md:mb-2">Practice Courts:</h6>
               <p className="flex flex-wrap gap-2">
@@ -180,7 +180,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
                 )}
               </p>
             </div>
-          )}
+          )} */}
           {/* Language Proficiency  */}
           {business?.getBusinessById?.businessDetails?.languages.length > 0 && (
             <div className="space-y-3">

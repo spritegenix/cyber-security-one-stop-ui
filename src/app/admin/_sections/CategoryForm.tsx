@@ -35,6 +35,7 @@ type Category = {
   shortDescription: string;
   icon: File | string | null;
   priority: number;
+  groupName: string;
 };
 
 type FormInputs = {
@@ -42,6 +43,7 @@ type FormInputs = {
   shortDescription: string;
   slug: string;
   icon: FileList;
+  groupName: string;
 };
 
 interface CategoryFormProps {
@@ -93,6 +95,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
     const newData = {
       id: itemIdToBeUpdate || undefined,
       name: formData.name,
+      groupName: formData.groupName,
       slug: formData.slug,
       description: formData.shortDescription,
       categoryImage: !itemIdToBeUpdate || formData.icon[0] ? formData.icon[0] : undefined,
@@ -216,6 +219,12 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
             {...register("name", { required: true })}
           />
           <Input
+            label="Category Group Name"
+            placeholder=" "
+            type="text"
+            {...register("groupName", { required: true })}
+          />
+          <Input
             label="Slug"
             type="text"
             placeholder=" "
@@ -307,6 +316,10 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
                           <h6 className="text-sm">
                             <strong>Slug: </strong>
                             {category?.slug}
+                          </h6>
+                          <h6 className="text-sm">
+                            <strong>Group: </strong>
+                            {category?.groupName}
                           </h6>
                           <p className="text-sm">{category?.shortDescription}</p>
                         </div>

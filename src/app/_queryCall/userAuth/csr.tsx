@@ -390,8 +390,8 @@ export const UPDATE_USER_DETAILS = gql`
     $hideDetails: Boolean
     $avatar: Upload
     $addresses: [UserAddressInput!]! #   "addresses": [
-    #     "toDelete": null,
-  ) #     {
+    #     {
+  ) #     "toDelete": null,
   #     "street": null,
   #     "state": null,
   #     "pincode": null,

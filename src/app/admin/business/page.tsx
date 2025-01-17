@@ -66,7 +66,7 @@ export default function UserListPage() {
   // ------------------------------------------------------------------ //
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>(undefined);
   const [selectedUserData, setSelectedUserData] = useState<any>(undefined);
-  const { adminGetBusinessById } = useAdminGetBusinessById();
+  const { adminGetBusinessById, refetch: adminGetBusinessByIdRefetch } = useAdminGetBusinessById();
   useEffect(() => {
     async function fetchData() {
       if (selectedUserId) {
@@ -231,7 +231,10 @@ export default function UserListPage() {
         </div>
         {/* Right Side  */}
         <div className="mt-12">
-          <IndividualBusinessData business={selectedUserData} />
+          <IndividualBusinessData
+            business={selectedUserData}
+            refetchData={adminGetBusinessByIdRefetch}
+          />
         </div>
       </Wrapper>
     </>
