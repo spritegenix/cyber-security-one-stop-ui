@@ -16,8 +16,14 @@ const GET_ALL_CATEGORIES = gql`
 
 // Hook for fetching all categories
 export const useFetchAllCategories = () => {
-  const { data, loading, error, refetch } = useQuery(GET_ALL_CATEGORIES);
-  return { allCategoriesList: data?.allCategories, loading, error, refetch };
+  const { data, loading, error, refetch } = useQuery<{ allCategories: any[] }>(GET_ALL_CATEGORIES);
+
+  return {
+    allCategoriesList: data?.allCategories || [], // Default to an empty array if data is undefined
+    loading,
+    error,
+    refetch,
+  };
 };
 
 export const SEARCH_AUTOSUGGESTION = gql`

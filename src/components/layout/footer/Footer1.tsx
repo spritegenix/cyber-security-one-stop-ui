@@ -24,7 +24,7 @@ export default function Footer1() {
       <div className="grid grid-cols-2 gap-5 pb-5 sm:grid-cols-3 md:grid-cols-4">
         {/* Footer Company About  */}
         <div className="col-span-2 flex flex-col gap-y-5 md:col-span-1">
-          <Logo />
+          <Logo mode="dark" />
           <p className="mb-4 max-w-[400px] text-wrap max-sm:mt-3 max-sm:!w-[80vw]">
             <TextWithLineBreak text={footer?.text} />
           </p>

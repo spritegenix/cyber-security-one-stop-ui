@@ -7,8 +7,7 @@ import { Input } from "@/components/elements/Input";
 import MultiSelect from "@/components/elements/multiInput/MultiSelect";
 import Button from "@/components/elements/Button";
 import { FaBuildingColumns } from "react-icons/fa6";
-import { courtTypes, languageProficiencyIndia, legalServices } from "@/data/global";
-import { VscLaw } from "react-icons/vsc";
+import { languageProficiencyIndia } from "@/data/global";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { professionalDetailsSchema } from "./zodSchema";
@@ -110,7 +109,7 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
       </div>
       {/* License/Bar Number  */}
       <div>
-        <Input {...register("licenseNumber")} label="License/Bar Number" placeholder=" " />
+        <Input {...register("licenseNumber")} label="GST Number (If Indian)" placeholder=" " />
         {errors.licenseNumber && (
           <p className="text-xs text-red-500">{errors.licenseNumber.message}</p>
         )}
@@ -129,10 +128,10 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
           {errors.teamSize && <p className="text-xs text-red-500">{errors.teamSize.message}</p>}
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {/* Practice Areas  */}
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-1">
+        {/* Service Areas  */}
         <div>
-          <h3 className="mb-5 text-lg font-semibold">Practice Areas</h3>
+          <h3 className="mb-5 text-lg font-semibold">Service Areas</h3>
           <MultiSelect
             options={
               !!allCategoriesList?.length
@@ -152,7 +151,7 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
           )}
         </div>
         {/* Practice Courts */}
-        <div>
+        {/* <div>
           <h3 className="mb-5 text-lg font-semibold">Practice Courts</h3>
           <MultiSelect
             options={courtTypes?.map((item) => ({ id: item, name: item }))}
@@ -167,7 +166,7 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
           {errors?.practiceCourts && (
             <p className="text-xs text-red-500">{errors.practiceCourts?.message}</p>
           )}
-        </div>
+        </div> */}
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Academic Degree */}
