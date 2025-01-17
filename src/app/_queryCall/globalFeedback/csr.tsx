@@ -21,9 +21,9 @@ export function useFeedbackMutation({ userType }: { userType: "firm" | "user" })
   }, [userType]);
 
   const [feedbackMutation, { data, loading, error }] = useMutation(FEEDBACK_MUTATION, {
-    onCompleted: (data: any) => {
-      console.log("Feedback mutation completed:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   console.log("Feedback mutation completed:", data);
+    // },
   });
 
   const submitFeedback = async ({
@@ -70,6 +70,7 @@ const GET_USER_FEEDBACK = gql`
     }
   }
 `;
+
 const GET_FIRM_FEEDBACK = gql`
   query BusinessMe {
     businessMe {

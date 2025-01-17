@@ -1,3 +1,6 @@
+import logoDark from "@/assets/logo/logo-dark.png";
+import logoWhite from "@/assets/logo/logo-white.png"
+
 // icons 
 import search from "@/assets/icons/detection.svg";
 import cat1 from "@/assets/icons/accountant.svg";
@@ -71,4 +74,7 @@ export {
     share,
 
     user,
+
+    logoDark,
+    logoWhite
 };

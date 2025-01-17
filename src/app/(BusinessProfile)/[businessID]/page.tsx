@@ -7,8 +7,6 @@ import { individualBusinessSample } from "@/data/listing";
 import Link from "next/link";
 import React from "react";
 import { IoEarthSharp } from "react-icons/io5";
-import Reviews, { ReviewsCard } from "./_sections/Reviews";
-import Button from "@/components/elements/Button";
 import { fetchBusinessById } from "@/app/_queryCall/businessProfile/ssg";
 import { notFound } from "next/navigation";
 import Banner from "./_sections/Banner";
@@ -231,6 +229,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
           )}
           {/* Rating and Reviews */}
           <ReviewsSection
+            businessSlug={businessID}
             className="hidden md:block"
             reviews={business?.getBusinessById?.reviews || []}
           />
@@ -361,7 +360,11 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
           </div>
         </aside>
         {/* Rating and Reviews */}
-        <ReviewsSection className="md:hidden" reviews={business?.getBusinessById?.reviews || []} />
+        <ReviewsSection
+          className="md:hidden"
+          reviews={business?.getBusinessById?.reviews || []}
+          businessSlug={businessID}
+        />
       </Wrapper>
     </Layout>
   );

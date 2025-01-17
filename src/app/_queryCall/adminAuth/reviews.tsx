@@ -37,7 +37,6 @@ export const ADMIN_SEARCH_ALL_FEEDBACKS = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       total
       page
@@ -49,7 +48,6 @@ export const ADMIN_SEARCH_ALL_FEEDBACKS = gql`
 
 export function useAdminSearchAllFeedbacks() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
   useEffect(() => {
     setTokenType("admin");
   }, []);
@@ -122,7 +120,6 @@ export const ADMIN_SEARCH_ALL_REVIEWS = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       total
       page
@@ -134,7 +131,6 @@ export const ADMIN_SEARCH_ALL_REVIEWS = gql`
 
 export function useAdminSearchAllReviews() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
   useEffect(() => {
     setTokenType("admin");
   }, []);
@@ -196,16 +192,12 @@ export const ADMIN_GET_ALL_TESTIMONIALS = gql`
       deletedAt
       updatedAt
       message
-      token
     }
   }
 `;
 
 export function useAdminGetAllTestimonials() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
-
-  // Set the token type to 'admin' on mount
   useEffect(() => {
     setTokenType("admin");
   }, [setTokenType]);
@@ -253,16 +245,13 @@ export const ADMIN_MANAGE_TESTIMONIALS = gql`
       deletedAt
       updatedAt
       message
-      token
     }
   }
 `;
 
 export function useAdminManageTestimonials() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
 
-  // Set the token type to 'admin' on mount
   useEffect(() => {
     setTokenType("admin");
   }, [setTokenType]);

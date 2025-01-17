@@ -17,6 +17,7 @@ interface AuthState {
     clearFirmTokens: () => void;
     clearUserTokens: () => void;
     clearAdminTokens: () => void;
+    validateTokens: () => void;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -52,7 +53,7 @@ const useAuthStore = create<AuthState>()(
                 }
             },
             clearTokens: () => {
-                set({ userToken: null, firmToken: null, tokenType: 'user' });
+                set({ userToken: null, firmToken: null, adminToken: null, tokenType: 'user' });
                 cookies.remove('userToken', { path: '/' });
                 cookies.remove('firmToken', { path: '/' });
                 cookies.remove('adminToken', { path: '/' });
@@ -69,6 +70,17 @@ const useAuthStore = create<AuthState>()(
                 set({ adminToken: null });
                 cookies.remove('adminToken', { path: '/' });
             },
+            validateTokens: () => {
+                if (!cookies.get('userToken')) {
+                    set({ userToken: null });
+                }
+                if (!cookies.get('firmToken')) {
+                    set({ firmToken: null });
+                }
+                if (!cookies.get('adminToken')) {
+                    set({ adminToken: null });
+                }
+            },
         }),
         {
             name: 'auth-storage', // Name for localStorage key
@@ -82,6 +94,9 @@ const useAuthStore = create<AuthState>()(
     )
 );
 
+// Periodic validation to ensure tokens are synced with cookies
+setInterval(() => {
+    useAuthStore.getState().validateTokens();
+}, 1000 * 60 * 5); // 5 hour
+
 export default useAuthStore;
-
-

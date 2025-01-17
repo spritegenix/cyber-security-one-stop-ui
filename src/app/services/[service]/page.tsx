@@ -202,18 +202,12 @@ export default function IndividualService({ params }: Props) {
                     : []
                 }
                 phoneNumber={
-                  (item?.primaryContacts.length > 0 &&
-                    item?.primaryContacts?.map(
-                      (item: any) => item?.type === "PHONE" && item?.value,
-                    )) ||
-                  []
+                  item?.primaryContacts?.find((contact: any) => contact?.type === "PHONE")?.value ||
+                  null
                 }
                 whatsAppNumber={
-                  (item?.primaryContacts.length > 0 &&
-                    item?.primaryContacts?.map(
-                      (item: any) => item?.type === "PHONE" && item?.value,
-                    )) ||
-                  ""
+                  item?.primaryContacts?.find((contact: any) => contact?.type === "PHONE")?.value ||
+                  null
                 }
               />
             ))

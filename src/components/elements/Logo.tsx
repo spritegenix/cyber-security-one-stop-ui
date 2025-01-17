@@ -1,21 +1,27 @@
-// import { logo } from "@/assets";
-// import Image from "next/image";
+import { logoDark, logoWhite } from "@/assets";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function Logo() {
+export default function Logo({
+  mode = "dark",
+  className,
+}: {
+  mode?: "light" | "dark";
+  className?: string;
+}) {
   return (
     <Link href="/" className="flex cursor-pointer items-center gap-2">
-      {/* <Image
-        src={logo}
+      <Image
+        src={mode === "light" ? logoWhite : logoDark}
         alt="logo"
-        height={100}
-        width={100}
-        className="h-16 max-h-16 w-min object-contain md:h-20"
-      /> */}
-      <p className="cursor-pointer text-lg font-medium md:text-3xl">
+        height={300}
+        width={500}
+        className="max-h-14 w-min object-contain"
+      />
+      {/* <p className="cursor-pointer text-lg font-medium md:text-3xl">
         Cyber Security
-      </p>
+      </p> */}
     </Link>
   );
 }

@@ -150,7 +150,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         updatedAt
         deletedAt
         message
-        token
       }
       hideDetails
       isBlocked
@@ -175,7 +174,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         pincode
         state
         message
-        token
       }
       bookings {
         id
@@ -196,7 +194,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       reviews {
         id
@@ -218,7 +215,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       feedbacks {
         id
@@ -229,7 +225,6 @@ export const ADMIN_GET_USER_BY_ID = gql`
         deletedAt
         updatedAt
         message
-        token
       }
       subscription {
         id
@@ -244,14 +239,12 @@ export const ADMIN_GET_USER_BY_ID = gql`
         message
       }
       message
-      token
     }
   }
 `;
 
 export function useAdminGetUserById() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
   useEffect(() => {
     setTokenType("admin");
   }, []);
@@ -351,7 +344,6 @@ export const ADMIN_GET_ALL_USER_SUBSCRIPTIONS = gql`
 
 export function useAdminGetAllUserSubscriptions() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
   useEffect(() => {
     setTokenType("admin");
   }, []);
@@ -408,7 +400,6 @@ export const ADMIN_MANAGE_USER_SUBSCRIPTIONS = gql`
 
 export function useAdminManageUserSubscriptions() {
   const { setTokenType } = useAuthStore();
-  const token = useAuthStore((state: any) => state?.adminToken);
   useEffect(() => {
     setTokenType("admin");
   }, []);

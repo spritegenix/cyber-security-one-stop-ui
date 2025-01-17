@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/customText";
 import Image from "next/image";
 import React from "react";
 
@@ -17,13 +18,14 @@ const IndividualBusinessData: React.FC<{ business?: any }> = ({ business }) => {
         <Image
           src={business.businessDetails?.logo || "/placeholder.png"}
           alt={business.name || "Business Logo"}
-          className="h-16 w-16 rounded-full"
+          className="size-20 rounded-full"
           width={100}
           height={100}
         />
         <div>
           <h1 className="text-2xl font-bold">{business.name || "N/A"}</h1>
-          <p className="text-gray-600">{business.type || "N/A"}</p>
+          <p className="text-gray-600">Updated At : {formatDate(business.updatedAt) || "N/A"}</p>
+          <p className="text-gray-600">Created At : {formatDate(business.createdAt) || "N/A"}</p>
         </div>
       </div>
 
@@ -60,7 +62,11 @@ const IndividualBusinessData: React.FC<{ business?: any }> = ({ business }) => {
         <p>
           Primary Website:{" "}
           {business.businessDetails?.primaryWebsite ? (
-            <a href={business.businessDetails.primaryWebsite} className="text-blue-500">
+            <a
+              href={business.businessDetails.primaryWebsite}
+              target="_blank"
+              className="text-blue-500"
+            >
               {business.businessDetails.primaryWebsite}
             </a>
           ) : (
@@ -68,10 +74,10 @@ const IndividualBusinessData: React.FC<{ business?: any }> = ({ business }) => {
           )}
         </p>
         <div>
-          <h3 className="mt-2 font-semibold">Websites</h3>
+          <h3 className="mt-2 font-semibold">Social Links</h3>
           {business.businessDetails?.websites?.length > 0 ? (
             business.businessDetails.websites.map((site: any, idx: number) => (
-              <a key={idx} href={site.url} className="block text-blue-500">
+              <a key={idx} href={site.url} target="_blank" className="block text-blue-500">
                 {site.url}
               </a>
             ))
@@ -79,10 +85,10 @@ const IndividualBusinessData: React.FC<{ business?: any }> = ({ business }) => {
             <p>No websites available.</p>
           )}
         </div>
-        <div>
+        {/* <div>
           <h3 className="mt-2 font-semibold">Operating Hours</h3>
           <p>{business.businessDetails?.operatingHours || "Not specified."}</p>
-        </div>
+        </div> */}
         <div>
           <h3 className="mt-2 font-semibold">Languages</h3>
           {business?.businessDetails?.languages?.length > 0 ? (
@@ -96,10 +102,10 @@ const IndividualBusinessData: React.FC<{ business?: any }> = ({ business }) => {
       {/* Categories */}
       <section className="mt-6">
         <h2 className="text-xl font-semibold">Categories</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-wrap gap-2">
           {business.businessDetails?.categories?.length > 0 ? (
             business.businessDetails.categories.map((category: any, idx: number) => (
-              <div key={idx} className="rounded-lg border p-4">
+              <div key={idx} className="rounded-lg border border-bg1 p-1 py-0">
                 <h3 className="font-semibold">{category.name}</h3>
               </div>
             ))
@@ -116,8 +122,8 @@ const IndividualBusinessData: React.FC<{ business?: any }> = ({ business }) => {
           {business.businessDetails?.addresses?.length > 0 ? (
             business.businessDetails.addresses.map((address: any, idx: number) => (
               <li key={idx} className="mt-2">
-                {address.street}, {address.city}, {address.state}, {address.country} -{" "}
-                {address.pincode}
+                <span className="font-semibold">{idx + 1}.</span> {address.street}, {address.city},{" "}
+                {address.state}, {address.country} - {address.pincode}
               </li>
             ))
           ) : (
