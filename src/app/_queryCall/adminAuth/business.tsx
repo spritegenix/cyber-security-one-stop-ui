@@ -20,6 +20,14 @@ export const ADMIN_ALL_BUSINESSES = gql`
     $limit: Int
     $sortBy: AllBusinessesSortBy
     $sortOrder: SortOrder
+    $hasReviews: Boolean
+    $hasFeedbacks: Boolean
+    $hasBusinessAdBanners: Boolean
+    $hasBusinessMobileAdBanners: Boolean
+    $hasAdminNotice: Boolean
+    $hasAdminBusinessAdBanners: Boolean
+    $hasAdminBusinessMobileAdBanners: Boolean
+    $hasTestimonials: Boolean
   ) {
     adminAllBusinesses(
       name: $name
@@ -38,6 +46,14 @@ export const ADMIN_ALL_BUSINESSES = gql`
       limit: $limit
       sortBy: $sortBy
       sortOrder: $sortOrder
+      hasReviews: $hasReviews
+      hasFeedbacks: $hasFeedbacks
+      hasBusinessAdBanners: $hasBusinessAdBanners
+      hasBusinessMobileAdBanners: $hasBusinessMobileAdBanners
+      hasAdminNotice: $hasAdminNotice
+      hasAdminBusinessAdBanners: $hasAdminBusinessAdBanners
+      hasAdminBusinessMobileAdBanners: $hasAdminBusinessMobileAdBanners
+      hasTestimonials: $hasTestimonials
     ) {
       businesses {
         id
@@ -60,10 +76,6 @@ export const ADMIN_ALL_BUSINESSES = gql`
         isListed
         isBlocked
         paymentVerification
-        adminNotice {
-          id
-          note
-        }
         businessDetails {
           coverImages {
             url
@@ -90,6 +102,7 @@ export function useAdminAllBusinesses() {
   useEffect(() => {
     setTokenType("admin");
   }, []);
+
   const [fetchAdminAllBusinesses, { data, loading, error, refetch }] = useLazyQuery(
     ADMIN_ALL_BUSINESSES,
     {
@@ -116,6 +129,14 @@ export function useAdminAllBusinesses() {
     limit = 5,
     sortBy = undefined,
     sortOrder = undefined,
+    hasReviews = undefined,
+    hasFeedbacks = undefined,
+    hasBusinessAdBanners = undefined,
+    hasBusinessMobileAdBanners = undefined,
+    hasAdminNotice = undefined,
+    hasAdminBusinessAdBanners = undefined,
+    hasAdminBusinessMobileAdBanners = undefined,
+    hasTestimonials = undefined,
   }: {
     name?: string;
     email?: string;
@@ -133,6 +154,14 @@ export function useAdminAllBusinesses() {
     limit?: number;
     sortBy?: "alphabetical" | "createdAt" | "updatedAt";
     sortOrder?: "asc" | "desc";
+    hasReviews?: boolean;
+    hasFeedbacks?: boolean;
+    hasBusinessAdBanners?: boolean;
+    hasBusinessMobileAdBanners?: boolean;
+    hasAdminNotice?: boolean;
+    hasAdminBusinessAdBanners?: boolean;
+    hasAdminBusinessMobileAdBanners?: boolean;
+    hasTestimonials?: boolean;
   }) => {
     try {
       const response = await fetchAdminAllBusinesses({
@@ -153,6 +182,14 @@ export function useAdminAllBusinesses() {
           limit,
           sortBy,
           sortOrder,
+          hasReviews,
+          hasFeedbacks,
+          hasBusinessAdBanners,
+          hasBusinessMobileAdBanners,
+          hasAdminNotice,
+          hasAdminBusinessAdBanners,
+          hasAdminBusinessMobileAdBanners,
+          hasTestimonials,
         },
       });
       return { response: response?.data, error: null };
