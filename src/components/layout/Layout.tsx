@@ -9,8 +9,20 @@ import { usePathname, useRouter } from "next/navigation";
 import AOS from "aos";
 import { header, header2 } from "@/data/layout";
 import Header2 from "./header/Header2/Header2";
+// import { fetchCategoriesSSR } from "@/app/_queryCall/ssr";
+// import { ArrayConvertor } from "@/utils/Convertor";
 
-export default function Layout({ headerStyle = 1, footerStyle = 1, children }: any) {
+// export const  = async () => {
+//   const categories = await fetchCategoriesSSR();
+//   const lowerNavData = ArrayConvertor(categories?.allCategories);
+//   return {
+//     props: {
+//       lowerNavData,
+//     },
+//   };
+// };
+
+export default function Layout({ headerStyle = 1, footerStyle = 1, children, props }: any) {
   const upperNavItems = header?.upperNav;
   const lowerNavItems = header?.lowerNav;
   const upperNavItems2 = header2?.upperNav;

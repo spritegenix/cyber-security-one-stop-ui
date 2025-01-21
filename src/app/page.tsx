@@ -6,6 +6,7 @@ import Categories from "@/app/_sections/Categories";
 import React from "react";
 import { AdBannerSlider } from "./_sections/AdBannerSlider";
 import { fetchCategoriesSSR, fetchTestimonialsSSR } from "./_queryCall/ssr";
+import { ArrayConvertor } from "@/utils/Convertor";
 
 // export const revalidate = 3600; // Rebuild the page every hour
 
@@ -16,13 +17,13 @@ export default async function Home() {
   // throw new Error("This is a test error!");
   const categories = await fetchCategoriesSSR();
   const testimonials = await fetchTestimonialsSSR({ type: "REVIEW", page: 1, limit: 10 });
-
-  // console.log("categories", categories);
-
+  // const categories = await fetchCategoriesSSR();
+  const convertedCategories = ArrayConvertor(categories?.allCategories);
   return (
     <Layout headerStyle={1} footerStyle={1}>
       <HomeHero />
       <Categories categories={categories?.allCategories} />
+      <p> {JSON.stringify(convertedCategories, null, 2)}</p>
       {/* AdBannerSlider  */}
       <Wrapper className="swiperStyle2 relative">
         <AdBannerSlider />

@@ -3,8 +3,6 @@ import Logo from "@/components/elements/Logo";
 import { IoSearchOutline } from "react-icons/io5";
 import Menu from "../Menu";
 import MenuMobile from "../MenuMobile";
-import Button from "@/components/elements/Button";
-import Link from "next/link";
 import AuthButton from "./AuthButton";
 import FirmButton from "./FirmButton";
 export default function Header1({

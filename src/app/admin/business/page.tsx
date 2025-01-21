@@ -51,7 +51,7 @@ export default function UserListPage() {
   }, [debouncedFilters]);
 
   useEffect(() => {
-    // console.log("data", data);
+    console.log("data", data);
     if (debouncedFilters.page === 1) {
       setUsersList(data?.businesses || []);
     } else if (data?.businesses?.length > 0) {
@@ -210,6 +210,7 @@ export default function UserListPage() {
                       phone={user?.primaryContacts?.find((c: any) => c?.type === "PHONE")?.value}
                       isBlock={user?.isBlocked}
                       isVerified={user?.isBusinessVerified}
+                      adminNotice={user?.adminNotice}
                       selectedUserId={selectedUserId}
                       setSelectedUserId={setSelectedUserId}
                       refetchData={adminAllBusinessRefetch}

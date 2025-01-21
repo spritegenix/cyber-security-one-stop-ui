@@ -9,6 +9,10 @@ export const GET_ALL_CATEGORIES = gql`
       slug
       description
       categoryImage
+      groupName {
+        id
+        name
+      }
     }
   }
 `;

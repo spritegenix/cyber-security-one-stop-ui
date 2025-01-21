@@ -462,6 +462,10 @@ export const ADMIN_GET_ALL_CATEGORIES = gql`
       description
       categoryImage
       order
+      groupName {
+        id
+        name
+      }
     }
   }
 `;

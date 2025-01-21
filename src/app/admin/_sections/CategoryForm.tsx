@@ -35,7 +35,7 @@ type Category = {
   shortDescription: string;
   icon: File | string | null;
   priority: number;
-  groupName: string;
+  groupName: groupName;
 };
 
 type FormInputs = {
@@ -46,6 +46,9 @@ type FormInputs = {
   groupName: string;
 };
 
+type groupName = {
+  name: string;
+};
 interface CategoryFormProps {
   data: Category[];
   refetchData: () => void;
@@ -80,7 +83,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
 
   useEffect(() => {
     setCategories(data || []);
-    // console.log("data", data);
+    console.log("data", data);
   }, [data]);
 
   useEffect(() => {
@@ -185,6 +188,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
       name: "",
       slug: "",
       shortDescription: "",
+      groupName: "",
     });
     setPreviewUrl(null);
     setItemIdToBeUpdate(undefined);
@@ -204,12 +208,36 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
         slug: category.slug,
         shortDescription: category.shortDescription,
         icon: undefined,
+        groupName: category?.groupName?.name,
       });
     }
   }
   return (
     <>
       <div className="max-w-md">
+        <h2 className="text-lg font-semibold">Categories Group Name:</h2>
+        <ul className="flex flex-wrap gap-2">
+          {(() => {
+            const uniqueGroupNames = new Set(); // To store unique group names
+            return categories
+              ?.filter((category: any) => {
+                const groupName = category?.groupName?.name;
+                if (groupName && !uniqueGroupNames.has(groupName)) {
+                  uniqueGroupNames.add(groupName);
+                  return true; // Include in the final list
+                }
+                return false; // Skip duplicates
+              })
+              ?.map((category: any, index: number) => (
+                <li
+                  key={category?.id || index}
+                  className="rounded-lg border-2 border-bg1 bg-bg1/5 px-2"
+                >
+                  {category?.groupName?.name}
+                </li>
+              ));
+          })()}
+        </ul>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 rounded bg-white p-4 shadow">
           <h2 className="text-lg font-semibold">Categories</h2>
           <Input
@@ -319,7 +347,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
                           </h6>
                           <h6 className="text-sm">
                             <strong>Group: </strong>
-                            {category?.groupName}
+                            {category?.groupName?.name}
                           </h6>
                           <p className="text-sm">{category?.shortDescription}</p>
                         </div>
