@@ -84,9 +84,9 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
           <FaStar key={i} className="mx-2 text-2xl text-bg1" />
         ))}
       </div>
-      <Link href={"#"} target="_blank" className="my-2">
+      {/* <Link href={"#"} target="_blank" className="my-2">
         <Button className="!w-full">View Story</Button>
-      </Link>
+      </Link> */}
     </div>
   );
 }

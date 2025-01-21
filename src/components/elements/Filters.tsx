@@ -4,7 +4,7 @@ import { IoFilter, IoLocationOutline } from "react-icons/io5";
 import LocationTypeHead from "./globalSearch/LocationTypeHead";
 import Dropdown, { DropdownItem } from "./Dropdown";
 import Button from "./Button";
-import { FilterProps } from "@/app/services/[service]/types";
+import { FilterProps } from "@/app/services/[service]/_sections/types";
 import { useLocationStore } from "@/zustandStore/location";
 import { FaArrowUpLong } from "react-icons/fa6";
 

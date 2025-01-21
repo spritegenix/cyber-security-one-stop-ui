@@ -17,23 +17,20 @@ export default async function Home() {
   // throw new Error("This is a test error!");
   const categories = await fetchCategoriesSSR();
   const testimonials = await fetchTestimonialsSSR({ type: "REVIEW", page: 1, limit: 10 });
-  // const categories = await fetchCategoriesSSR();
-  const convertedCategories = ArrayConvertor(categories?.allCategories);
   return (
     <Layout headerStyle={1} footerStyle={1}>
       <HomeHero />
       <Categories categories={categories?.allCategories} />
-      <p> {JSON.stringify(convertedCategories, null, 2)}</p>
       {/* AdBannerSlider  */}
       <Wrapper className="swiperStyle2 relative">
         <AdBannerSlider />
       </Wrapper>
       {/* Testimonials  */}
-      {testimonials.allTestimonials.length > 0 && (
+      {testimonials?.allTestimonials.length > 0 && (
         <Wrapper className="relative space-y-5 py-16">
           <h2 className="mb-5 text-center text-3xl font-bold text-bg1">What Client Say About Us</h2>
           <div className="sliderStyle relative">
-            <TestimonialSlider testimonials={testimonials.allTestimonials} />
+            <TestimonialSlider testimonials={testimonials?.allTestimonials} />
           </div>
           <div className="relative mx-auto !-mt-60 h-64 w-full overflow-hidden rounded-2xl bg-bg1 max-sm:hidden">
             {/* Line Animation  */}

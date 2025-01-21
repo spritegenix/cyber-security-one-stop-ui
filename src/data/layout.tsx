@@ -189,7 +189,7 @@ export const footer = {
     linkedin: "https://www.linkedin.com/school/CyberSecurity/",
     youtube: "https://www.youtube.com/c/CyberSecurity",
   },
-  copyrightText: "Copyrights © 2024 CyberSecurity. All rights reserved.",
+  copyrightText: `Copyrights © ${new Date().getFullYear()} CyberSecurity. All rights reserved.`,
   list1: {
     title: "Quick Links",
     links: [
@@ -213,6 +213,11 @@ export const footer = {
         id: 4,
         label: "User Login",
         href: "/login",
+      },
+      {
+        id: 5,
+        label: "Firm Login",
+        href: "/listing-login",
       },
     ],
   },
