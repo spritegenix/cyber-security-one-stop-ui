@@ -419,6 +419,7 @@ const GET_ALL_AD_BANNER = gql`
 
 export const useFetchAllAdBanners = () => {
   const { data, loading, error, refetch } = useQuery(GET_ALL_AD_BANNER);
+  
   return { data, loading, error, refetch };
 };
 
