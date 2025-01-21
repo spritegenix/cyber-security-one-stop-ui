@@ -282,27 +282,39 @@ export const GET_ALL_AD_BANNERS = gql`
   query Query {
     getAllAddBanners {
       id
-      url
       order
-      businessDetails {
-        business {
-          id
-          slug
-          name
+      businessAdBannerImage {
+        id
+        url
+        order
+        businessDetails {
+          business {
+            id
+            slug
+            name
+          }
         }
+        message
       }
+      message
     }
     getAllMobileAddBanners {
       id
-      url
       order
-      businessDetails {
-        business {
-          id
-          slug
-          name
+      businessMobileAdBannerImage {
+        id
+        url
+        order
+        businessDetails {
+          business {
+            id
+            slug
+            name
+          }
         }
+        message
       }
+      message
     }
   }
 `;
@@ -314,7 +326,7 @@ export const fetchAdBannersSSR = async () => {
       query: GET_ALL_AD_BANNERS,
     });
 
-    if (!data || !data.getAllAddBanners) {
+    if (!data || !data.getAllAddBanners || !data.getAllMobileAddBanners) {
       console.warn("No ad banners found.");
       return null;
     }
@@ -326,6 +338,7 @@ export const fetchAdBannersSSR = async () => {
       return null; // Return null on GraphQL or network error
     }
 
+    console.error("Error while fetching add banners:", error);
     return null;
   }
 };

@@ -48,13 +48,19 @@ export const AdBannerSlider = ({
             ? data &&
               data?.getAllMobileAddBanners?.map((item: any, index: number) => (
                 <SwiperSlide key={index}>
-                  <AdCard image={item?.url} href={item?.businessDetails?.business?.slug} />
+                  <AdCard
+                    image={item?.businessMobileAdBannerImage?.url}
+                    href={item?.businessMobileAdBannerImage?.businessDetails?.business?.slug}
+                  />
                 </SwiperSlide>
               ))
             : data &&
               data?.getAllAddBanners?.map((item: any, index: number) => (
                 <SwiperSlide key={index}>
-                  <AdCard image={item?.url} href={item?.businessDetails?.business?.slug} />
+                  <AdCard
+                    image={item?.businessAdBannerImage?.url}
+                    href={item?.businessAdBannerImage?.businessDetails?.business?.slug}
+                  />
                 </SwiperSlide>
               ))}
         </Swiper>

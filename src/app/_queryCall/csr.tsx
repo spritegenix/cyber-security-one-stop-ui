@@ -380,33 +380,46 @@ const GET_ALL_AD_BANNER = gql`
   query Query {
     getAllAddBanners {
       id
-      url
       order
-      businessDetails {
-        business {
-          id
-          slug
-          name
+      businessAdBannerImage {
+        id
+        url
+        order
+        businessDetails {
+          business {
+            id
+            slug
+            name
+          }
         }
+        message
       }
+      message
     }
     getAllMobileAddBanners {
       id
-      url
       order
-      businessDetails {
-        business {
-          id
-          slug
-          name
+      businessMobileAdBannerImage {
+        id
+        url
+        order
+        businessDetails {
+          business {
+            id
+            slug
+            name
+          }
         }
+        message
       }
+      message
     }
   }
 `;
 
 export const useFetchAllAdBanners = () => {
   const { data, loading, error, refetch } = useQuery(GET_ALL_AD_BANNER);
+  
   return { data, loading, error, refetch };
 };
 
