@@ -623,6 +623,16 @@ export const GET_BUSINESS_DETAILS = gql`
       }
       price
       message
+      adminNotice {
+        id
+        businessId
+        type
+        note
+        createdAt
+        updatedAt
+        deletedAt
+        message
+      }
     }
   }
 `;
