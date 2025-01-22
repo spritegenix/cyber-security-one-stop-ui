@@ -1,7 +1,9 @@
 import { gql, useMutation } from "@apollo/client";
 
 export const ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE = gql`
-  mutation AdminManageBusinessAdBannerImage($businessAdBannerImages: [AdminBusinessAdBannerImageInput]) {
+  mutation AdminManageBusinessAdBannerImage(
+    $businessAdBannerImages: [AdminBusinessAdBannerImageInput]
+  ) {
     adminManageBusinessAdBannerImage(businessAdBannerImages: $businessAdBannerImages) {
       id
       order
@@ -13,9 +15,18 @@ export const ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE = gql`
   }
 `;
 
+// "businessAdBannerImages": [
+//   {
+//     "id": null,
+//     "order": null,
+//     "toDelete": null
+//   }
+// ]
+// }
+
 export function useAdminManageBusinessAdBannerImage() {
   const [adminManageBusinessAdBannerImage, { loading, error }] = useMutation(
-    ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE
+    ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE,
   );
 
   const manageBusinessAdBannerImage = async ({
@@ -49,10 +60,13 @@ export function useAdminManageBusinessAdBannerImage() {
   };
 }
 
-
 export const ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE = gql`
-  mutation AdminManageBusinessMobileAdBannerImage($businessMobileAdBannerImages: [AdminBusinessMobileAdBannerImageInput]) {
-   adminManageBusinessMobileAdBannerImage(businessMobileAdBannerImages: $businessMobileAdBannerImages) {
+  mutation AdminManageBusinessMobileAdBannerImage(
+    $businessMobileAdBannerImages: [AdminBusinessMobileAdBannerImageInput]
+  ) {
+    adminManageBusinessMobileAdBannerImage(
+      businessMobileAdBannerImages: $businessMobileAdBannerImages
+    ) {
       id
       order
       createdAt
@@ -63,36 +77,46 @@ export const ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE = gql`
   }
 `;
 
+// {
+//   "businessMobileAdBannerImages": [
+//     {
+//       "id": null,
+//       "order": null,
+//       "toDelete": null
+//     }
+//   ]
+// }
+
 export function useAdminManageBusinessMobileAdBannerImage() {
-    const [adminManageBusinessMobileAdBannerImage, { data, loading, error }] = useMutation(
-      ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE
-    );
-  
-    const manageBusinessMobileAdBannerImage = async ({
-      businessMobileAdBannerImages
-    }: {
-      businessMobileAdBannerImages: Array<{
-        id: string | null;
-        order: number | null;
-        toDelete: boolean | null;
-      }>;
-    }) => {
-      try {
-        const response = await adminManageBusinessMobileAdBannerImage({
-          variables: {
-            businessMobileAdBannerImages
-          },
-        });
-        return { response: response?.data, error: null };
-      } catch (err) {
-        return { response: null, error: err };
-      }
-    };
-  
-    return {
-      manageBusinessMobileAdBannerImage,
-      data,
-      loading,
-      error,
-    };
-  }
+  const [adminManageBusinessMobileAdBannerImage, { data, loading, error }] = useMutation(
+    ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE,
+  );
+
+  const manageBusinessMobileAdBannerImage = async ({
+    businessMobileAdBannerImages,
+  }: {
+    businessMobileAdBannerImages: Array<{
+      id: string | null;
+      order: number | null;
+      toDelete: boolean | null;
+    }>;
+  }) => {
+    try {
+      const response = await adminManageBusinessMobileAdBannerImage({
+        variables: {
+          businessMobileAdBannerImages,
+        },
+      });
+      return { response: response?.data, error: null };
+    } catch (err) {
+      return { response: null, error: err };
+    }
+  };
+
+  return {
+    manageBusinessMobileAdBannerImage,
+    data,
+    loading,
+    error,
+  };
+}

@@ -1,3 +1,4 @@
+import { useAdminManageTestimonials } from "@/app/_queryCall/adminAuth/reviews";
 import Button from "@/components/elements/Button";
 import { Input } from "@/components/elements/Input";
 import Modal from "@/components/elements/Modal";
@@ -16,7 +17,17 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
     id: null,
   });
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
-
+  // -------------------------------------------------
+  const {
+    adminManageTestimonials,
+    data: adminManageTestimonialsData,
+    loading: adminManageTestimonialsLoading,
+    error: adminManageTestimonialsError,
+  } = useAdminManageTestimonials();
+  async function handleAddFeedbackToWeb(id: string) {
+    await adminManageTestimonials([{ feedbackId: id }]);
+  }
+  // -------------------------------------------------------
   function handleDeleteReview(id: string) {
     setDeleteModal({ isOpen: true, id: id });
   }
@@ -309,7 +320,10 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
               business?.feedbacks.map((feedback: any) => (
                 <li key={feedback?.id} className="relative rounded-lg border border-bg1 p-2">
                   <Tooltip content="Add to Web" direction="top" className="float-end">
-                    <MdOutlinePostAdd className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105" />
+                    <MdOutlinePostAdd
+                      className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
+                      onClick={() => handleAddFeedbackToWeb(feedback?.id)}
+                    />
                   </Tooltip>
                   <p>Rating: {feedback?.rating}/5</p>
                   <p>{feedback?.comment}</p>
@@ -322,6 +336,12 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
               <p>No feedbacks available.</p>
             )}
           </ul>
+          {adminManageTestimonialsData && (
+            <p className="text-sm text-green-500">{adminManageTestimonialsData?.[0]?.message}</p>
+          )}
+          {adminManageTestimonialsError && (
+            <p className="text-sm text-red-500">{adminManageTestimonialsError?.message}</p>
+          )}
         </section>
       </div>
       {/* Delete Confirmation Modal */}

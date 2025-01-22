@@ -86,7 +86,7 @@ export default function Footer1({ footerData }: any) {
             className="font-medium hover:underline"
             href={"https://www.spritegenix.com/"}
           >
-            SpriteGenix
+            Sprite Genix
           </Link>
         </p>
 

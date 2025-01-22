@@ -249,6 +249,14 @@ export const ADMIN_MANAGE_TESTIMONIALS = gql`
   }
 `;
 
+interface TestimonialInput {
+  feedbackId?: string | undefined;
+  id?: string | undefined;
+  order?: number | undefined;
+  reviewId?: string | undefined;
+  toDelete?: boolean | undefined;
+}
+
 export function useAdminManageTestimonials() {
   const { setTokenType } = useAuthStore();
 
@@ -256,33 +264,25 @@ export function useAdminManageTestimonials() {
     setTokenType("admin");
   }, [setTokenType]);
 
-  // Use Apollo's useMutation hook for managing testimonials
   const [manageTestimonials, { data, loading, error }] = useMutation(ADMIN_MANAGE_TESTIMONIALS, {
     onCompleted: (data: any) => {
-      // Handle successful response
       console.log("Successfully managed testimonials:", data);
     },
     onError: (err: any) => {
-      // Handle error response
       console.error("Error managing testimonials:", err);
     },
   });
 
-  const adminManageTestimonials = async (testimonials: Array<any>) => {
+  const adminManageTestimonials = async (testimonials: TestimonialInput[]) => {
     try {
       const response = await manageTestimonials({
         variables: { testimonials },
       });
-      return { response: response.data, error: null };
+      return { response: response?.data, error: null };
     } catch (err) {
       return { response: null, error: err };
     }
   };
 
-  return {
-    adminManageTestimonials,
-    data: data?.adminManageTestimonials,
-    loading,
-    error,
-  };
+  return { adminManageTestimonials, data: data?.adminManageTestimonials, loading, error };
 }
