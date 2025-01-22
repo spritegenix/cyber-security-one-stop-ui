@@ -7,9 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
-import Link from "next/link";
 import { FaStar } from "react-icons/fa";
-import Button from "@/components/elements/Button";
 // import { testimonials } from "@/data/global";
 export const TestimonialSlider = ({ testimonials }: any) => {
   const uniqueId = "testimonials123";

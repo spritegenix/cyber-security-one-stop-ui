@@ -1,4 +1,3 @@
-"use client";
 import AuthSlider from "@/components/elements/AuthSliderModel/AuthSlider";
 import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";

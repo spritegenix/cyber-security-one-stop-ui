@@ -1,10 +1,11 @@
 import Button from "@/components/elements/Button";
 import { Input } from "@/components/elements/Input";
 import Modal from "@/components/elements/Modal";
+import Tooltip from "@/components/elements/Tooltip";
 import { formatDate } from "@/utils/customText";
 import Image from "next/image";
 import React, { useState } from "react";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDeleteForever, MdOutlinePostAdd } from "react-icons/md";
 
 const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void }> = ({
   business,
@@ -22,7 +23,6 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
 
   const confirmDeleteReview = async () => {
     if (deleteModal.id && deleteConfirmation === "DELETE REVIEW") {
-      // await adminManageCategories([{ id: deleteModal.categoryId, toDelete: true }]);
       handleClear();
     }
   };
@@ -307,7 +307,10 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
           <ul className="space-y-2">
             {business?.feedbacks?.length > 0 ? (
               business?.feedbacks.map((feedback: any) => (
-                <li key={feedback?.id} className="rounded-lg border border-bg1 p-2">
+                <li key={feedback?.id} className="relative rounded-lg border border-bg1 p-2">
+                  <Tooltip content="Add to Web" direction="top" className="float-end">
+                    <MdOutlinePostAdd className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105" />
+                  </Tooltip>
                   <p>Rating: {feedback?.rating}/5</p>
                   <p>{feedback?.comment}</p>
                   <p className="text-sm text-gray-500">

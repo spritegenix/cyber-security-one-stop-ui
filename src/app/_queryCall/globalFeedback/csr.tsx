@@ -1,7 +1,7 @@
 "use client";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import useAuthStore from "@/zustandStore/authStore";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 const FEEDBACK_MUTATION = gql`
   mutation Mutation($feedbackId: ID, $rating: Float, $comment: String, $toDelete: Boolean) {
