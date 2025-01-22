@@ -390,8 +390,8 @@ export const UPDATE_USER_DETAILS = gql`
     $hideDetails: Boolean
     $avatar: Upload
     $addresses: [UserAddressInput!]! #   "addresses": [
-    #     {
-  ) #     "toDelete": null,
+    #     "toDelete": null,
+  ) #     {
   #     "street": null,
   #     "state": null,
   #     "pincode": null,
@@ -569,6 +569,17 @@ export const GET_USER_ME = gql`
         }
       }
       message
+      adminNotice {
+        id
+        businessId
+        userId
+        type
+        note
+        createdAt
+        updatedAt
+        deletedAt
+        message
+      }
     }
   }
 `;
