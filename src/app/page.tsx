@@ -6,7 +6,6 @@ import Categories from "@/app/_sections/Categories";
 import React from "react";
 import { AdBannerSlider } from "./_sections/AdBannerSlider";
 import { fetchCategoriesSSR, fetchTestimonialsSSR } from "./_queryCall/ssr";
-import { ArrayConvertor } from "@/utils/Convertor";
 
 export const revalidate = 1000; // Rebuild the page every hour
 

@@ -223,7 +223,7 @@ export function useAdminGetAllTestimonials() {
 
   useEffect(() => {
     setTokenType("admin"); // Ensure the token type is set to 'admin'
-  }, [setTokenType]);
+  }, []);
 
   const [fetchTestimonials, { data, loading, error, refetch }] = useLazyQuery(
     ADMIN_GET_ALL_TESTIMONIALS,

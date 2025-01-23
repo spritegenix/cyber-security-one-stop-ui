@@ -21,7 +21,7 @@ export default function TestimonialsCards({ filterType = "BUSINESS" }: any) {
 
   useEffect(() => {
     getTestimonials({ filter: filterType });
-    console.log(data);
+    // console.log(data);
   }, [data]);
 
   async function handleTestimonialOrder(id: string, orderSelected: number) {

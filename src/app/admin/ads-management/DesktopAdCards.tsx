@@ -1,27 +1,62 @@
 "use client";
-import { banner } from "@/assets";
+import {
+  useAdminGetAllBusinessAdBannerImages,
+  useAdminManageBusinessAdBannerImage,
+} from "@/app/_queryCall/adminAuth/adBanner";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 
 export default function DesktopAdCards() {
-  async function handleOrder(id: string, orderSelected: number) {}
-  async function handleDelete(id: string) {}
+  const { adminGetAllBusinessAdBannerImages, data, loading, error, refetch } =
+    useAdminGetAllBusinessAdBannerImages();
+  useEffect(() => {
+    adminGetAllBusinessAdBannerImages({});
+    // console.log(data, "adminGetAllBusinessAdBannerImagesData");
+  }, [data]);
+
+  const {
+    manageBusinessAdBannerImage,
+    data: manageBusinessAdBannerImageData,
+    loading: manageBusinessAdBannerImageLoading,
+    error: manageBusinessAdBannerImageError,
+  } = useAdminManageBusinessAdBannerImage();
+
+  async function handleOrder(id: string, orderSelected: number) {
+    await manageBusinessAdBannerImage([{ id, order: orderSelected }]);
+    refetch();
+  }
+  async function handleDelete(id: string) {
+    await manageBusinessAdBannerImage([{ id, toDelete: true }]);
+    refetch();
+  }
+
+  if (loading) return <p>Loading banners...</p>;
+  if (error) return <p>Error loading banners. Please try again later.</p>;
+
   return (
-    <div className="">
+    <section>
       <ul className="space-y-4">
-        {[...Array(10)].map((_, index) => (
+        <p>Total : {data?.total}</p>
+        {data?.images?.length === 0 && <p>No banner found</p>}
+        {manageBusinessAdBannerImageData && (
+          <p className="text-sm text-green-500">{manageBusinessAdBannerImageData?.[0]?.message}</p>
+        )}
+        {manageBusinessAdBannerImageError && (
+          <p className="text-sm text-red-500">{manageBusinessAdBannerImageError?.message}</p>
+        )}
+        {data?.images?.map((item: any, index: number) => (
           <Card
-            key={index}
-            id={index.toString()}
-            order={index + 1}
-            image={banner}
+            key={item?.id}
+            id={item?.id}
+            order={item?.order}
+            image={item?.url}
             handleOrder={handleOrder}
             handleDelete={handleDelete}
           />
         ))}
       </ul>
-    </div>
+    </section>
   );
 }
 
@@ -40,7 +75,7 @@ function Card({ id, order, image, handleOrder, handleDelete }: any) {
             className="float-right cursor-pointer text-2xl text-red-500 duration-300 hover:scale-105"
             onClick={() => handleDelete(id)}
           />
-          <Image src={image} alt="image" width={900} height={500} className="rounded-lg shadow" />
+          <Image src={image} alt="image" width={900} height={300} className="rounded-lg shadow" />
           <div className="mt-2 flex gap-2">
             <h2 className="text-lg font-semibold">Order On UI: </h2>
             <input

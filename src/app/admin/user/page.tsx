@@ -8,6 +8,7 @@ import { FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
 import UserCard from "./_sections/UserCard";
 import { useDebounce } from "@/utils/debounce";
 import PageTabs from "../_sections/PageTabs";
+import UserIndividualData from "./_sections/UserIndividualData";
 
 export default function UserListPage() {
   const [usersList, setUsersList] = useState<any[]>([]);
@@ -188,31 +189,9 @@ export default function UserListPage() {
         </div>
         {/* Right Side  */}
         <div className="col-span-5 mt-12">
-          <IndividualUserData userData={selectedUserData} />
+          <UserIndividualData user={selectedUserData} />
         </div>
       </Wrapper>
     </>
   );
 }
-
-function IndividualUserData({ userData }: any) {
-  if (!userData) {
-    return (
-      <div className="rounded bg-white p-4 shadow">
-        <p className="text-gray-500">Click on a User Name to see details</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="rounded bg-white p-4 shadow">
-      <pre className="whitespace-pre-wrap break-words text-sm text-gray-800">
-        {JSON.stringify(userData, null, 2)}
-      </pre>
-    </div>
-  );
-}
-
-// "sortBy":"alphabetical" not working
-// How to Block user
-// Admin Note

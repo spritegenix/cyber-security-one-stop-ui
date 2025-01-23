@@ -216,7 +216,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
     <>
       <div className="max-w-md">
         <h2 className="text-lg font-semibold">Categories Group Name:</h2>
-        <ul className="flex flex-wrap gap-2">
+        <ul className="mb-3 flex flex-wrap gap-2">
           {(() => {
             const uniqueGroupNames = new Set(); // To store unique group names
             return categories

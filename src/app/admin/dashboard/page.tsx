@@ -5,6 +5,7 @@ import CategoryForm from "../_sections/CategoryForm";
 import { useAdminGetAllCategories } from "@/app/_queryCall/adminAuth/csr";
 import PageTabs from "../_sections/PageTabs";
 import { group } from "console";
+import AddressForm from "../_sections/Locations";
 
 export default function AdminDashboardPage() {
   const { data: allCategories, refetch: allCategoriesFetch } = useAdminGetAllCategories();
@@ -39,6 +40,9 @@ export default function AdminDashboardPage() {
             }
             refetchData={allCategoriesFetch}
           />
+        </div>
+        <div className="col-span-2">
+          <AddressForm />
         </div>
       </Wrapper>
     </>

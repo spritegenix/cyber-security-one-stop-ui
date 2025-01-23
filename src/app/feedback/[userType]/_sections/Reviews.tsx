@@ -117,9 +117,9 @@ export default function Reviews({ userType }: any) {
               />
             </div>
           ) : (
-            <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg md:h-36 md:w-36">
-              <p className="caption-bottom text-5xl text-white">
-                {userType === "user" ? feedbackData?.name : feedbackData?.name}
+            <div className="flex size-20 items-center justify-center rounded-full border-4 border-white bg-gray-200 shadow-lg">
+              <p className="caption-bottom text-5xl capitalize text-white">
+                {userType === "user" ? feedbackData?.name?.[0] : feedbackData?.name?.[0]}
               </p>
             </div>
           )}
