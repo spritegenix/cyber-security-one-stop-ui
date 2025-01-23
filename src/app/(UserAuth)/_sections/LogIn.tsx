@@ -52,7 +52,7 @@ export default function LogIn({ handleModelClose }: any) {
   };
 
   useEffect(() => {
-    if (data) handleModelClose();
+    if (data && handleModelClose) handleModelClose();
   }, [data]);
 
   return (

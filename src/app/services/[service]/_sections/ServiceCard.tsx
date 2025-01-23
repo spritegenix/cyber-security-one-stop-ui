@@ -72,12 +72,12 @@ export default function ServiceCard({
             onClick={() => {
               if (!isPhoneDisplay) {
                 setIsPhoneDisplay(true);
-              } else if (isPhoneDisplay) {
-                if (isLoggedIn) {
-                  window.open(`tel:${phoneNumber}`);
-                } else {
+                if (!isLoggedIn) {
                   window.location.href = "/login";
+                  return;
                 }
+              } else if (isLoggedIn) {
+                window.open(`tel:${phoneNumber}`);
               }
             }}
             variant="green"
@@ -85,10 +85,11 @@ export default function ServiceCard({
           >
             {isPhoneDisplay && isLoggedIn ? phoneNumber : "Show Number"}
           </Button>
+
           <Button
             onClick={() => {
               if (isLoggedIn) {
-                window.open(`https://wa.me/${whatsAppNumber}`, "_blank");
+                window.open(`https://api.whatsapp.com/send?phone=${whatsAppNumber}`, "_blank");
               } else {
                 window.location.href = "/login";
               }
