@@ -15,29 +15,20 @@ export const ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE = gql`
   }
 `;
 
-// "businessAdBannerImages": [
-//   {
-//     "id": null,
-//     "order": null,
-//     "toDelete": null
-//   }
-// ]
-// }
+interface AdminManageBusinessAdBannerImageInput {
+  id: string | undefined;
+  order?: number | undefined;
+  toDelete?: boolean | undefined;
+}
 
 export function useAdminManageBusinessAdBannerImage() {
-  const [adminManageBusinessAdBannerImage, { loading, error }] = useMutation(
+  const [adminManageBusinessAdBannerImage, { data, loading, error }] = useMutation(
     ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE,
   );
 
-  const manageBusinessAdBannerImage = async ({
-    businessAdBannerImages,
-  }: {
-    businessAdBannerImages: Array<{
-      id: string | null;
-      order: number | null;
-      toDelete: boolean | null;
-    }>;
-  }) => {
+  const manageBusinessAdBannerImage = async (
+    businessAdBannerImages: AdminManageBusinessAdBannerImageInput[],
+  ) => {
     if (!businessAdBannerImages || businessAdBannerImages.length === 0) {
       return { response: null, error: new Error("No input provided") };
     }
@@ -53,11 +44,7 @@ export function useAdminManageBusinessAdBannerImage() {
     }
   };
 
-  return {
-    manageBusinessAdBannerImage,
-    loading,
-    error,
-  };
+  return { manageBusinessAdBannerImage, data, loading, error };
 }
 
 export const ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE = gql`
@@ -77,34 +64,18 @@ export const ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE = gql`
   }
 `;
 
-// {
-//   "businessMobileAdBannerImages": [
-//     {
-//       "id": null,
-//       "order": null,
-//       "toDelete": null
-//     }
-//   ]
-// }
-
 export function useAdminManageBusinessMobileAdBannerImage() {
   const [adminManageBusinessMobileAdBannerImage, { data, loading, error }] = useMutation(
     ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE,
   );
 
-  const manageBusinessMobileAdBannerImage = async ({
-    businessMobileAdBannerImages,
-  }: {
-    businessMobileAdBannerImages: Array<{
-      id: string | null;
-      order: number | null;
-      toDelete: boolean | null;
-    }>;
-  }) => {
+  const manageBusinessMobileAdBannerImage = async (
+    businessAdBannerImages: AdminManageBusinessAdBannerImageInput[],
+  ) => {
     try {
       const response = await adminManageBusinessMobileAdBannerImage({
         variables: {
-          businessMobileAdBannerImages,
+          businessAdBannerImages,
         },
       });
       return { response: response?.data, error: null };

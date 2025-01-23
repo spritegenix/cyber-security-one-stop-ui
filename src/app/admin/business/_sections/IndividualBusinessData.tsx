@@ -1,3 +1,8 @@
+import {
+  useAdminManageBusinessAdBannerImage,
+  useAdminManageBusinessMobileAdBannerImage,
+} from "@/app/_queryCall/adminAuth/adBanner";
+import { useAdminDeleteReviews } from "@/app/_queryCall/adminAuth/business";
 import { useAdminManageTestimonials } from "@/app/_queryCall/adminAuth/reviews";
 import Button from "@/components/elements/Button";
 import { Input } from "@/components/elements/Input";
@@ -17,7 +22,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
     id: null,
   });
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
-  // -------------------------------------------------
+  // --------------Managing Testimonials-------------------------------------
   const {
     adminManageTestimonials,
     data: adminManageTestimonialsData,
@@ -28,21 +33,50 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
     await adminManageTestimonials([{ feedbackId: id }]);
   }
   // -------------------------------------------------------
-  function handleDeleteReview(id: string) {
+
+  // --------------Managing Reviews---------------------------------------------
+  const {
+    deleteReviews,
+    data: deleteReviewsData,
+    loading: deleteReviewsLoading,
+    error: deleteReviewsError,
+  } = useAdminDeleteReviews();
+  async function handleDeleteReview(id: string) {
     setDeleteModal({ isOpen: true, id: id });
   }
-
   const confirmDeleteReview = async () => {
     if (deleteModal.id && deleteConfirmation === "DELETE REVIEW") {
+      await deleteReviews([{ reviewId: deleteModal.id, toDelete: true }]);
       handleClear();
     }
   };
-
   const handleClear = () => {
     setDeleteModal({ isOpen: false, id: null });
     setDeleteConfirmation("");
     refetchData();
   };
+  // -----------------------------------------------------
+  // --------------------- Managing Ad Banners -----------
+  const {
+    manageBusinessAdBannerImage,
+    data: manageBusinessAdBannerImageData,
+    loading: manageBusinessAdBannerImageLoading,
+    error: manageBusinessAdBannerImageError,
+  } = useAdminManageBusinessAdBannerImage();
+
+  const {
+    manageBusinessMobileAdBannerImage,
+    data: manageBusinessMobileAdBannerImageData,
+    loading: manageBusinessMobileAdBannerImageLoading,
+    error: manageBusinessMobileAdBannerImageError,
+  } = useAdminManageBusinessMobileAdBannerImage();
+  async function handleDesktopAdBannerToWeb(id: string) {
+    await manageBusinessAdBannerImage([{ id: id }]);
+  }
+  async function handleMobileAdBannerToWeb(id: string) {
+    await manageBusinessMobileAdBannerImage([{ id: id }]);
+  }
+  // -----------------------------------------------------
 
   if (!business) {
     return (
@@ -52,7 +86,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
     );
   }
 
-  // console.log("business", business);
+  console.log("business", business);
   return (
     <>
       <div className="mx-auto max-w-6xl p-4">
@@ -247,14 +281,38 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
           <div className="grid grid-cols-1 gap-4">
             {business.businessDetails?.adBannerImages?.length > 0 ? (
               business.businessDetails.adBannerImages.map((banner: any, idx: number) => (
-                <Image
-                  key={idx}
-                  src={banner.url || "/placeholder-banner.png"}
-                  alt={`Banner ${idx}`}
-                  className="rounded-lg"
-                  width={800}
-                  height={500}
-                />
+                <div key={idx} className="relative">
+                  <div className="absolute -right-2 -top-2 w-min">
+                    {banner?.adminBusinessAdBannerImage?.id !== banner?.id && (
+                      <Tooltip content="Add to Web" direction="top">
+                        <MdOutlinePostAdd
+                          className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
+                          onClick={() => handleDesktopAdBannerToWeb(banner?.id)}
+                        />
+                      </Tooltip>
+                    )}
+                  </div>
+                  <Image
+                    src={banner.url || "/placeholder-banner.png"}
+                    alt={`Banner ${idx}`}
+                    className="rounded-lg"
+                    width={800}
+                    height={500}
+                  />
+                  {banner?.adminBusinessAdBannerImage?.id === banner?.id && (
+                    <p className="font-semibold text-green-500">Already Added by Admin</p>
+                  )}
+                  {manageBusinessAdBannerImageData && (
+                    <p className="text-sm text-green-500">
+                      {manageBusinessAdBannerImageData?.[idx]?.message}
+                    </p>
+                  )}
+                  {manageBusinessAdBannerImageError && (
+                    <p className="text-sm text-red-500">
+                      {manageBusinessAdBannerImageError?.message}
+                    </p>
+                  )}
+                </div>
               ))
             ) : (
               <p>No ad banners available.</p>
@@ -267,19 +325,78 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
           <div className="grid grid-cols-2 gap-4">
             {business.businessDetails?.mobileAdBannerImages?.length > 0 ? (
               business.businessDetails.mobileAdBannerImages.map((banner: any, idx: number) => (
-                <Image
-                  key={idx}
-                  src={banner.url || "/placeholder-banner.png"}
-                  alt={`Banner ${idx}`}
-                  className="rounded-lg"
-                  width={500}
-                  height={800}
-                />
+                <div key={idx} className="relative">
+                  <div className="absolute -right-2 -top-2 w-min">
+                    <Tooltip content="Add to Web" direction="top">
+                      <MdOutlinePostAdd
+                        className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
+                        onClick={() => handleMobileAdBannerToWeb(banner?.id)}
+                      />
+                    </Tooltip>
+                  </div>
+                  <Image
+                    src={banner.url || "/placeholder-banner.png"}
+                    alt={`Banner ${idx}`}
+                    className="rounded-lg"
+                    width={500}
+                    height={800}
+                  />
+
+                  {manageBusinessMobileAdBannerImageData && (
+                    <p className="text-sm text-green-500">
+                      {manageBusinessMobileAdBannerImageData?.[idx]?.message}
+                    </p>
+                  )}
+                  {manageBusinessMobileAdBannerImageError && (
+                    <p className="text-sm text-red-500">
+                      {manageBusinessMobileAdBannerImageError?.message}
+                    </p>
+                  )}
+                </div>
               ))
             ) : (
               <p>No Mobile ad banners available.</p>
             )}
           </div>
+        </section>
+
+        {/* Feedbacks */}
+        <section className="mt-6">
+          <h2 className="text-xl font-semibold">Feedbacks</h2>
+          <ul className="space-y-2">
+            {business?.feedbacks?.length > 0 ? (
+              business?.feedbacks.map((feedback: any) => (
+                <li key={feedback?.id} className="relative rounded-lg border border-bg1 p-2">
+                  {!business?.testimonials.some((t: any) => t?.feedbackId === feedback?.id) && (
+                    <Tooltip content="Add to Web" direction="top" className="float-end">
+                      <MdOutlinePostAdd
+                        className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
+                        onClick={() => handleAddFeedbackToWeb(feedback?.id)}
+                      />
+                    </Tooltip>
+                  )}
+                  <p>Rating: {feedback?.rating}/5</p>
+                  <p>{feedback?.comment}</p>
+                  <p className="text-sm text-gray-500">
+                    {new Date(feedback.createdAt).toLocaleDateString()}
+                  </p>
+                  {business?.testimonials.some((t: any) => t?.feedbackId === feedback?.id) && (
+                    <p className="text-sm font-semibold text-green-500">
+                      Already selected by Admin for UI
+                    </p>
+                  )}
+                </li>
+              ))
+            ) : (
+              <p>No feedbacks available.</p>
+            )}
+          </ul>
+          {adminManageTestimonialsData && (
+            <p className="text-sm text-green-500">{adminManageTestimonialsData?.[0]?.message}</p>
+          )}
+          {adminManageTestimonialsError && (
+            <p className="text-sm text-red-500">{adminManageTestimonialsError?.message}</p>
+          )}
         </section>
 
         {/* Reviews */}
@@ -310,37 +427,11 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
               <p>No reviews available.</p>
             )}
           </ul>
-        </section>
-
-        {/* Feedbacks */}
-        <section className="mt-6">
-          <h2 className="text-xl font-semibold">Feedbacks</h2>
-          <ul className="space-y-2">
-            {business?.feedbacks?.length > 0 ? (
-              business?.feedbacks.map((feedback: any) => (
-                <li key={feedback?.id} className="relative rounded-lg border border-bg1 p-2">
-                  <Tooltip content="Add to Web" direction="top" className="float-end">
-                    <MdOutlinePostAdd
-                      className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
-                      onClick={() => handleAddFeedbackToWeb(feedback?.id)}
-                    />
-                  </Tooltip>
-                  <p>Rating: {feedback?.rating}/5</p>
-                  <p>{feedback?.comment}</p>
-                  <p className="text-sm text-gray-500">
-                    {new Date(feedback.createdAt).toLocaleDateString()}
-                  </p>
-                </li>
-              ))
-            ) : (
-              <p>No feedbacks available.</p>
-            )}
-          </ul>
-          {adminManageTestimonialsData && (
-            <p className="text-sm text-green-500">{adminManageTestimonialsData?.[0]?.message}</p>
+          {deleteReviewsData && (
+            <p className="text-center text-sm text-green-500">{deleteReviewsData?.[0]?.message}</p>
           )}
-          {adminManageTestimonialsError && (
-            <p className="text-sm text-red-500">{adminManageTestimonialsError?.message}</p>
+          {deleteReviewsError && (
+            <p className="text-center text-sm text-red-500">{deleteReviewsError?.message}</p>
           )}
         </section>
       </div>

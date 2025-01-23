@@ -51,7 +51,7 @@ export default function UserListPage() {
   }, [debouncedFilters]);
 
   useEffect(() => {
-    console.log("data", data);
+    // console.log("data", data);
     if (debouncedFilters.page === 1) {
       setUsersList(data?.businesses || []);
     } else if (data?.businesses?.length > 0) {

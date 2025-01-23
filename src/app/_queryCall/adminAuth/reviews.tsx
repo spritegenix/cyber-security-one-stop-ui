@@ -1,5 +1,5 @@
 import useAuthStore from "@/zustandStore/authStore";
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useEffect } from "react";
 
 export const ADMIN_SEARCH_ALL_FEEDBACKS = gql`
@@ -169,56 +169,95 @@ export function useAdminSearchAllReviews() {
 }
 
 export const ADMIN_GET_ALL_TESTIMONIALS = gql`
-  query AdminGetAllTestimonials {
-    adminGetAllTestimonials {
-      id
-      order
-      type
-      rating
-      comment
-      businessId
-      business {
+  query AdminGetAllTestimonials(
+    $type: AllTestimonialType
+    $page: Int
+    $limit: Int
+    $sortBy: SortByEnum
+    $sortOrder: OrderEnum
+    $filter: AllTestimonialFilter
+  ) {
+    adminGetAllTestimonials(
+      type: $type
+      page: $page
+      limit: $limit
+      sortBy: $sortBy
+      sortOrder: $sortOrder
+      filter: $filter
+    ) {
+      testimonials {
         id
-        slug
-        name
+        reviewId
+        feedbackId
+        order
+        type
+        rating
+        comment
+        businessId
+        business {
+          id
+          name
+          slug
+        }
+        userId
+        user {
+          id
+          name
+          slug
+        }
+        createdAt
+        deletedAt
+        updatedAt
+        message
       }
-      userId
-      user {
-        id
-        slug
-        name
-      }
-      createdAt
-      deletedAt
-      updatedAt
-      message
+      total
+      page
+      limit
+      totalPages
     }
   }
 `;
 
 export function useAdminGetAllTestimonials() {
   const { setTokenType } = useAuthStore();
+
   useEffect(() => {
-    setTokenType("admin");
+    setTokenType("admin"); // Ensure the token type is set to 'admin'
   }, [setTokenType]);
 
-  // Use Apollo's useQuery hook to fetch testimonials
-  const { data, loading, error } = useQuery(ADMIN_GET_ALL_TESTIMONIALS, {
-    onCompleted: (data: any) => {
-      // Log or handle successful response
-      console.log("Fetched testimonials successfully:", data);
+  const [fetchTestimonials, { data, loading, error, refetch }] = useLazyQuery(
+    ADMIN_GET_ALL_TESTIMONIALS,
+    {
+      // onCompleted: (data: any) => {
+      //   console.log("Fetched testimonials successfully:", data);
+      // },
+      onError: (err) => {
+        console.error("Error fetching testimonials:", err);
+      },
     },
-    onError: (err: any) => {
-      // Log or handle error response
-      console.error("Error fetching testimonials:", err);
-    },
-  });
+  );
 
-  return {
-    data: data?.adminGetAllTestimonials, // Return the fetched testimonials
-    loading, // Loading state
-    error, // Error state
+  const getTestimonials = ({
+    type = "FEEDBACK",
+    page = 1,
+    limit = 100,
+    sortBy,
+    sortOrder,
+    filter,
+  }: {
+    type?: "REVIEW" | "FEEDBACK" | undefined;
+    page?: number | undefined;
+    limit?: number | undefined;
+    sortBy?: string | undefined;
+    sortOrder?: string | undefined;
+    filter?: "USER" | "BUSINESS" | undefined;
+  }) => {
+    fetchTestimonials({
+      variables: { type, page, limit, sortBy, sortOrder, filter },
+    });
   };
+
+  return { getTestimonials, data, loading, error, refetch };
 }
 
 export const ADMIN_MANAGE_TESTIMONIALS = gql`

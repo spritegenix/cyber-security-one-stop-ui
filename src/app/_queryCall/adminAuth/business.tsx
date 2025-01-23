@@ -213,6 +213,10 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
       id
       name
       slug
+      testimonials {
+        feedbackId
+        order
+      }
       primaryContacts {
         id
         businessId
@@ -346,7 +350,10 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           businessDetailsId
-          message
+          adminBusinessAdBannerImage {
+            id
+            order
+          }
         }
         mobileAdBannerImages {
           id
@@ -356,7 +363,10 @@ export const ADMIN_GET_BUSINESS_BY_ID = gql`
           deletedAt
           updatedAt
           businessDetailsId
-          message
+          adminBusinessMobileAdBannerImage {
+            id
+            order
+          }
         }
         operatingHours {
           id
@@ -734,4 +744,36 @@ export function useAdminManageBusinessSubscriptions() {
     loading,
     error,
   };
+}
+
+export const ADMIN_DELETE_REVIEWS = gql`
+  mutation AdminDeleteReviews($reviews: [ReviewDelete]) {
+    adminDeleteReviews(reviews: $reviews) {
+      id
+      message
+    }
+  }
+`;
+
+interface reviewsInputs {
+  reviewId?: string;
+  toDelete?: boolean;
+}
+
+export function useAdminDeleteReviews() {
+  const [adminDeleteReviews, { data, loading, error }] = useMutation(ADMIN_DELETE_REVIEWS);
+
+  // Function to handle review deletion
+  const deleteReviews = async (reviews: reviewsInputs[]) => {
+    try {
+      const response = await adminDeleteReviews({
+        variables: { reviews },
+      });
+      return { response: response?.data, error: null };
+    } catch (err) {
+      return { response: null, error: err };
+    }
+  };
+
+  return { deleteReviews, data: data?.adminDeleteReviews, loading, error };
 }
