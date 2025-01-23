@@ -20,18 +20,18 @@ export default function Categories({ categories }: any) {
             desc={category?.description || "Category Description"}
           />
         ))}
-        <Link href={"#"} className="group w-full cursor-pointer transition-all duration-300">
-          <div className="mb-4 flex w-full justify-center rounded-md border border-zinc-400 p-8 duration-300 group-hover:border-bg1 group-hover:shadow-lg">
+        <div className="group w-full cursor-pointer transition-all duration-300">
+          <div className="mb-4 flex w-full justify-center rounded-md border border-zinc-400 p-4 group-hover:border-bg1 group-hover:shadow-lg">
             <Image
               src={search}
               alt={"search"}
               width={100}
               height={100}
-              className="h-full w-full object-contain"
+              className="h-24 w-full object-contain"
             />
           </div>
           <h4 className="text-center transition-all duration-300 group-hover:text-bg1">More</h4>
-        </Link>
+        </div>
       </ul>
     </Wrapper>
   );
@@ -49,7 +49,7 @@ export function CategoryCard({ id, label, href, icon, desc }: any) {
           alt={label}
           width={100}
           height={100}
-          className="h-full w-full object-contain"
+          className="h-24 w-full object-contain"
         />
       </div>
       <h4 className="cursor-pointer text-center transition-all duration-300 group-hover:text-bg1">
@@ -63,7 +63,7 @@ export function CategoryCard({ id, label, href, icon, desc }: any) {
             alt={label}
             width={100}
             height={100}
-            className="h-full w-full object-contain"
+            className="h-28 w-full object-contain"
           />
         </div>
         <h4 className="cursor-pointer text-center transition-all duration-300 group-hover:text-bg1">

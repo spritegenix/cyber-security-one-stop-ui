@@ -8,7 +8,7 @@ import { AdBannerSlider } from "./_sections/AdBannerSlider";
 import { fetchCategoriesSSR, fetchTestimonialsSSR } from "./_queryCall/ssr";
 import { ArrayConvertor } from "@/utils/Convertor";
 
-// export const revalidate = 3600; // Rebuild the page every hour
+export const revalidate = 1000; // Rebuild the page every hour
 
 export default async function Home() {
   // Checking Loading Page
