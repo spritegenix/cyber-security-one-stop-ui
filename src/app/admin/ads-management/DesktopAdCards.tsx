@@ -21,8 +21,8 @@ export default function DesktopAdCards() {
     loading: manageBusinessAdBannerImageLoading,
     error: manageBusinessAdBannerImageError,
   } = useAdminManageBusinessAdBannerImage();
-
   async function handleOrder(id: string, orderSelected: number) {
+    // console.log(id, orderSelected);
     await manageBusinessAdBannerImage([{ id, order: orderSelected }]);
     refetch();
   }
@@ -49,7 +49,8 @@ export default function DesktopAdCards() {
           <Card
             key={item?.id}
             id={item?.id}
-            order={item?.order}
+            firmName={item?.businessDetails?.business?.name}
+            order={item?.adminBusinessAdBannerImage?.order}
             image={item?.url}
             handleOrder={handleOrder}
             handleDelete={handleDelete}
@@ -60,7 +61,7 @@ export default function DesktopAdCards() {
   );
 }
 
-function Card({ id, order, image, handleOrder, handleDelete }: any) {
+function Card({ id, firmName, order, image, handleOrder, handleDelete }: any) {
   const [orderSelected, setOrderSelected] = useState<number | undefined>(order);
   const handleBlur = () => {
     if (orderSelected !== undefined) {
@@ -71,10 +72,15 @@ function Card({ id, order, image, handleOrder, handleDelete }: any) {
     <>
       <li>
         <div className="relative">
-          <MdDeleteForever
-            className="float-right cursor-pointer text-2xl text-red-500 duration-300 hover:scale-105"
-            onClick={() => handleDelete(id)}
-          />
+          <div className="flex justify-between">
+            <p>
+              <strong>{firmName}</strong>
+            </p>
+            <MdDeleteForever
+              className="float-right cursor-pointer text-2xl text-red-500 duration-300 hover:scale-105"
+              onClick={() => handleDelete(id)}
+            />
+          </div>
           <Image src={image} alt="image" width={900} height={300} className="rounded-lg shadow" />
           <div className="mt-2 flex gap-2">
             <h2 className="text-lg font-semibold">Order On UI: </h2>

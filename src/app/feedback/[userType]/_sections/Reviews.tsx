@@ -74,7 +74,7 @@ export default function Reviews({ userType }: any) {
       toDelete: false,
     };
 
-    console.log("Submitted Data:", data);
+    // console.log("Submitted Data:", data);
     await submitFeedback(newFeedbackData);
     await feedbackRefetch();
     setIsEditing(false);
@@ -150,7 +150,10 @@ export default function Reviews({ userType }: any) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col items-center space-y-5">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex w-full flex-col items-center space-y-5 md:w-96"
+    >
       <div>
         <RatingInput
           totalStars={5}

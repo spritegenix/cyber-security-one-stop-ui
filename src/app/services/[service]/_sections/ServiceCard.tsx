@@ -89,7 +89,10 @@ export default function ServiceCard({
           <Button
             onClick={() => {
               if (isLoggedIn) {
-                window.open(`https://api.whatsapp.com/send?phone=${whatsAppNumber}`, "_blank");
+                window.open(
+                  `https://api.whatsapp.com/send/?phone=%2B${whatsAppNumber}&text&type=phone_number&app_absent=0`,
+                  "_blank",
+                );
               } else {
                 window.location.href = "/login";
               }

@@ -28,7 +28,8 @@ export const metadata: Metadata = {
     default: "Cyber Security | One stop Solution",
     template: "%s | Cyber Security",
   },
-  description: "One stop Solution",
+  description:
+    "Explore and connect with top firms and individual experts specializing in categories like Financial Fraud, Cybersecurity, Legal Consultancy, and more. Discover trusted professionals to help solve your challenges and secure your interests.",
   twitter: {
     card: "summary_large_image",
   },
@@ -37,7 +38,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Cyber Security",
-    description: "One stop Solution",
+    description:
+      "Explore and connect with top firms and individual experts specializing in categories like Financial Fraud, Cybersecurity, Legal Consultancy, and more. Discover trusted professionals to help solve your challenges and secure your interests.",
     // images: [
     //   {
     //     url: "/api/og-image/route.ts",

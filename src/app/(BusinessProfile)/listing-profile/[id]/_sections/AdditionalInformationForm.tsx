@@ -100,6 +100,7 @@ export default function AdditionalInformationForm({ data, refetchData }: any) {
         websites: [...socialLinks],
         addresses: [],
       });
+      refetchData();
     } catch (error) {
       console.error("Error in submission:", error);
     }

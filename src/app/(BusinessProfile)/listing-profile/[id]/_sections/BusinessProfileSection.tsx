@@ -12,10 +12,15 @@ import VerificationDocumentsForm from "./VerificationDocumentsForm";
 import { useGetBusinessDetails } from "@/app/_queryCall/businessAuth/csr";
 import { FramerMotionAccordion } from "@/components/elements/Accordions/FramerMotionAccordion";
 import { FaCircleDot } from "react-icons/fa6";
+import { ImBlocked } from "react-icons/im";
 import AdminNotification from "./AdminNotification";
+import { useEffect } from "react";
 
 export default function BusinessProfile() {
   const { userData: loggedUser, loading, error, refetch } = useGetBusinessDetails();
+  // useEffect(() => {
+  //   console.log(loggedUser);
+  // }, [loggedUser]);
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useLocalStorage(
     "businessProfileActiveTab",
@@ -23,10 +28,10 @@ export default function BusinessProfile() {
   );
   const hydrated = useHydrated();
 
-  if (!hydrated) return null; // Avoid rendering mismatched UI during hydration
+  if (!hydrated) return null;
   return (
     <div className="w-full md:col-span-11">
-      <AdminNotification />
+      <AdminNotification note={loggedUser?.adminNotice?.note} />
       {isMobile ? (
         <div className="space-y-2">
           {!!loggedUser?.isBusinessVerified ? (
@@ -38,6 +43,12 @@ export default function BusinessProfile() {
             <p className="flex w-max items-center gap-2 rounded-full bg-red-500 px-4 py-1 text-sm text-white">
               <FaCircleDot />
               <span>You are not Verified</span>
+            </p>
+          )}
+          {loggedUser?.isBlocked && (
+            <p className="flex w-max items-center gap-2 rounded-full bg-red-500 px-4 py-1 text-sm text-white">
+              <FaCircleDot />
+              <span>Blocked By Admin</span>
             </p>
           )}
           {FirmDashboard?.tabs?.map((tab: any) => (
@@ -75,6 +86,12 @@ export default function BusinessProfile() {
               <p className="flex w-max items-center gap-2 rounded-full bg-red-500 px-4 py-1 text-sm text-white">
                 <FaCircleDot />
                 <span>You are not Verified</span>
+              </p>
+            )}
+            {loggedUser?.isBlocked && (
+              <p className="flex w-max items-center gap-2 rounded-full bg-red-500 px-4 py-1 text-sm text-white">
+                <ImBlocked />
+                <span>Blocked By Admin</span>
               </p>
             )}
             <Tab tabs={FirmDashboard?.tabs} activeTab={activeTab} setActiveTab={setActiveTab} />

@@ -13,19 +13,12 @@ export const ADMIN_GET_ALL_BUSINESS_AD_BANNER_IMAGES = gql`
       images {
         id
         url
-        order
         createdAt
-        deletedAt
-        updatedAt
         businessDetailsId
         message
         adminBusinessAdBannerImage {
           id
           order
-          createdAt
-          updatedAt
-          deletedAt
-          message
         }
         businessDetails {
           business {
@@ -53,9 +46,9 @@ export function useAdminGetAllBusinessAdBannerImages() {
   const [fetchAllBusinessAdBannerImages, { data, loading, error, refetch }] = useLazyQuery(
     ADMIN_GET_ALL_BUSINESS_AD_BANNER_IMAGES,
     {
-      onCompleted: (data) => {
-        console.log("Fetched business ad banner images successfully:", data);
-      },
+      // onCompleted: (data) => {
+      //   console.log("Fetched business ad banner images successfully:", data);
+      // },
       onError: (err) => {
         console.error("Error fetching business ad banner images:", err);
       },
@@ -104,17 +97,9 @@ export const ADMIN_GET_ALL_BUSINESS_MOBILE_AD_BANNER_IMAGES = gql`
         url
         order
         createdAt
-        deletedAt
-        updatedAt
-        businessDetailsId
-        message
         adminBusinessMobileAdBannerImage {
           id
           order
-          createdAt
-          updatedAt
-          deletedAt
-          message
         }
         businessDetails {
           business {
@@ -142,9 +127,9 @@ export function useAdminGetAllBusinessMobileAdBannerImages() {
   const [fetchAllBusinessMobileAdBannerImages, { data, loading, error, refetch }] = useLazyQuery(
     ADMIN_GET_ALL_BUSINESS_MOBILE_AD_BANNER_IMAGES,
     {
-      onCompleted: (data) => {
-        console.log("Fetched business mobile ad banner images successfully:", data);
-      },
+      // onCompleted: (data) => {
+      //   console.log("Fetched business mobile ad banner images successfully:", data);
+      // },
       onError: (err) => {
         console.error("Error fetching business mobile ad banner images:", err);
       },
@@ -181,9 +166,6 @@ export const ADMIN_MANAGE_BUSINESS_AD_BANNER_IMAGE = gql`
     adminManageBusinessAdBannerImage(businessAdBannerImages: $businessAdBannerImages) {
       id
       order
-      createdAt
-      updatedAt
-      deletedAt
       message
     }
   }
@@ -218,7 +200,12 @@ export function useAdminManageBusinessAdBannerImage() {
     }
   };
 
-  return { manageBusinessAdBannerImage, data, loading, error };
+  return {
+    manageBusinessAdBannerImage,
+    data: data?.adminManageBusinessAdBannerImage,
+    loading,
+    error,
+  };
 }
 
 export const ADMIN_MANAGE_BUSINESS_MOBILE_AD_BANNER_IMAGE = gql`
@@ -248,9 +235,7 @@ export function useAdminManageBusinessMobileAdBannerImage() {
   ) => {
     try {
       const response = await adminManageBusinessMobileAdBannerImage({
-        variables: {
-          businessAdBannerImages,
-        },
+        variables: { businessMobileAdBannerImages: businessAdBannerImages },
       });
       return { response: response?.data, error: null };
     } catch (err) {
@@ -260,7 +245,7 @@ export function useAdminManageBusinessMobileAdBannerImage() {
 
   return {
     manageBusinessMobileAdBannerImage,
-    data,
+    data: data?.adminManageBusinessMobileAdBannerImage,
     loading,
     error,
   };

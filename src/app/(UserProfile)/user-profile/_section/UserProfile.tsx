@@ -15,9 +15,6 @@ import { useEffect } from "react";
 export default function UserProfile() {
   const { userData, loading, error, refetch } = useUserMe();
 
-  useEffect(() => {
-    console.log("User data:", userData);
-  }, [userData]);
   const {
     updateUserDetails: handleUpdateLogo,
     queryResponse: mutationLogoResult,

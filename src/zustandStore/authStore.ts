@@ -17,8 +17,9 @@ interface AuthState {
     clearFirmTokens: () => void;
     clearUserTokens: () => void;
     clearAdminTokens: () => void;
-    validateTokens: () => void;
 }
+
+const EXPIRY_TIME_IN_MS = 1000 * 60 * 60 * 24 * 5; // 5 days
 
 const useAuthStore = create<AuthState>()(
     persist(
@@ -31,7 +32,12 @@ const useAuthStore = create<AuthState>()(
             setUserToken: (token: string | null) => {
                 set({ userToken: token });
                 if (token) {
-                    cookies.set('userToken', token, { path: '/', secure: true, sameSite: 'strict' });
+                    cookies.set('userToken', token, {
+                        path: '/',
+                        secure: true,
+                        sameSite: 'strict',
+                        maxAge: EXPIRY_TIME_IN_MS / 1000
+                    });
                 } else {
                     cookies.remove('userToken', { path: '/' });
                 }
@@ -39,7 +45,12 @@ const useAuthStore = create<AuthState>()(
             setFirmToken: (token: string | null) => {
                 set({ firmToken: token });
                 if (token) {
-                    cookies.set('firmToken', token, { path: '/', secure: true, sameSite: 'strict' });
+                    cookies.set('firmToken', token, {
+                        path: '/',
+                        secure: true,
+                        sameSite: 'strict',
+                        maxAge: EXPIRY_TIME_IN_MS / 1000
+                    });
                 } else {
                     cookies.remove('firmToken', { path: '/' });
                 }
@@ -47,7 +58,12 @@ const useAuthStore = create<AuthState>()(
             setAdminToken: (token: string | null) => {
                 set({ adminToken: token });
                 if (token) {
-                    cookies.set('adminToken', token, { path: '/', secure: true, sameSite: 'strict' });
+                    cookies.set('adminToken', token, {
+                        path: '/',
+                        secure: true,
+                        sameSite: 'strict',
+                        maxAge: EXPIRY_TIME_IN_MS / 1000
+                    });
                 } else {
                     cookies.remove('adminToken', { path: '/' });
                 }
@@ -70,17 +86,6 @@ const useAuthStore = create<AuthState>()(
                 set({ adminToken: null });
                 cookies.remove('adminToken', { path: '/' });
             },
-            validateTokens: () => {
-                if (!cookies.get('userToken')) {
-                    set({ userToken: null });
-                }
-                if (!cookies.get('firmToken')) {
-                    set({ firmToken: null });
-                }
-                if (!cookies.get('adminToken')) {
-                    set({ adminToken: null });
-                }
-            },
         }),
         {
             name: 'auth-storage', // Name for localStorage key
@@ -90,13 +95,27 @@ const useAuthStore = create<AuthState>()(
                 firmToken: state.firmToken,
                 adminToken: state.adminToken,
             }),
+            // Set expiration logic for persisted data
+            onRehydrateStorage: () => (state) => {
+                if (state) {
+                    const now = Date.now();
+                    const expirationTimestamp = now - EXPIRY_TIME_IN_MS;
+                    const lastUpdated = parseInt(localStorage.getItem('auth-storage-timestamp') || '0', 10);
+
+                    if (lastUpdated < expirationTimestamp) {
+                        state.clearTokens();
+                    } else {
+                        localStorage.setItem('auth-storage-timestamp', now.toString());
+                    }
+                }
+            },
         }
     )
 );
 
-// Periodic validation to ensure tokens are synced with cookies
-setInterval(() => {
-    useAuthStore.getState().validateTokens();
-}, 1000 * 60 * 5); // 5 hour
+// Update the timestamp every time the state changes
+useAuthStore.subscribe(() => {
+    localStorage.setItem('auth-storage-timestamp', Date.now().toString());
+});
 
 export default useAuthStore;

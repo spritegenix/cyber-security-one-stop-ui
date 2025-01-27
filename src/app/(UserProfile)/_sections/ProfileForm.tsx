@@ -196,17 +196,7 @@ export function ProfileForm({ defaultValues }: any) {
           {errors.pincode && <p className="text-xs text-red-500">{errors?.pincode?.message}</p>}
         </div>
         <div>
-          <select
-            className="mt-5 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
-            {...register(`state`)}
-          >
-            <option value="">State</option>
-            {indianStatesAndUTs.map((state) => (
-              <option className="capitalize" value={state} key={state}>
-                {state}
-              </option>
-            ))}
-          </select>
+          <Input {...register(`state`)} label="State" placeholder=" " />
           {errors?.state && <p className="text-xs text-red-500">{errors?.state?.message}</p>}
         </div>
         <div>

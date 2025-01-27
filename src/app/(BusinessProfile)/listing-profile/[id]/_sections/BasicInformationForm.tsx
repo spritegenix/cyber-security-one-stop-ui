@@ -305,17 +305,11 @@ export default function BasicInformationForm({ data, refetchData }: any) {
                           )}
                         </div>
                         <div>
-                          <select
-                            className="mt-5 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
+                          <Input
                             {...register(`addresses.${index}.state`)}
-                          >
-                            <option value="">State</option>
-                            {indianStatesAndUTs.map((state) => (
-                              <option className="capitalize" value={state} key={state}>
-                                {state}
-                              </option>
-                            ))}
-                          </select>
+                            label="State"
+                            placeholder=" "
+                          />
                           {errors?.addresses?.[index]?.state && (
                             <p className="text-xs text-red-500">
                               {errors.addresses[index]?.state?.message}

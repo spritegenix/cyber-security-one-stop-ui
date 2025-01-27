@@ -1,6 +1,6 @@
 "use client";
 import useAuthStore from "@/zustandStore/authStore";
-import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import { useEffect } from "react";
 
 export const REVIEW_BUSINESS_MUTATION = gql`

@@ -35,6 +35,7 @@ export default function CoverPhotosForm({ data, refetchData }: any) {
     }));
     try {
       await handleCover({ coverImages: images });
+      refetchData();
     } catch (e) {
       console.error("Error updating cover photos", e);
     }
@@ -49,6 +50,7 @@ export default function CoverPhotosForm({ data, refetchData }: any) {
     }));
     try {
       await handleDesktopBanner({ adBannerImages: images });
+      refetchData();
     } catch (e) {
       console.error("Error updating cover photos", e);
     }
@@ -62,6 +64,7 @@ export default function CoverPhotosForm({ data, refetchData }: any) {
     }));
     try {
       await handleMobileBanner({ mobileAdBannerImages: images });
+      refetchData();
     } catch (e) {
       console.error("Error updating cover photos", e);
     }

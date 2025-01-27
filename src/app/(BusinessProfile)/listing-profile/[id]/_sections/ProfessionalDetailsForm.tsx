@@ -91,6 +91,7 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
           [],
         addresses: [],
       });
+      refetchData();
       // console.log("Update successful");
     } catch (error) {
       console.error("Error in submission:", error);

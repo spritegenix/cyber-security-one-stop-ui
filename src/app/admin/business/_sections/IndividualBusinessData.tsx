@@ -327,21 +327,25 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
               business.businessDetails.mobileAdBannerImages.map((banner: any, idx: number) => (
                 <div key={idx} className="relative">
                   <div className="absolute -right-2 -top-2 w-min">
-                    <Tooltip content="Add to Web" direction="top">
-                      <MdOutlinePostAdd
-                        className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
-                        onClick={() => handleMobileAdBannerToWeb(banner?.id)}
-                      />
-                    </Tooltip>
+                    {banner?.adminBusinessMobileAdBannerImage?.id !== banner?.id && (
+                      <Tooltip content="Add to Web" direction="top">
+                        <MdOutlinePostAdd
+                          className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
+                          onClick={() => handleMobileAdBannerToWeb(banner?.id)}
+                        />
+                      </Tooltip>
+                    )}
                   </div>
                   <Image
-                    src={banner.url || "/placeholder-banner.png"}
+                    src={banner?.url || "/placeholder-banner.png"}
                     alt={`Banner ${idx}`}
                     className="rounded-lg"
                     width={500}
                     height={800}
                   />
-
+                  {banner?.adminBusinessMobileAdBannerImage?.id === banner?.id && (
+                    <p className="font-semibold text-green-500">Already Added by Admin</p>
+                  )}
                   {manageBusinessMobileAdBannerImageData && (
                     <p className="text-sm text-green-500">
                       {manageBusinessMobileAdBannerImageData?.[idx]?.message}
