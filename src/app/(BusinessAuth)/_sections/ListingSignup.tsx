@@ -1,6 +1,6 @@
 "use client";
 import Button from "@/components/elements/Button";
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,10 @@ export default function ListingSignUp() {
     resolver: zodResolver(listingSignUpSchema),
   });
 
+  useEffect(() => {
+    console.log("error", error);
+  }, [error]);
+
   const onSubmit = async (data: ListingSignUpFormValues) => {
     const type = data.loginIdentifier.includes("@") ? "email" : "phone";
     const identifier = data.loginIdentifier.includes("@")
@@ -50,8 +54,8 @@ export default function ListingSignUp() {
             placeholder=" "
             autoFocus
           />
-          {errors.loginIdentifier && (
-            <p className="text-xs text-red-500">{errors.loginIdentifier.message}</p>
+          {errors?.loginIdentifier && (
+            <p className="text-xs text-red-500">{errors?.loginIdentifier?.message}</p>
           )}
         </div>
         <Button
@@ -64,7 +68,9 @@ export default function ListingSignUp() {
           Start Now
         </Button>
       </form>
-      {error && <p className="text-xs text-red-500">{error.message}</p>}
+      {loading && <p className="text-xs text-gray-500">Redirecting...</p>}
+      {error && <p className="text-xs text-red-500">{error?.message}</p>}
+      {data && <p className="text-xs text-green-500">{data?.message}</p>}
     </div>
   );
 }

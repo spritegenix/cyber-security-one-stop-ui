@@ -706,8 +706,8 @@ export const subscriptionPage = {
       title: "Monthly",
       description:
         "Perfect for individuals or firms looking for short-term exposure or testing out the platform.",
-      monthlyPrice: "100",
-      totalPrice: "100",
+      monthlyPrice: "299",
+      totalPrice: "299",
     },
     {
       id: 2,

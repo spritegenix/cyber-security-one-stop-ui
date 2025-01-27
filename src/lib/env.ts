@@ -3,6 +3,7 @@ class Env {
     static API_URL: string = process.env.NEXT_PUBLIC_API_URL as string;
     static BASE_GQL_URL: string = process.env.NEXT_PUBLIC_BASE_GQL_URL as string;
     static CHAT_API_URL: string = process.env.NEXT_PUBLIC_CHAT_API_URL as string;
+    static RAZORPAY_API_KEY: string = process.env.NEXT_PUBLIC_RAZORPAY_API_KEY as string;
 }
 
 export default Env;

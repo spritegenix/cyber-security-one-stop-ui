@@ -7,6 +7,7 @@ import "./css/humMenu.css";
 import "./css/typeHead.css";
 import "./css/swiper.css";
 import { ApolloWrapper } from "@/lib/apollo-wrapper";
+import Script from "next/script";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -66,6 +67,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${font1.variable} relative scroll-smooth bg-bg1/5 antialiased`}
       >
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
         <ApolloWrapper>
           {/*  modal portal */}
           <div id="modal-portal" className="relative z-[999999]" />

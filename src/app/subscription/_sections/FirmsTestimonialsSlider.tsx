@@ -14,6 +14,10 @@ import { unknown } from "zod";
 export const FirmsTestimonialsSlider = ({ testimonials }: any) => {
   const uniqueId = "FirmsTestimonialsSlider";
 
+  const getSlidesPerView = (base: number) => {
+    return testimonials.length < base ? testimonials.length : base;
+  };
+
   const swiperOptions = {
     slidesPerView: 1,
     spaceBetween: 30,
@@ -25,9 +29,9 @@ export const FirmsTestimonialsSlider = ({ testimonials }: any) => {
     },
     modules: [Autoplay, Navigation],
     breakpoints: {
-      640: { slidesPerView: 1 },
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 },
+      640: { slidesPerView: getSlidesPerView(1) },
+      768: { slidesPerView: getSlidesPerView(2) },
+      1024: { slidesPerView: getSlidesPerView(3) },
     },
   };
 
