@@ -176,10 +176,10 @@ export const header2 = {
   ],
 };
 export const footer = {
-  text: "Providing expert consultancy in fraud prevention, legal advice, and forensic investigations for businesses and individuals.",
+  text: "Connect with trusted fraud experts for Financial Fraud, Social Media Scams, Corporate Fraud, and more. Find reliable solutions to safeguard your assets and ensure peace of mind.",
   contactDetails: {
-    contactNo: "+1 (999) 888-77-66",
-    email: "info@CyberSecurity.com",
+    contactNo: "+91 8957865554",
+    email: "info@cybersecurity.com",
     location: "India",
   },
   socials: {

@@ -13,7 +13,7 @@ export default async function Layout({ headerStyle = 1, footerStyle = 1, childre
   };
   const footerData = {
     ...footer,
-    list2: { ...footer.list2, links: categories?.allCategories },
+    // list2: { ...footer.list2, links: categories?.allCategories },
   };
 
   return (

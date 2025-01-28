@@ -30,8 +30,8 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const subjectOptions = [
-  "Finding a suitable expert",
-  "Raise a Complaint against a firm or expert",
+  "Finding a suitable Expert",
+  "Raise a Complaint against a firm/ Expert",
   "Raise a Complaint against a user",
   "General query",
   "Other issues",
@@ -91,7 +91,7 @@ const HelpForm: React.FC = () => {
         {/* Subject Select */}
         <div>
           <select
-            className="h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-zinc-500 outline-none duration-200 focus:outline-bg1"
+            className="h-11 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-zinc-500 outline-none duration-200 focus:outline-bg1"
             {...register("subject")}
           >
             <option value="">Select a subject</option>
@@ -118,7 +118,7 @@ const HelpForm: React.FC = () => {
 
         {/* Submit Button */}
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Submitting..." : "onSubmit"}
+          {loading ? "Submitting..." : "Submit"}
         </Button>
         {error && <p className="mt-1 text-sm text-red-500">{error?.message}</p>}
         {data && <p className="mt-1 text-sm text-green-500">{data?.message}</p>}
