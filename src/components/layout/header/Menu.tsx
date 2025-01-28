@@ -17,7 +17,7 @@ const Menu = ({ navItemsArray, activeItemId, onItemClick }: any) => {
           </span>
         )}
         <p
-          className={`font cursor-pointer px-1 py-4 transition-all duration-300 hover:scale-105 hover:text-bg1 ${activeItemId === item.id.toString() ? "text-bg1" : ""}`}
+          className={`font cursor-pointer px-1 py-4 capitalize transition-all duration-300 hover:scale-105 hover:text-bg1 ${activeItemId === item.id.toString() ? "text-bg1" : ""}`}
         >
           {item?.label}
         </p>

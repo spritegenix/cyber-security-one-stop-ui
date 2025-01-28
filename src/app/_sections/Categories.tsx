@@ -56,7 +56,7 @@ export function CategoryCard({ id, label, href, icon, desc }: any) {
         {label}
       </h4>
       {/* Hover Effect to show Description */}
-      <div className="absolute left-1/2 top-0 z-[2] w-[130%] -translate-x-1/2 cursor-pointer rounded-lg border border-zinc-400 bg-white p-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
+      <div className="absolute left-1/2 top-0 z-[9999] h-0 w-[130%] -translate-x-1/2 cursor-pointer overflow-hidden rounded-lg border border-zinc-400 bg-white p-2 opacity-0 transition-all duration-500 group-hover:h-max group-hover:opacity-100">
         <div className="mb-4 flex w-full justify-center rounded-md border border-zinc-400 p-4 group-hover:border-bg1 group-hover:shadow-lg">
           <Image
             src={icon}
