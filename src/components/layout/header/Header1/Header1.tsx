@@ -46,7 +46,7 @@ export default function Header1({
         containerClassName="border-t border-gray-300"
         className="max-md:hidden"
       >
-        <ul className="hidden items-center justify-between gap-x-5 font-medium text-zinc-800 md:flex">
+        <ul className="hidden items-center justify-between gap-x-1 font-medium text-zinc-800 md:flex">
           <Menu
             navItemsArray={lowerNavItems}
             activeItemId={activeItemId}

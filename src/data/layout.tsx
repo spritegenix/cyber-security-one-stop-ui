@@ -153,8 +153,8 @@ export const header2 = {
     {
       id: 1,
       icon: <FaPhoneAlt />,
-      label: "+91 9999999999",
-      href: "tel:+91 9999999999",
+      label: "+91 8957865554",
+      href: "tel:+91 8957865554",
       iconStyle: "trin-trin",
       subNav: [],
     },

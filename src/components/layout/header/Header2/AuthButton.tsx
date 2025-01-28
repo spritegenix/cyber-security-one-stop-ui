@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import { VscLaw } from "react-icons/vsc";
 import { useHeaderUser } from "@/app/_queryCall/businessAuth/csr";
 import useAuthStore from "@/zustandStore/authStore";
+import { IoShieldHalfOutline } from "react-icons/io5";
 
 export default function AuthButton() {
   const isLogin = useAuthStore((state) => state?.firmToken);
@@ -16,7 +17,7 @@ export default function AuthButton() {
           as={Link}
           href="/listing-login"
           variant="orange-gradient"
-          leftIcon={<VscLaw className="text-xl" />}
+          leftIcon={<IoShieldHalfOutline className="text-xl" />}
         >
           LogIn
         </Button>

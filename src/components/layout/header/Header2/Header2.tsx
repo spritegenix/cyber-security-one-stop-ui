@@ -22,7 +22,7 @@ export default function Header2({
     >
       {/* Desktop Section */}
       {/* Upper Nav  */}
-      <Wrapper className="flex w-full items-center justify-between max-md:hidden">
+      <Wrapper className="flex w-full items-center justify-between py-1 max-md:hidden">
         {/* Logo with Link */}
         <Logo />
         <div className="flex items-center gap-3 md:gap-4">

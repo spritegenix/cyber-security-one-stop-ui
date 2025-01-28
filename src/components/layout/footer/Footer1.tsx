@@ -28,7 +28,7 @@ export default function Footer1({ footerData }: any) {
             <TextWithLineBreak text={footerData?.text} />
           </p>
         </div>
-        <div className="col-span-7 grid grid-cols-1 justify-center gap-5 md:grid-cols-2 md:pl-24">
+        <div className="col-span-7 grid grid-cols-1 justify-center gap-1 sm:grid-cols-2 md:pl-24">
           {/* Quick Links  */}
           <div className="flex flex-col gap-y-2">
             <h4 className="my-2 text-2xl font-semibold">{footerData?.list1?.title}</h4>
@@ -74,7 +74,7 @@ export default function Footer1({ footerData }: any) {
         </div>
       </div>
       {/* copyright  */}
-      <div className="flex items-center justify-between gap-5 border-t border-white py-5 max-md:flex-col">
+      <div className="flex items-center justify-between gap-5 border-t-2 border-white/30 py-5 max-md:flex-col">
         <p className="text-center text-sm">
           Copyrights © 2024 <span className="font-medium">CyberSecurity</span>. All rights
           reserved. Designed and Developed by{" "}
