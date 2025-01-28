@@ -31,7 +31,7 @@ export default function BusinessProfile() {
   if (!hydrated) return null;
   return (
     <div className="w-full md:col-span-11">
-      <AdminNotification note={loggedUser?.adminNotice?.note} />
+      {loggedUser?.adminNotice?.note && <AdminNotification note={loggedUser?.adminNotice?.note} />}
       {isMobile ? (
         <div className="space-y-2">
           {!!loggedUser?.isBusinessVerified ? (

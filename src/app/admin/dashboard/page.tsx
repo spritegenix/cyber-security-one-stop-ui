@@ -4,8 +4,7 @@ import React, { useEffect } from "react";
 import CategoryForm from "../_sections/CategoryForm";
 import { useAdminGetAllCategories } from "@/app/_queryCall/adminAuth/csr";
 import PageTabs from "../_sections/PageTabs";
-import { group } from "console";
-import AddressForm from "../_sections/Locations";
+import { ChangePassword } from "../_sections/ChangePassword";
 
 export default function AdminDashboardPage() {
   const { data: allCategories, refetch: allCategoriesFetch } = useAdminGetAllCategories();
@@ -41,8 +40,8 @@ export default function AdminDashboardPage() {
             refetchData={allCategoriesFetch}
           />
         </div>
-        <div className="col-span-2">
-          <AddressForm />
+        <div className="col-span-1">
+          <ChangePassword />
         </div>
       </Wrapper>
     </>

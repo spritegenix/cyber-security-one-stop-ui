@@ -74,7 +74,7 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
 
   const onSubmit = async (formData: ProfessionalDetailsFormValues) => {
     // console.log("Form submitted:", formData);
-    console.log(errors);
+    // console.log(errors);
     try {
       await handleUpdate({
         registrationNumber: formData.registrationNumber,
