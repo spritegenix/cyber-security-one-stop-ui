@@ -31,6 +31,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
   } = useAdminManageTestimonials();
   async function handleAddFeedbackToWeb(id: string) {
     await adminManageTestimonials([{ feedbackId: id }]);
+    refetchData();
   }
   // -------------------------------------------------------
 
@@ -93,32 +94,35 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         {/* Business Header */}
         <div className="flex items-center space-x-4">
           <Image
-            src={business.businessDetails?.logo || "/placeholder.png"}
-            alt={business.name || "Business Logo"}
+            src={business?.businessDetails?.logo || "/placeholder.png"}
+            alt={business?.name || "Business Logo"}
             className="size-20 rounded-full"
             width={100}
             height={100}
           />
           <div>
-            <h1 className="text-2xl font-bold">{business.name || "N/A"}</h1>
-            <p className="text-gray-600">Updated At : {formatDate(business.updatedAt) || "N/A"}</p>
-            <p className="text-gray-600">Created At : {formatDate(business.createdAt) || "N/A"}</p>
+            <h1 className="text-2xl font-bold">{business?.name || "N/A"}</h1>
+            <p className="text-gray-600">Updated At : {formatDate(business?.updatedAt) || "N/A"}</p>
+            <p className="text-gray-600">Created At : {formatDate(business?.createdAt) || "N/A"}</p>
           </div>
         </div>
         {/* Subscription Details */}
         <div className="mt-5 flex items-center gap-2">
           <h2 className="text-xl font-semibold">Subscription:</h2>
-          <p className="rounded-lg border-2 border-green-500 bg-green-100 px-2 text-green-500">
-            {business?.subscription || "FREE"}
+          <p className="rounded-lg border-2 border-green-500 bg-green-100 px-2 uppercase text-green-500">
+            {business?.subscription?.name || "FREE"}
           </p>
-          <p>{business?.subscriptionExpire || "N/A"}</p>
+          <p>
+            {" "}
+            Expire Date: {new Date(business?.subscriptionExpire).toLocaleDateString() || "N/A"}
+          </p>
         </div>
         {/* Contact Information */}
         <section className="mt-2">
           <h2 className="text-xl font-semibold">Contact Information</h2>
           <ul className="list-inside list-disc">
-            {business.primaryContacts?.length > 0 ? (
-              business.primaryContacts.map((contact: any) => (
+            {business?.primaryContacts?.length > 0 ? (
+              business?.primaryContacts.map((contact: any) => (
                 <li key={contact?.id}>
                   {contact?.type}: {contact.value}{" "}
                   {contact?.isPrimary && <span className="text-green-500">(Primary)</span>}{" "}
@@ -128,8 +132,8 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
             ) : (
               <p>No primary contacts available.</p>
             )}
-            {business.additionalContacts?.length > 0 ? (
-              business.additionalContacts.map((contact: string, index: number) => (
+            {business?.additionalContacts?.length > 0 ? (
+              business?.additionalContacts.map((contact: string, index: number) => (
                 <li key={index}>Additional Contact: {contact}</li>
               ))
             ) : (
@@ -141,29 +145,29 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         {/* Business Details */}
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Business Details</h2>
-          <p>{business.businessDetails?.description || "No description available."}</p>
+          <p>{business?.businessDetails?.description || "No description available."}</p>
           <p>
             <strong>Experience:</strong> {business.businessDetails?.experience || 0} years
           </p>
           <p>
             <strong>Registration Number:</strong>{" "}
-            {business.businessDetails?.registrationNumber || "N/A"}
+            {business?.businessDetails?.registrationNumber || "N/A"}
           </p>
           <p>
-            <strong>License Number:</strong> {business.businessDetails?.license || "N/A"}
+            <strong>License Number:</strong> {business?.businessDetails?.license || "N/A"}
           </p>
           <p>
-            <strong>Team Size:</strong> {business.businessDetails?.teamSize || "N/A"}
+            <strong>Team Size:</strong> {business?.businessDetails?.teamSize || "N/A"}
           </p>
           <p>
             <strong>Primary Website:</strong>{" "}
-            {business.businessDetails?.primaryWebsite ? (
+            {business?.businessDetails?.primaryWebsite ? (
               <a
-                href={business.businessDetails.primaryWebsite}
+                href={business?.businessDetails?.primaryWebsite}
                 target="_blank"
                 className="text-blue-500"
               >
-                {business.businessDetails.primaryWebsite}
+                {business?.businessDetails?.primaryWebsite}
               </a>
             ) : (
               "N/A"
@@ -171,7 +175,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
           </p>
           <div>
             <h3 className="mt-2 font-semibold">Social Links</h3>
-            {business.businessDetails?.websites?.length > 0 ? (
+            {business?.businessDetails?.websites?.length > 0 ? (
               business.businessDetails.websites.map((site: any, idx: number) => (
                 <a key={idx} href={site.url} target="_blank" className="block text-blue-500">
                   {site.url}
@@ -184,15 +188,15 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
           <p className="mt-2 capitalize">
             <strong>Languages: </strong>
             {business?.businessDetails?.languages?.length > 0 ? (
-              business.businessDetails.languages?.map((lang: any) => lang.name).join(", ")
+              business?.businessDetails.languages?.map((lang: any) => lang.name).join(", ")
             ) : (
               <p>No languages specified.</p>
             )}
           </p>
           <p className="mt-2">
             <strong>Degrees: </strong>
-            {business.businessDetails?.degrees && business.businessDetails?.degrees.length > 0
-              ? business.businessDetails.degrees.join(", ")
+            {business?.businessDetails?.degrees && business.businessDetails?.degrees.length > 0
+              ? business?.businessDetails.degrees.join(", ")
               : "N/A"}
           </p>
         </section>
@@ -201,7 +205,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         <section>
           <h2 className="my-2 font-semibold">Consultation Timing</h2>
           <ConsultationTiming
-            timeSlots={transformOperatingHours(business.businessDetails?.operatingHours || [])}
+            timeSlots={transformOperatingHours(business?.businessDetails?.operatingHours || [])}
           />
         </section>
         {/* Categories */}
@@ -209,7 +213,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
           <h2 className="text-xl font-semibold">Categories</h2>
           <div className="flex flex-wrap gap-2">
             {business.businessDetails?.categories?.length > 0 ? (
-              business.businessDetails.categories.map((category: any, idx: number) => (
+              business?.businessDetails.categories.map((category: any, idx: number) => (
                 <div key={idx} className="rounded-lg border border-bg1 p-1 py-0">
                   <h3 className="font-semibold">{category.name}</h3>
                 </div>
@@ -224,8 +228,8 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Addresses</h2>
           <ul>
-            {business.businessDetails?.addresses?.length > 0 ? (
-              business.businessDetails.addresses.map((address: any, idx: number) => (
+            {business?.businessDetails?.addresses?.length > 0 ? (
+              business?.businessDetails.addresses.map((address: any, idx: number) => (
                 <li key={idx} className="mt-2">
                   <span className="font-semibold">{idx + 1}.</span> {address.street}, {address.city}
                   , {address.state}, {address.country} - {address.pincode}
@@ -258,8 +262,8 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Gallery</h2>
           <div className="grid grid-cols-2 gap-4">
-            {business.businessDetails?.coverImages?.length > 0 ? (
-              business.businessDetails.coverImages.map((image: any, idx: number) => (
+            {business?.businessDetails?.coverImages?.length > 0 ? (
+              business?.businessDetails.coverImages.map((image: any, idx: number) => (
                 <Image
                   key={idx}
                   src={image.url || "/placeholder-image.png"}
@@ -279,8 +283,8 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Ad Banners</h2>
           <div className="grid grid-cols-1 gap-4">
-            {business.businessDetails?.adBannerImages?.length > 0 ? (
-              business.businessDetails.adBannerImages.map((banner: any, idx: number) => (
+            {business?.businessDetails?.adBannerImages?.length > 0 ? (
+              business?.businessDetails.adBannerImages.map((banner: any, idx: number) => (
                 <div key={idx} className="relative">
                   <div className="absolute -right-2 -top-2 w-min">
                     {banner?.adminBusinessAdBannerImage?.id !== banner?.id && (
@@ -293,7 +297,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
                     )}
                   </div>
                   <Image
-                    src={banner.url || "/placeholder-banner.png"}
+                    src={banner?.url || "/placeholder-banner.png"}
                     alt={`Banner ${idx}`}
                     className="rounded-lg"
                     width={800}
@@ -323,8 +327,8 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Mobile Ad Banners</h2>
           <div className="grid grid-cols-2 gap-4">
-            {business.businessDetails?.mobileAdBannerImages?.length > 0 ? (
-              business.businessDetails.mobileAdBannerImages.map((banner: any, idx: number) => (
+            {business?.businessDetails?.mobileAdBannerImages?.length > 0 ? (
+              business?.businessDetails.mobileAdBannerImages.map((banner: any, idx: number) => (
                 <div key={idx} className="relative">
                   <div className="absolute -right-2 -top-2 w-min">
                     {banner?.adminBusinessMobileAdBannerImage?.id !== banner?.id && (
@@ -382,7 +386,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
                   <p>Rating: {feedback?.rating}/5</p>
                   <p>{feedback?.comment}</p>
                   <p className="text-sm text-gray-500">
-                    {new Date(feedback.createdAt).toLocaleDateString()}
+                    {new Date(feedback?.createdAt).toLocaleDateString()}
                   </p>
                   {business?.testimonials.some((t: any) => t?.feedbackId === feedback?.id) && (
                     <p className="text-sm font-semibold text-green-500">

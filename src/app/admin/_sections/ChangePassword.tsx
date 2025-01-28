@@ -4,9 +4,10 @@ import { Input } from "../../../components/elements/Input";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import Button from "@/components/elements/Button";
 import { passwordChangeSchema } from "./zodValidations";
+import { useAdminChangePassword } from "@/app/_queryCall/csr";
 
 export function ChangePassword() {
-  //   const { changeAdminPassword, data, loading, error } = useChangeAdminPassword();
+  const { adminChangePassword, data, loading, error } = useAdminChangePassword();
   const [password, setPassword] = useState({
     password: "",
     confirmPassword: "",
@@ -26,9 +27,7 @@ export function ChangePassword() {
 
     if (parsedData.success) {
       try {
-        // await changeAdminPassword({
-        //   password: queryInput.password,
-        // });
+        await adminChangePassword(parsedData.data.password);
       } catch (err) {
         console.error("Unexpected error:", err);
       }
@@ -70,15 +69,11 @@ export function ChangePassword() {
       />
       {errors.confirmPassword && <p className="text-xs text-red-500">{errors.confirmPassword}</p>}
 
-      <Button
-        className="mt-5 w-full"
-        onClick={handleSubmit}
-        //    disabled={loading}
-      >
-        {false ? "Changing Password..." : "Change Password"}
+      <Button className="mt-5 w-full" onClick={handleSubmit} disabled={loading}>
+        {loading ? "Changing Password..." : "Change Password"}
       </Button>
-      {/* {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
-      {data && <p className="text-center text-xs text-green-500">{data?.message}</p>} */}
+      {error && <p className="text-center text-xs text-red-500">{error?.message}</p>}
+      {data && <p className="text-center text-xs text-green-500">{data?.message}</p>}
     </div>
   );
 }

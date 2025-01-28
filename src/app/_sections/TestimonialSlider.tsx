@@ -10,6 +10,7 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 // import { testimonials } from "@/data/global";
 export const TestimonialSlider = ({ testimonials }: any) => {
+  // console.log(testimonials);
   const uniqueId = "testimonials123";
 
   const getSlidesPerView = (base: number) => {
@@ -72,11 +73,11 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
               className="h-full w-full rounded-full object-cover object-top"
             />
           ) : (
-            <p>{name?.slice(0, 1)}</p>
+            <p className="text-2xl capitalize">{name?.slice(0, 1) || "U"}</p>
           )}
         </div>
         <div className="ml-5 p-3">
-          <h3 className="font-bold">{name}</h3>
+          <h3 className="font-bold">{name || "User"}</h3>
           <p className="text-sm text-zinc-500">{profession}</p>
         </div>
       </div>

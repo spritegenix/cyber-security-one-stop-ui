@@ -41,7 +41,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, direction = "top",
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.2 }}
-          className={`absolute z-10 min-w-28 rounded-md border-2 border-bg1 bg-bg1/10 px-3 py-2 text-center text-sm text-bg1 shadow-lg ${getDirectionClasses()}`}
+          className={`absolute z-10 min-w-max rounded-md border-2 border-bg1 bg-white px-3 py-2 text-center text-sm text-bg1 shadow-lg ${getDirectionClasses()}`}
         >
           {content}
         </motion.div>

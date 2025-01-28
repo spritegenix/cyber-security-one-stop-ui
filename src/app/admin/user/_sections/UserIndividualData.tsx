@@ -1,4 +1,7 @@
+import { useAdminManageTestimonials } from "@/app/_queryCall/adminAuth/reviews";
+import Tooltip from "@/components/elements/Tooltip";
 import React from "react";
+import { MdOutlinePostAdd } from "react-icons/md";
 
 interface Contact {
   id: string;
@@ -42,9 +45,28 @@ interface User {
   isBlocked?: boolean;
   paymentVerification?: boolean;
   subscriptionId?: string;
+  testimonials?: any;
 }
 
-export default function UserIndividualData({ user }: { user: User }) {
+export default function UserIndividualData({
+  user,
+  refetchData,
+}: {
+  user: User;
+  refetchData: any;
+}) {
+  // --------------Managing Testimonials-------------------------------------
+  const {
+    adminManageTestimonials,
+    data: adminManageTestimonialsData,
+    loading: adminManageTestimonialsLoading,
+    error: adminManageTestimonialsError,
+  } = useAdminManageTestimonials();
+  async function handleAddFeedbackToWeb(id: string) {
+    await adminManageTestimonials([{ feedbackId: id }]);
+    refetchData();
+  }
+  // -------------------------------------------------------
   return (
     <div className="mx-auto max-w-5xl rounded-lg bg-gray-100 p-6 shadow-lg">
       {/* Header Section */}
@@ -104,13 +126,32 @@ export default function UserIndividualData({ user }: { user: User }) {
             {user.feedbacks.map((feedback) => (
               <li
                 key={feedback?.id}
-                className="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow"
+                className="relative mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow"
               >
+                {!user?.testimonials.some((t: any) => t?.feedbackId === feedback?.id) && (
+                  <Tooltip content="Add to Web" direction="top" className="float-end">
+                    <MdOutlinePostAdd
+                      className="cursor-pointer text-2xl text-blue-500 duration-300 hover:scale-105"
+                      onClick={() => handleAddFeedbackToWeb(feedback?.id)}
+                    />
+                  </Tooltip>
+                )}
                 <p className="text-gray-600">Rating: {feedback?.rating || 0} ⭐</p>
                 <p className="mt-1 text-gray-700">{feedback?.comment || "No feedback provided."}</p>
+                {user?.testimonials.some((t: any) => t?.feedbackId === feedback?.id) && (
+                  <p className="text-sm font-semibold text-green-500">
+                    Already selected by Admin for UI
+                  </p>
+                )}
               </li>
             ))}
           </ul>
+          {adminManageTestimonialsData && (
+            <p className="text-sm text-green-500">{adminManageTestimonialsData?.[0]?.message}</p>
+          )}
+          {adminManageTestimonialsError && (
+            <p className="text-sm text-red-500">{adminManageTestimonialsError?.message}</p>
+          )}
         </div>
       ) : (
         <p className="text-gray-700">No feedbacks available.</p>

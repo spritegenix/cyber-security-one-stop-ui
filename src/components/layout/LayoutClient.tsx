@@ -8,6 +8,7 @@ import ScrollToTopButton from "../elements/ScrollToTopButton";
 import { usePathname, useRouter } from "next/navigation";
 import AOS from "aos";
 import Header2 from "./header/Header2/Header2";
+import StickyWidgetForm from "../elements/stickyWidgetForm/StickyWidgetForm";
 
 export default function LayoutClient({
   header1Data,
@@ -123,6 +124,7 @@ export default function LayoutClient({
         <Sidebar isSidebar={isSidebar} handleSidebar={() => setSidebar((pre) => !pre)} />
       )}
       <ScrollToTopButton />
+      <StickyWidgetForm />
     </>
   );
 }

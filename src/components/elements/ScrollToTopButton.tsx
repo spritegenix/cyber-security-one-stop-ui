@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa6";
+import Portal from "./Portal";
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,13 +26,15 @@ const ScrollToTopButton = () => {
   }, []);
 
   return (
-    <button
-      className="bg-bg1 fixed bottom-20 right-5 z-[999999] rounded-full bg-opacity-80 p-3 duration-300 hover:bg-opacity-100 md:bottom-5 md:right-10"
-      onClick={scrollToTop}
-      style={{ display: isVisible ? "block" : "none" }}
-    >
-      <FaArrowUp />
-    </button>
+    <Portal>
+      <button
+        className="fixed bottom-20 right-5 z-[999999] rounded-full border border-white bg-bg1 bg-opacity-80 p-3 duration-300 hover:bg-opacity-100 md:right-10"
+        onClick={scrollToTop}
+        style={{ display: isVisible ? "block" : "none" }}
+      >
+        <FaArrowUp className="text-white" />
+      </button>
+    </Portal>
   );
 };
 

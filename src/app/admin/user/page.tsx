@@ -55,7 +55,13 @@ export default function UserListPage() {
   // ------------------------------------------------------------------ //
   const [selectedUserId, setSelectedUserId] = useState<string | undefined>(undefined);
   const [selectedUserData, setSelectedUserData] = useState<any>(undefined);
-  const { adminGetUserById } = useAdminGetUserById();
+  const {
+    adminGetUserById,
+    data: adminGetUserByIdData,
+    loading: adminGetUserByIdLoading,
+    error: adminGetUserByIdError,
+    refetch: adminGetUserByIdRefetch,
+  } = useAdminGetUserById();
   useEffect(() => {
     async function fetchData() {
       if (selectedUserId) {
@@ -189,7 +195,7 @@ export default function UserListPage() {
         </div>
         {/* Right Side  */}
         <div className="col-span-5 mt-12">
-          <UserIndividualData user={selectedUserData} />
+          <UserIndividualData user={selectedUserData} refetchData={adminGetUserByIdRefetch} />
         </div>
       </Wrapper>
     </>

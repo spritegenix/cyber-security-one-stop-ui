@@ -83,7 +83,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
 
   useEffect(() => {
     setCategories(data || []);
-    console.log("data", data);
+    // console.log("data", data);
   }, [data]);
 
   useEffect(() => {

@@ -39,8 +39,13 @@ export const fetchCategoriesSSR = async () => {
 };
 
 export const GET_ALL_TESTIMONIALS = gql`
-  query AllTestimonials($type: AllTestimonialType, $page: Int, $limit: Int) {
-    allTestimonials(type: $type, page: $page, limit: $limit) {
+  query AllTestimonials(
+    $type: AllTestimonialType
+    $filter: AllTestimonialFilter
+    $page: Int
+    $limit: Int
+  ) {
+    allTestimonials(type: $type, filter: $filter, page: $page, limit: $limit) {
       id
       order
       type
@@ -67,31 +72,35 @@ export const GET_ALL_TESTIMONIALS = gql`
 `;
 
 export const fetchTestimonialsSSR = async ({
-  type,
-  page,
-  limit,
+  type = "FEEDBACK",
+  filter = "USER",
+  page = 1,
+  limit = 10,
 }: {
   type?: "REVIEW" | "FEEDBACK";
+  filter?: "USER" | "BUSINESS";
   page?: number;
   limit?: number;
 }) => {
   try {
     const { data } = await query({
       query: GET_ALL_TESTIMONIALS,
-      variables: { type, page, limit },
+      variables: { type, page, limit, filter },
     });
 
     if (!data || !data.allTestimonials) {
-      console.warn("No testimonials found.", { type, page, limit });
+      console.warn("No testimonials found.", { type, page, limit, filter });
       return null;
     }
-
-    return data;
+    // console.log({ data, type, page, limit, filter });
+    return data?.allTestimonials;
   } catch (error) {
     if (error instanceof ApolloError) {
       console.error("ApolloError while fetching testimonials:", error.message);
       return null;
     }
+
+    console.error("Unexpected error while fetching testimonials:", error);
     throw error;
   }
 };

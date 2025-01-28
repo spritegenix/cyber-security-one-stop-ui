@@ -1,6 +1,6 @@
 "use client";
 import { useLocationStore } from "@/zustandStore/location";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const GET_ALL_CATEGORIES = gql`
   query AllCategories {
@@ -419,63 +419,95 @@ const GET_ALL_AD_BANNER = gql`
 
 export const useFetchAllAdBanners = () => {
   const { data, loading, error, refetch } = useQuery(GET_ALL_AD_BANNER);
-  
+
   return { data, loading, error, refetch };
 };
 
-const ALL_TESTIMONIALS_QUERY = gql`
-  query AllTestimonials {
-    allTestimonials {
+const ADMIN_CHANGE_PASSWORD = gql`
+  mutation AdminChangePassword($password: String!) {
+    adminChangePassword(password: $password) {
       id
-      order
-      type
-      rating
-      comment
-      businessId
-      business {
-        id
-        slug
-        name
-        businessDetails {
-          logo
-        }
-      }
-      userId
-      user {
-        id
-        slug
-        name
-        avatar
-      }
-      createdAt
-      deletedAt
-      updatedAt
+      name
+      email
       message
-      token
     }
   }
 `;
 
-export function useAllTestimonials() {
-  const { data, loading, error, refetch } = useQuery(ALL_TESTIMONIALS_QUERY, {
-    onCompleted: (data: any) => {
-      console.log("All testimonials fetched:", data);
-    },
-  });
+export const useAdminChangePassword = () => {
+  const [adminChangePasswordMutation, { data, loading, error }] = useMutation<{
+    adminChangePassword: {
+      id: string;
+      name: string;
+      email: string;
+      message: string;
+    };
+  }>(ADMIN_CHANGE_PASSWORD);
 
-  const fetchTestimonials = async () => {
+  const adminChangePassword = async (password: string) => {
     try {
-      const response = await refetch();
-      return { response: response.data, error: null };
+      const response = await adminChangePasswordMutation({
+        variables: { password },
+      });
+      return response.data?.adminChangePassword;
     } catch (err) {
-      return { response: null, error: err };
+      console.error("Error changing admin password:", err);
+      throw err;
     }
   };
 
   return {
-    testimonials: data?.allTestimonials || [],
+    adminChangePassword,
+    data: data?.adminChangePassword,
     loading,
     error,
-    refetch: fetchTestimonials,
   };
-}
+};
+
+// Define the RaiseQuery mutation
+const RAISE_QUERY = gql`
+  mutation RaiseQuery(
+    $name: String
+    $email: String!
+    $phone: String
+    $subject: String
+    $message: String
+  ) {
+    raiseQuery(name: $name, email: $email, phone: $phone, subject: $subject, message: $message) {
+      message
+    }
+  }
+`;
+
+// Custom hook for the RaiseQuery mutation
+export const useRaiseQuery = () => {
+  const [raiseQueryMutation, { data, loading, error }] = useMutation<{
+    raiseQuery: { message: string };
+  }>(RAISE_QUERY);
+
+  const raiseQuery = async ({
+    name,
+    email,
+    phone,
+    subject,
+    message,
+  }: {
+    name?: string;
+    email: string;
+    phone?: string;
+    subject?: string;
+    message?: string;
+  }) => {
+    try {
+      const response = await raiseQueryMutation({
+        variables: { name, email, phone, subject, message },
+      });
+      return response.data?.raiseQuery.message;
+    } catch (err) {
+      console.error("Error raising query:", err);
+      throw err;
+    }
+  };
+
+  return { raiseQuery, data: data?.raiseQuery, loading, error };
+};

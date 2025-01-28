@@ -12,6 +12,7 @@ import { FaStar } from "react-icons/fa";
 import Button from "@/components/elements/Button";
 import { unknown } from "zod";
 export const FirmsTestimonialsSlider = ({ testimonials }: any) => {
+  // console.log(testimonials);
   const uniqueId = "FirmsTestimonialsSlider";
 
   const getSlidesPerView = (base: number) => {
@@ -44,9 +45,9 @@ export const FirmsTestimonialsSlider = ({ testimonials }: any) => {
             className="mb-12 w-full overflow-hidden rounded-2xl border border-zinc-300 bg-white shadow-lg"
           >
             <TestimonialCard
-              avatar={testimonial?.user?.avatar || undefined}
-              name={testimonial?.user?.name || undefined}
-              profession={testimonial?.user?.profession || "Unknown"} // Default profession if not available
+              avatar={testimonial?.business?.businessDetails?.logo || undefined}
+              name={testimonial?.business?.name || undefined}
+              profession={"Firm"}
               testimonial={testimonial?.comment || undefined}
               rating={testimonial?.rating || undefined}
             />
@@ -74,11 +75,11 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
               className="h-full w-full rounded-full object-cover object-top"
             />
           ) : (
-            <p>{name?.slice(0, 1)}</p>
+            <p className="text-2xl capitalize">{name?.slice(0, 1) || "F"}</p>
           )}
         </div>
         <div className="ml-5 p-3">
-          <h3 className="font-bold">{name}</h3>
+          <h3 className="font-bold">{name || "Firm"}</h3>
           <p className="text-sm text-zinc-500">{profession}</p>
         </div>
       </div>
@@ -88,9 +89,9 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
           <FaStar key={i} className="mx-2 text-2xl text-bg1" />
         ))}
       </div>
-      <Link href={"#"} target="_blank" className="my-2">
+      {/* <Link href={"#"} target="_blank" className="my-2">
         <Button className="!w-full">View Story</Button>
-      </Link>
+      </Link> */}
     </div>
   );
 }

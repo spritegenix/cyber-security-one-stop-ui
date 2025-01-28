@@ -137,6 +137,10 @@ export const ADMIN_GET_USER_BY_ID = gql`
       id
       name
       slug
+      testimonials {
+        feedbackId
+        order
+      }
       contacts {
         id
         userId
@@ -248,7 +252,7 @@ export function useAdminGetUserById() {
   useEffect(() => {
     setTokenType("admin");
   }, []);
-  const [fetchUserById, { data, loading, error }] = useLazyQuery(ADMIN_GET_USER_BY_ID, {
+  const [fetchUserById, { data, loading, error, refetch }] = useLazyQuery(ADMIN_GET_USER_BY_ID, {
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching user:", err);
@@ -275,6 +279,7 @@ export function useAdminGetUserById() {
     data: data?.adminGetUserById,
     loading,
     error,
+    refetch,
   };
 }
 
@@ -323,124 +328,4 @@ export function useAdminBlockUsers() {
     loading,
     error,
   };
-}
-
-export const ADMIN_GET_ALL_USER_SUBSCRIPTIONS = gql`
-  query Query {
-    adminGetAllUserSubscriptions {
-      id
-      name
-      description
-      price
-      duration
-      features
-      createdAt
-      updatedAt
-      deletedAt
-      message
-    }
-  }
-`;
-
-export function useAdminGetAllUserSubscriptions() {
-  const { setTokenType } = useAuthStore();
-  useEffect(() => {
-    setTokenType("admin");
-  }, []);
-  const { data, loading, error } = useQuery(ADMIN_GET_ALL_USER_SUBSCRIPTIONS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched subscriptions successfully:", data);
-    },
-    onError: (err: any) => {
-      // Handle error response
-      console.error("Error fetching subscriptions:", err);
-    },
-  });
-
-  return {
-    data: data?.adminGetAllUserSubscriptions,
-    loading,
-    error,
-  };
-}
-
-export const ADMIN_MANAGE_USER_SUBSCRIPTIONS = gql`
-  mutation Mutation(
-    $name: String!
-    $price: Float!
-    $duration: Int!
-    $features: [String!]!
-    $adminManageUserSubscriptionsId: ID
-    $description: String
-    $toDelete: Boolean
-  ) {
-    adminManageUserSubscriptions(
-      name: $name
-      price: $price
-      duration: $duration
-      features: $features
-      id: $adminManageUserSubscriptionsId
-      description: $description
-      toDelete: $toDelete
-    ) {
-      id
-      name
-      description
-      price
-      duration
-      features
-      createdAt
-      updatedAt
-      deletedAt
-      message
-    }
-  }
-`;
-
-export function useAdminManageUserSubscriptions() {
-  const { setTokenType } = useAuthStore();
-  useEffect(() => {
-    setTokenType("admin");
-  }, []);
-  const [adminManageUserSubscriptions, { data, loading, error }] = useMutation(
-    ADMIN_MANAGE_USER_SUBSCRIPTIONS,
-  );
-
-  const manageUserSubscription = async ({
-    name,
-    price,
-    duration,
-    features,
-    adminManageUserSubscriptionsId,
-    description,
-    toDelete,
-  }: {
-    name: string;
-    price: number;
-    duration: number;
-    features: string[];
-    adminManageUserSubscriptionsId?: string;
-    description?: string;
-    toDelete?: boolean;
-  }) => {
-    try {
-      const response = await adminManageUserSubscriptions({
-        variables: {
-          name,
-          price,
-          duration,
-          features,
-          adminManageUserSubscriptionsId,
-          description,
-          toDelete,
-        },
-      });
-      return { response: response.data, error: null };
-    } catch (err) {
-      return { response: null, error: err };
-    }
-  };
-
-  return { manageUserSubscription, data, loading, error };
 }

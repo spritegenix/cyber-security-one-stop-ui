@@ -1,4 +1,3 @@
-import Button from "@/components/elements/Button";
 import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import { subscriptionPage } from "@/data/global";
@@ -7,14 +6,17 @@ import React from "react";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { FirmsTestimonialsSlider } from "./_sections/FirmsTestimonialsSlider";
 import Accordion1 from "@/components/elements/Accordions/Accordion1";
-import { fetchTestimonialsSSR } from "../_queryCall/ssr";
 import { fetchBusinessSubscriptionsSSR } from "../_queryCall/businessSubscription/ssr";
 import SubscriptionCards from "./_sections/SubscriptionCards";
+import Env from "@/lib/env";
+import { fetchTestimonialsSSR } from "../_queryCall/ssr";
+
+export const revalidate = Number(Env.REVALIDATE_TIME);
 
 export default async function SubscriptionPage() {
-  const testimonials = await fetchTestimonialsSSR({ type: "FEEDBACK", page: 1, limit: 10 });
+  const testimonials = await fetchTestimonialsSSR({ filter: "BUSINESS" });
   const plans = await fetchBusinessSubscriptionsSSR();
-  console.log(plans, "plans");
+  // console.log(plans, "plans");
   return (
     <Layout headerStyle={2} footerStyle={1}>
       <Wrapper isTop2={true} className="mb-10 mt-3">
@@ -37,13 +39,13 @@ export default async function SubscriptionPage() {
         </div>
       </Wrapper>
       {/* Testimonials  */}
-      {testimonials?.allTestimonials.length > 0 && (
+      {testimonials?.length > 0 && (
         <Wrapper className="relative space-y-5 py-16">
           <h2 className="mb-5 text-center text-3xl font-bold text-bg1">
             What Makes Us the Preferred Choice
           </h2>
           <div className="sliderStyle relative">
-            <FirmsTestimonialsSlider testimonials={testimonials?.allTestimonials} />
+            <FirmsTestimonialsSlider testimonials={testimonials} />
           </div>
           <div className="relative mx-auto !-mt-60 h-64 w-full rounded-2xl bg-bg1">
             {/* Line Animation  */}

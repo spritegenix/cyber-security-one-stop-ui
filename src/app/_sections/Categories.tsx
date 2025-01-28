@@ -20,7 +20,7 @@ export default function Categories({ categories }: any) {
             desc={category?.description || "Category Description"}
           />
         ))}
-        <div className="group w-full cursor-pointer transition-all duration-300">
+        {/* <div className="group w-full cursor-pointer transition-all duration-300">
           <div className="mb-4 flex w-full justify-center rounded-md border border-zinc-400 p-4 group-hover:border-bg1 group-hover:shadow-lg">
             <Image
               src={search}
@@ -31,7 +31,7 @@ export default function Categories({ categories }: any) {
             />
           </div>
           <h4 className="text-center transition-all duration-300 group-hover:text-bg1">More</h4>
-        </div>
+        </div> */}
       </ul>
     </Wrapper>
   );

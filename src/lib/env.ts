@@ -4,6 +4,7 @@ class Env {
     static BASE_GQL_URL: string = process.env.NEXT_PUBLIC_BASE_GQL_URL as string;
     static CHAT_API_URL: string = process.env.NEXT_PUBLIC_CHAT_API_URL as string;
     static RAZORPAY_API_KEY: string = process.env.NEXT_PUBLIC_RAZORPAY_API_KEY as string;
+    static REVALIDATE_TIME = process.env.NEXT_PUBLIC_REVALIDATE_TIME || 10000 as number;
 }
 
 export default Env;
