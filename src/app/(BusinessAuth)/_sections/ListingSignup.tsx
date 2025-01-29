@@ -13,7 +13,7 @@ const listingSignUpSchema = z.object({
   loginIdentifier: z
     .string()
     .refine((value) => /\S+@\S+\.\S+/.test(value) || /^\+\d{1,3}\d{10,15}$/.test(value), {
-      message: "Enter a valid email or phone number with a country code (e.g., +1234567890).",
+      message: "Enter a valid email or phone number with a country code (e.g., +91 1234567890).",
     }),
 });
 

@@ -37,6 +37,8 @@ import service1 from "@/assets/1.jpg";
 import banner from "@/assets/banner.jpg";
 // user 
 import user from "@/assets/user.png";
+// illustration1 
+import illustration1 from "@/assets/Security On-bro.svg";
 
 export {
     cat1,
@@ -76,5 +78,7 @@ export {
     user,
 
     logoDark,
-    logoWhite
+    logoWhite,
+
+    illustration1,
 };

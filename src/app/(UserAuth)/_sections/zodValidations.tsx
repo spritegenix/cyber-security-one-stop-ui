@@ -27,7 +27,7 @@ export const loginSchema = z.object({
   loginIdentifier: z
     .string()
     .refine((val) => /\S+@\S+\.\S+/.test(val) || /^\+\d{1,3}\d{10,15}$/.test(val), {
-      message: "Please enter a valid email address or phone number",
+      message: "Enter a valid email or phone number with a country code (e.g., +91 1234567890).",
     }),
   password: z.string(),
 });
