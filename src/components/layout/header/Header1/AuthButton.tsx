@@ -10,7 +10,7 @@ export default function AuthButton({ handleSidebar }: any) {
   return (
     <>
       {!isLogin ? (
-        <Button as={Link} href="/login" variant="orange-gradient">
+        <Button as={Link} href="/login" prefetch={true} variant="orange-gradient">
           Log In / Sign Up
         </Button>
       ) : (

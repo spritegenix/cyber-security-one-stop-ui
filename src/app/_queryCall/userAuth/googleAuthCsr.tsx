@@ -1,6 +1,6 @@
 import useAuthStore from "@/zustandStore/authStore";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export const USER_LOGIN = gql`
   query UserLogin($password: String!, $email: String, $phone: String) {
@@ -65,7 +65,34 @@ export function useUserLogin() {
   return { userLogin, data: data?.userLogin, loading, error };
 }
 
+// 1st google OAuth query
+const USER_GOOGLE_OAUTH = gql`
+  query UserGoogleOAuth($redirectUri: String!) {
+    userGoogleOAuth(redirectURI: $redirectUri) {
+      link
+      requestId
+    }
+  }
+`;
 
+export const useGoogleOAuth = () => {
+  const [getGoogleOAuth, { data, loading, error }] = useLazyQuery(USER_GOOGLE_OAUTH, {
+    fetchPolicy: "network-only",
+  });
+
+  const initiateGoogleOAuth = (redirectUri: string) => {
+    getGoogleOAuth({ variables: { redirectUri } });
+  };
+
+  return {
+    initiateGoogleOAuth,
+    data: data?.userGoogleOAuth,
+    loading,
+    error,
+  };
+};
+
+// 2nd  Google OAuth query
 export const USER_GOOGLE_OAUTH_VERIFY = gql`
   mutation UserGoogleOAuthVerify($code: String!) {
     userGoogleOAuthVerify(code: $code) {
@@ -96,7 +123,7 @@ export const USER_GOOGLE_OAUTH_VERIFY = gql`
 `;
 
 // User Google OAuth Verification Hook
-export function useUserGoogleOAuthVerify() {
+export const useUserGoogleOAuthVerify = () => {
   const router = useRouter();
   const { setUserToken, setTokenType } = useAuthStore();
 
@@ -104,21 +131,21 @@ export function useUserGoogleOAuthVerify() {
     onCompleted: (data) => {
       if (data?.userGoogleOAuthVerify) {
         const { token } = data.userGoogleOAuthVerify;
-        setTokenType("user");
-        setUserToken(token);
-        router.replace("/"); // Redirect to the homepage after successful login
+        if (token) {
+          setTokenType("user");
+          setUserToken(token);
+          router.replace("/");
+        }
       }
     },
     onError: (error) => {
-      console.error("Error during Google OAuth verification:", error.message || error);
+      console.error("Google OAuth verification error:", error.message || error);
     },
   });
 
   const userGoogleOAuthVerify = async (code: string) => {
     try {
-      const response = await verifyGoogleOAuth({
-        variables: { code },
-      });
+      const response = await verifyGoogleOAuth({ variables: { code } });
       return {
         response: response?.data?.userGoogleOAuthVerify || null,
         error: null,
@@ -135,4 +162,4 @@ export function useUserGoogleOAuthVerify() {
   };
 
   return { userGoogleOAuthVerify, data: data?.userGoogleOAuthVerify, loading, error };
-}
+};

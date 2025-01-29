@@ -78,7 +78,11 @@ export default function LayoutClient({
 
   useEffect(() => {
     AOS.init();
-    const firstLineShape = document.querySelector(".line-shape.first");
+    document.querySelector(".line-shape.first");
+  }, []);
+
+  useEffect(() => {
+    import("@/components/elements/AuthSliderModel/AuthSlider");
   }, []);
 
   const handleNavItemClick = (itemId: string, href: string) => {
