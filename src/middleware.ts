@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import Cookies from 'universal-cookie';
 
 // Define the protected and public routes
-const protectedRoutes = ["/user-profile", '/user-profile/:path*', "/listing-profile", '/listing-profile/:path*', '/listing-verify', '/admin/dashboard',];
+const protectedRoutes = ["/user-profile", '/user-profile/:path*', "/listing-profile", '/listing-profile/:path*', '/listing-verify', '/admin/dashboard', '/admin/*'];
 const publicRoutes = ['/login', '/signup', '/listing-login', '/listing-signup', '/admin',];
 
 // Helper function to match dynamic routes

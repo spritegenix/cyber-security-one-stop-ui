@@ -17,7 +17,7 @@ export default function StickyWidgetForm() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="relative z-10 w-[90vw] max-w-md overflow-y-auto rounded-2xl border border-bg1 bg-white shadow-2xl max-sm:-mb-16 md:max-h-[31rem] md:w-96"
+              className="relative z-20 w-[90vw] max-w-md overflow-y-auto rounded-2xl border border-bg1 bg-white shadow-2xl max-sm:-mb-16 md:max-h-[31rem] md:w-96"
               initial={{ opacity: 0, scale: 0.8, y: 100 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: 50 }}
