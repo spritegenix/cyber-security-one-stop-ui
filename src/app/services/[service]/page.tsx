@@ -1,6 +1,14 @@
 import Layout from "@/components/layout/Layout";
 import React from "react";
 import PageSections from "./_sections/PageSections";
+import Env from "@/lib/env";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Services | Cybersecurity One Stop",
+};
+
+export const revalidate = Number(Env.REVALIDATE_TIME);
 
 type Props = {
   params: {

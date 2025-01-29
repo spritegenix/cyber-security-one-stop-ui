@@ -10,6 +10,11 @@ import { fetchBusinessSubscriptionsSSR } from "../_queryCall/businessSubscriptio
 import SubscriptionCards from "./_sections/SubscriptionCards";
 import Env from "@/lib/env";
 import { fetchTestimonialsSSR } from "../_queryCall/ssr";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Advertisement | Cybersecurity One Stop",
+};
 
 export const revalidate = Number(Env.REVALIDATE_TIME);
 

@@ -76,14 +76,23 @@ export default function Footer1({ footerData }: any) {
       {/* copyright  */}
       <div className="flex items-center justify-between gap-5 border-t-2 border-white/30 py-5 max-md:flex-col">
         <p className="text-center text-sm">
-          Copyrights © 2024 <span className="font-medium">CyberSecurity</span>. All rights
-          reserved. Designed and Developed by{" "}
+          Copyrights © {new Date().getFullYear()}{" "}
+          <span className="font-medium">CyberSecurity</span>. All rights reserved. Designed and
+          Developed by{" "}
           <Link
             target="_blank"
             className="font-medium hover:underline"
             href={"https://www.spritegenix.com/"}
           >
             Sprite Genix
+          </Link>
+          .{" "}
+          <Link target="_blank" className="hover:underline" href={"/privacy-policy"}>
+            Privacy Policy
+          </Link>{" "}
+          |{" "}
+          <Link target="_blank" className="hover:underline" href={"/terms-and-conditions"}>
+            Terms & Conditions
           </Link>
         </p>
 

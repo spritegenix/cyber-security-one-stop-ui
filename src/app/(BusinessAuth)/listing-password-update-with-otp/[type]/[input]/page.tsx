@@ -2,6 +2,11 @@ import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import { ChangePasswordByOtp } from "@/app/(BusinessAuth)/_sections/ChangePasswordByOtp";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Password Update with OTP | Cybersecurity One Stop",
+};
 
 type Props = {
   params: {

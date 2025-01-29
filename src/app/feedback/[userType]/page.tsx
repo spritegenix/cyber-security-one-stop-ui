@@ -2,6 +2,11 @@ import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import React from "react";
 import Reviews from "./_sections/Reviews";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Feedback | Cybersecurity One Stop",
+};
 
 type Params = {
   params: {

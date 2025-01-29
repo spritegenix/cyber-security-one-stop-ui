@@ -3,6 +3,12 @@ import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import { VerifyByOtp } from "@/app/(BusinessAuth)/_sections/VerifyByOtp";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Listing Verify Profile | Cybersecurity One Stop",
+};
+
 type Props = {
   params: {
     type: "email" | "phone";

@@ -8,6 +8,7 @@ import "./css/typeHead.css";
 import "./css/swiper.css";
 import { ApolloWrapper } from "@/lib/apollo-wrapper";
 import Script from "next/script";
+import Env from "@/lib/env";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -31,8 +32,15 @@ export const metadata: Metadata = {
   },
   description:
     "Explore and connect with top firms and individual experts specializing in categories like Financial Fraud, Cybersecurity, Legal Consultancy, and more. Discover trusted professionals to help solve your challenges and secure your interests.",
+  metadataBase: new URL(Env.BASE_URL),
+
   twitter: {
     card: "summary_large_image",
+    site: "cybersecurityonestop.com",
+    title: "Cyber Security | One stop Solution",
+    description:
+      "Explore and connect with top firms and individual experts specializing in categories like Financial Fraud, Cybersecurity, Legal Consultancy, and more. Discover trusted professionals to help solve your challenges and secure your interests.",
+    images: ["screenshots/homePage.png"],
   },
   openGraph: {
     title: "Cyber Security | One stop Solution",
@@ -41,14 +49,14 @@ export const metadata: Metadata = {
     siteName: "Cyber Security",
     description:
       "Explore and connect with top firms and individual experts specializing in categories like Financial Fraud, Cybersecurity, Legal Consultancy, and more. Discover trusted professionals to help solve your challenges and secure your interests.",
-    // images: [
-    //   {
-    //     url: "/api/og-image/route.ts",
-    //     width: 1200,
-    //     height: 600,
-    //     alt: "Cyber Security - One Stop Solution",
-    //   },
-    // ],
+    images: [
+      {
+        url: "screenshots/homePage.png",
+        width: 1200,
+        height: 600,
+        alt: "Cyber Security - One Stop Solution",
+      },
+    ],
   },
   icons: {
     shortcut: "/favicon.ico",

@@ -2,6 +2,11 @@ import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import ListingLogIn from "@/app/(BusinessAuth)/_sections/ListingLogIn";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Listing Login | Cybersecurity One Stop",
+};
 
 export default function ListingLogInPage() {
   return (

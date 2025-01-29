@@ -3,6 +3,12 @@ import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import React from "react";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Listing Signup With Otp Password | Cybersecurity One Stop",
+};
+
 type Props = {
   params: {
     type: "email" | "phone";

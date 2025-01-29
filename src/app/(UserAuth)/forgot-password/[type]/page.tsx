@@ -2,6 +2,13 @@ import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import React from "react";
 import ForgotPassword from "../../_sections/ForgotPassword";
+
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Forgot Password | Cybersecurity One Stop",
+};
+
 type Props = {
   params: {
     type: "email" | "phone";

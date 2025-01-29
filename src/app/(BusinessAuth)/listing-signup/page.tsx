@@ -9,6 +9,12 @@ import Env from "@/lib/env";
 import { fetchTestimonialsSSR } from "@/app/_queryCall/ssr";
 import { FirmsTestimonialsSlider } from "@/app/subscription/_sections/FirmsTestimonialsSlider";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Listing Sign Up | Cybersecurity One Stop",
+};
+
 export const revalidate = Number(Env.REVALIDATE_TIME);
 
 export default async function ListingSignUpPage() {

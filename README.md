@@ -85,10 +85,8 @@ https://nextjs.org/docs/app/building-your-application/optimizing/metadata#json-l
 https://docs.srv.us/
 https://www.opengraph.xyz/
 
-// 56:25
-//3:2
 
-
+https://locationiq.com/demo#autocomplete
 
 
 

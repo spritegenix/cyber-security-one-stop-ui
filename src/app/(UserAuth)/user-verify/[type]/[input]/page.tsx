@@ -2,7 +2,12 @@ import React from "react";
 import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 import Otp from "@/app/(UserAuth)/_sections/Otp";
-// import { VerifyByOtp } from "@/app/(BusinessAuth)/_sections/VerifyByOtp";
+
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "User Verify | Cybersecurity One Stop",
+};
 
 type Props = {
   params: {

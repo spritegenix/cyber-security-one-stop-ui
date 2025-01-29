@@ -105,7 +105,6 @@ export const fetchTestimonialsSSR = async ({
   }
 };
 
-// Define the GraphQL query
 export const GET_ALL_BUSINESSES = gql`
   query GetAllBusinesses {
     getAllBusinesses {
@@ -232,8 +231,7 @@ export const GET_ALL_BUSINESSES = gql`
     }
   }
 `;
-
-// Define the SSR function
+// Get All Businesses with all Data
 export const fetchBusinessesSSR = async () => {
   try {
     const { data } = await query({
@@ -255,7 +253,36 @@ export const fetchBusinessesSSR = async () => {
   }
 };
 
-// Define the GraphQL query
+// Get All Businesses Slug
+const GET_ALL_BUSINESSES_SLUGS = gql`
+  query GetAllBusinesses {
+    getAllBusinesses {
+      slug
+    }
+  }
+`;
+
+export const fetchBusinessesSlugSSR = async () => {
+  try {
+    const { data } = await query({
+      query: GET_ALL_BUSINESSES_SLUGS,
+    });
+
+    if (!data || !data.getAllBusinesses) {
+      console.warn("No businesses found.");
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof ApolloError) {
+      console.error("ApolloError while fetching businesses:", error.message);
+      return null;
+    }
+    throw error;
+  }
+};
+
 export const GET_ALL_BUSINESS_SLUGS = gql`
   query GetAllBusinesses {
     getAllBusinesses {
@@ -264,7 +291,6 @@ export const GET_ALL_BUSINESS_SLUGS = gql`
   }
 `;
 
-// Define the SSR function
 export const fetchBusinessSlugsSSR = async () => {
   try {
     const { data } = await query({
@@ -286,7 +312,6 @@ export const fetchBusinessSlugsSSR = async () => {
   }
 };
 
-// Define the GraphQL query
 export const GET_ALL_AD_BANNERS = gql`
   query Query {
     getAllAddBanners {
@@ -328,7 +353,6 @@ export const GET_ALL_AD_BANNERS = gql`
   }
 `;
 
-// Define the SSR function
 export const fetchAdBannersSSR = async () => {
   try {
     const { data } = await query({
@@ -352,7 +376,6 @@ export const fetchAdBannersSSR = async () => {
   }
 };
 
-// Define the GraphQL query
 export const FILTER_BUSINESS = gql`
   query Search(
     $minPrice: Float

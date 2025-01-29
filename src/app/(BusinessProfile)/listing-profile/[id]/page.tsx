@@ -3,6 +3,12 @@ import QuickLinks from "@/app/(BusinessProfile)/listing-profile/[id]/_sections/Q
 import Wrapper from "@/components/elements/Wrappers";
 import Layout from "@/components/layout/Layout";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Firm Profile | Cybersecurity One Stop",
+};
+
 export default function FirmProfilePage() {
   return (
     <Layout headerStyle={2} footerStyle={1}>
