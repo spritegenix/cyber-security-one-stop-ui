@@ -409,10 +409,10 @@ export default function UserListPage() {
               }}
             >
               {filtersApplied?.hasTestimonials === undefined
-                ? "All have / not have Testimonials"
+                ? "All admin selected / not selected Testimonials"
                 : filtersApplied?.hasTestimonials
-                  ? "have Testimonials"
-                  : "Not have Testimonials"}
+                  ? "admin selected Testimonials"
+                  : "admin Not selected Testimonials"}
             </Button>
           </div>
           {/* ------------------------------------------------------  */}

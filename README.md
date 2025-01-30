@@ -91,8 +91,9 @@ https://locationiq.com/demo#autocomplete
 
 
 
-
-
+// no registration no. on indi page
+// user feedselected but not previous show, created date wrong
+// adimn notice null in profile section 
 
 
 

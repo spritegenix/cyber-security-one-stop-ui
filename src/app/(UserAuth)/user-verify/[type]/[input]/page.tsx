@@ -26,7 +26,7 @@ export default function UserVerifyPage({ params, searchParams }: Props) {
   return (
     <Layout headerStyle={1} footerStyle={1}>
       <Wrapper isTop={true} className="mb-10 flex h-screen justify-center">
-        <div className="rounded-lg bg-white p-5 shadow-lg">
+        <div className="h-max rounded-lg bg-white p-5 shadow-lg">
           <Otp type={type} userIdentifier={input} requestId={searchParams?.requestId} />
         </div>
       </Wrapper>

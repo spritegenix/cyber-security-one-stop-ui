@@ -23,13 +23,6 @@ export default function AdminLogIn() {
   });
   const { adminLogin, data, loading, error } = useAdminLogin();
 
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
-
   const onSubmit = async (data: LoginFormValues) => {
     // console.log("Form data submitted:", data);
     await adminLogin({

@@ -101,31 +101,31 @@ export default function Footer1({ footerData }: any) {
           <div className="flex-center gap-2 text-3xl text-white">
             {footerData?.socials?.facebook && (
               <FaFacebook
-                className="social-icon text-xl"
+                className="social-icon cursor-pointer text-xl transition-all duration-300 hover:scale-110"
                 onClick={() => window.open(footerData?.socials?.facebook, "_blank")}
               />
             )}
             {footerData?.socials?.instagram && (
               <AiFillInstagram
-                className="social-icon text-xl"
+                className="social-icon cursor-pointer text-xl transition-all duration-300 hover:scale-110"
                 onClick={() => window.open(footerData?.socials?.instagram, "_blank")}
               />
             )}
             {footerData?.socials?.linkedin && (
               <FaLinkedinIn
-                className="social-icon text-xl"
+                className="social-icon cursor-pointer text-xl transition-all duration-300 hover:scale-110"
                 onClick={() => window.open(footerData?.socials?.linkedin, "_blank")}
               />
             )}
             {footerData?.socials?.youtube && (
               <TbBrandYoutubeFilled
-                className="social-icon text-xl"
+                className="social-icon cursor-pointer text-xl transition-all duration-300 hover:scale-110"
                 onClick={() => window.open(footerData?.socials?.youtube, "_blank")}
               />
             )}
             {footerData?.socials?.twitter && (
               <FaXTwitter
-                className="social-icon text-xl"
+                className="social-icon cursor-pointer text-xl transition-all duration-300 hover:scale-110"
                 onClick={() => window.open(footerData?.socials?.twitter, "_blank")}
               />
             )}

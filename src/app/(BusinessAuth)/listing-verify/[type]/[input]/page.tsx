@@ -25,7 +25,7 @@ export default function BusinessVerifyPage({ params, searchParams }: Props) {
   return (
     <Layout headerStyle={2} footerStyle={1}>
       <Wrapper isTop={true} className="mb-10 flex items-center justify-center p-2">
-        <div className="rounded-lg bg-white p-5 shadow-lg">
+        <div className="h-max rounded-lg bg-white p-5 shadow-lg">
           <VerifyByOtp type={type} userIdentifier={input} requestId={searchParams?.requestId} />
         </div>
       </Wrapper>

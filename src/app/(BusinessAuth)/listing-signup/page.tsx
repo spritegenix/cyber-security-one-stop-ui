@@ -10,6 +10,8 @@ import { fetchTestimonialsSSR } from "@/app/_queryCall/ssr";
 import { FirmsTestimonialsSlider } from "@/app/subscription/_sections/FirmsTestimonialsSlider";
 
 import { Metadata } from "next";
+import { expertFaqs } from "@/data/global";
+import Accordion1 from "@/components/elements/Accordions/Accordion1";
 
 export const metadata: Metadata = {
   title: "Listing Sign Up | Cybersecurity One Stop",
@@ -79,6 +81,11 @@ export default async function ListingSignUpPage() {
           </div>
         </Wrapper>
       )}
+      {/* FAQ's  */}
+      <Wrapper className="space-y-5 py-16">
+        <h2 className="mb-5 text-center text-3xl font-bold text-bg1">Frequently Asked Questions</h2>
+        <Accordion1 data={expertFaqs} />
+      </Wrapper>
     </Layout>
   );
 }

@@ -99,7 +99,7 @@ export function VerifyByOtp({ type, userIdentifier, requestId }: VerifyByOtpValu
   return (
     <>
       <button
-        className="mb-5 flex items-center gap-2 text-lg text-blue-500"
+        className="mb-5 flex h-max items-center gap-2 text-lg text-blue-500"
         onClick={handleBackToEdit}
       >
         <FiEdit className="text-lg" />

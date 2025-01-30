@@ -54,7 +54,7 @@ export default function ListingForgotPassword({ type }: Type) {
   };
 
   return (
-    <div className="rounded-lg bg-white p-5 shadow-lg">
+    <div className="rounded-lg bg-white p-5 shadow-lg h-max">
       <h2 className="mb-5 text-2xl font-bold">
         Recover Password by {type === "email" ? "Email" : "Phone Number"}
       </h2>

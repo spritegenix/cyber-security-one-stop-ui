@@ -585,7 +585,6 @@ export const languageProficiencyIndia = [
   "Azerbaijani",
   "Basque",
   "Belarusian",
-  "Bengali",
   "Bosnian",
   "Bulgarian",
   "Catalan",
@@ -620,7 +619,6 @@ export const languageProficiencyIndia = [
   "Italian",
   "Japanese",
   "Javanese",
-  "Kannada",
   "Kazakh",
   "Khmer",
   "Kinyarwanda",
@@ -639,14 +637,11 @@ export const languageProficiencyIndia = [
   "Maori",
   "Mongolian",
   "Myanmar (Burmese)",
-  "Nepali",
   "Norwegian",
-  "Odia",
   "Pashto",
   "Persian",
   "Polish",
   "Portuguese",
-  "Punjabi",
   "Romanian",
   "Russian",
   "Samoan",
@@ -654,7 +649,6 @@ export const languageProficiencyIndia = [
   "Serbian",
   "Sesotho",
   "Shona",
-  "Sindhi",
   "Sinhala",
   "Slovak",
   "Slovenian",
@@ -760,54 +754,84 @@ export const subscriptionPage = {
   ],
   faqs: [
     {
-      question: "What are the subscription options available?",
+      question: "What subscription options are available for experts and firms?",
       answer:
-        "We offer three flexible subscription plans: Monthly, Quarterly, and Yearly. Each plan is designed to cater to different needs and budgets.",
+        "We offer a single subscription plan with flexible durations: Monthly, Quarterly, and Yearly. You can choose the plan that best suits your needs.",
     },
     {
-      question: "Can I switch between subscription plans?",
+      question: "What happens if I buy another subscription before my current one expires?",
       answer:
-        "Yes, you can upgrade or downgrade your subscription plan at any time. The changes will take effect at the start of the next billing cycle.",
+        "Your new subscription will be added to your existing plan, extending its duration instead of replacing it. This ensures uninterrupted service.",
     },
     {
-      question: "What payment methods are accepted?",
+      question: "What benefits do I get with the subscription?",
       answer:
-        "We accept various payment methods, including credit cards, debit cards, and online payment platforms like PayPal.",
+        "Subscribers gain increased visibility, priority listing, and additional features to attract more clients and grow their cybersecurity services.",
     },
     {
-      question: "Is there a refund policy for subscriptions?",
+      question: "Can I upgrade from a monthly to a yearly subscription?",
       answer:
-        "We do not offer refunds for subscriptions, but you can cancel your plan anytime to avoid future charges.",
+        "Yes, you can purchase a longer-duration subscription at any time, and it will be added to your current plan, extending its validity.",
     },
     {
-      question: "Do I get any additional benefits with a yearly plan?",
+      question: "How do I manage or renew my subscription?",
       answer:
-        "Yes, the yearly plan offers significant savings compared to the monthly and quarterly plans, making it ideal for long-term commitments.",
-    },
-    {
-      question: "Can I cancel my subscription at any time?",
-      answer:
-        "Yes, you can cancel your subscription anytime through your account settings. Your subscription will remain active until the end of the billing period.",
-    },
-    {
-      question: "Will I receive reminders before my subscription renews?",
-      answer:
-        "Yes, we send email reminders before your subscription is renewed, so you can manage your subscription accordingly.",
-    },
-    {
-      question: "How do I contact support for subscription-related issues?",
-      answer:
-        "You can reach out to our support team via email or our live chat option. We're here to assist you with any concerns.",
-    },
-    {
-      question: "Can multiple team members use a single subscription?",
-      answer:
-        "No, subscriptions are tied to individual accounts. However, you can contact us for team or enterprise solutions.",
-    },
-    {
-      question: "What happens if I don't renew my subscription?",
-      answer:
-        "If you don't renew, your access to premium features will be restricted, and your account will revert to the free plan.",
+        "You can check your subscription status and renew it through your account dashboard. Renewing early ensures continuous access to premium benefits.",
     },
   ],
 };
+
+export const homePageFaqs = [
+  {
+    question: "What is Cybersecurity One Stop?",
+    answer:
+      "Cybersecurity One Stop is a platform that connects users with verified cybersecurity experts specializing in fraud prevention, digital security, and risk management.",
+  },
+  {
+    question: "How can I find and connect with a cybersecurity expert?",
+    answer:
+      "You can search for experts based on their specialization, location, and expertise. Once you find a suitable expert, you can connect with them directly through our platform or you can ask for a free consultation.",
+  },
+  {
+    question: "Are the cybersecurity experts on your platform verified?",
+    answer: "No, Only cybersecurity experts with green badge are verified on our platform.",
+  },
+  {
+    question: "Is it free to search for cybersecurity experts?",
+    answer:
+      "Yes, searching for experts is completely free. However, consultation and services provided by experts may have their own pricing.",
+  },
+  {
+    question: "Can businesses also use this platform?",
+    answer:
+      "Absolutely! Businesses can find cybersecurity consultants to help with risk assessments, compliance, and security solutions tailored to their needs.",
+  },
+];
+
+export const expertFaqs = [
+  {
+    question: "How can I list myself or my firm on Cybersecurity One Stop?",
+    answer:
+      "You can sign up, create a profile, and list your services instantly without verification. However, a green badge is awarded after our team verifies your documents.",
+  },
+  {
+    question: "What is the green badge, and how do I get it?",
+    answer:
+      "The green badge signifies that our team has verified your credentials. To obtain it, you need to submit relevant documents, which our team will review for authenticity.",
+  },
+  {
+    question: "Can I receive client inquiries without verification?",
+    answer:
+      "Yes, you can still be listed and receive inquiries from potential clients without verification. However, verified experts with a green badge may gain more trust and visibility.",
+  },
+  {
+    question: "Is there a fee for listing my profile?",
+    answer:
+      "You can list your profile for free. We also offer premium plans that provide additional visibility and features to help you attract more clients.",
+  },
+  {
+    question: "How can I improve my profile’s visibility?",
+    answer:
+      "To attract more clients, complete your profile with a detailed bio, add certifications, include client testimonials, and consider applying for verification to get the green badge.",
+  },
+];

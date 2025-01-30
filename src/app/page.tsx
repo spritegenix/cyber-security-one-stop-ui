@@ -7,6 +7,8 @@ import React from "react";
 import { AdBannerSlider } from "./_sections/AdBannerSlider";
 import { fetchCategoriesSSR, fetchTestimonialsSSR } from "./_queryCall/ssr";
 import Env from "@/lib/env";
+import Accordion1 from "@/components/elements/Accordions/Accordion1";
+import { homePageFaqs } from "@/data/global";
 
 export const revalidate = Number(Env.REVALIDATE_TIME);
 
@@ -45,6 +47,11 @@ export default async function Home() {
           </div>
         </Wrapper>
       )}
+      {/* FAQ's  */}
+      <Wrapper className="space-y-5 py-16">
+        <h2 className="mb-5 text-center text-3xl font-bold text-bg1">Frequently Asked Questions</h2>
+        <Accordion1 data={homePageFaqs} />
+      </Wrapper>
     </Layout>
   );
 }

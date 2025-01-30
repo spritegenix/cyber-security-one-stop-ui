@@ -18,9 +18,9 @@ import { useEffect } from "react";
 
 export default function BusinessProfile() {
   const { userData: loggedUser, loading, error, refetch } = useGetBusinessDetails();
-  // useEffect(() => {
-  //   console.log(loggedUser);
-  // }, [loggedUser]);
+  useEffect(() => {
+    console.log(loggedUser);
+  }, [loggedUser]);
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useLocalStorage(
     "businessProfileActiveTab",

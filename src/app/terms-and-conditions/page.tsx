@@ -15,78 +15,89 @@ export default function TermsAndConditions() {
       <Wrapper isTop={true}>
         <div className="mx-auto max-w-4xl p-6">
           <h1 className="mb-4 text-3xl font-bold">Terms and Conditions</h1>
-          <p className="mb-4">
-            Welcome to <strong>Cybersecurity One Stop</strong>. By accessing or using our services,
-            you agree to comply with the following Terms and Conditions. If you do not agree, please
-            refrain from using our platform.
+          <p className="mb-4 text-gray-600">Effective Date: 1 Jan 2025</p>
+          <p className="mt-4">
+            Welcome to <strong>Cybersecurity One Stop</strong>. By accessing or using our platform,
+            you agree to comply with these Terms and Conditions.
           </p>
 
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">1. Use of Our Services</h2>
-          <p>
-            Our platform provides cybersecurity and fraud prevention solutions. You agree to use our
-            services only for lawful purposes and in compliance with these terms.
-          </p>
-
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">2. User Responsibilities</h2>
-          <p>You agree to:</p>
-          <ul className="mb-4 ml-6 list-disc">
-            <li>Provide accurate and truthful information when using our services.</li>
-            <li>Not engage in fraudulent activities or violate any laws.</li>
-            <li>Respect the privacy and security of other users.</li>
+          <h2 className="text-xl font-semibold text-bg1">1. User & Expert Responsibilities</h2>
+          <p className="mt-2">By using our platform, you agree that:</p>
+          <ul className="mt-2 list-disc pl-6">
+            <li>
+              Users can search and connect with cybersecurity experts at their own discretion.
+            </li>
+            <li>Experts/Firms must provide accurate and legal information on their profiles.</li>
+            <li>
+              Users and Experts are responsible for their own interactions outside of our platform.
+            </li>
+            <li>
+              Cybersecurity One Stop is not responsible for disputes between users and experts.
+            </li>
           </ul>
 
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">3. Account Security</h2>
-          <p>
-            If you create an account, you are responsible for maintaining its confidentiality. We
-            are not liable for unauthorized account access due to user negligence.
-          </p>
-
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">4. Prohibited Activities</h2>
-          <p>You may not:</p>
-          <ul className="mb-4 ml-6 list-disc">
-            <li>Use our platform for illegal activities, hacking, or fraud.</li>
-            <li>Distribute harmful software or engage in cyber threats.</li>
-            <li>Misuse any cybersecurity tools provided by us.</li>
+          <h2 className="mt-6 text-xl font-semibold text-bg1">2. Expert Listing & Verification</h2>
+          <ul className="mt-2 list-disc pl-6">
+            <li>Experts/Firms can list their services without verification.</li>
+            <li>
+              Verified experts will receive a <strong>green badge</strong> after document
+              verification by our team.
+            </li>
+            <li>Providing false information may result in account suspension.</li>
           </ul>
 
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">5. Intellectual Property</h2>
-          <p>
-            All content, trademarks, and materials on this platform are the property of
-            <strong> Cybersecurity One Stop</strong>. Unauthorized use is strictly prohibited.
+          <h2 className="mt-6 text-xl font-semibold text-bg1">3. Subscription Policy</h2>
+          <ul className="mt-2 list-disc pl-6">
+            <li>Experts can subscribe to a single type of plan: Monthly, Quarterly, or Yearly.</li>
+            <li>
+              Buying a new subscription adds to the existing duration instead of replacing it.
+            </li>
+            <li>Subscription payments are non-refundable.</li>
+          </ul>
+
+          <h2 className="mt-6 text-xl font-semibold text-bg1">4. Prohibited Activities</h2>
+          <p className="mt-2">You agree not to:</p>
+          <ul className="mt-2 list-disc pl-6">
+            <li>Use our platform for fraudulent or illegal activities.</li>
+            <li>Impersonate another person or misrepresent your identity.</li>
+            <li>Harass, abuse, or harm other users or experts.</li>
+            <li>Upload misleading, false, or inappropriate content.</li>
+          </ul>
+
+          <h2 className="mt-6 text-xl font-semibold text-bg1">5. Limitation of Liability</h2>
+          <p className="mt-2">
+            Cybersecurity One Stop is a listing platform. We do not endorse or guarantee the
+            accuracy of experts’ credentials or services. Any agreements or transactions made
+            between users and experts are at their own risk.
           </p>
 
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">6. Limitation of Liability</h2>
-          <p>
-            We strive to provide accurate information and secure services. However, we are not
-            responsible for damages resulting from security breaches, cyberattacks, or misuse of our
-            platform.
-          </p>
+          <h2 className="mt-6 text-xl font-semibold text-bg1">
+            6. Account Suspension & Termination
+          </h2>
+          <ul className="mt-2 list-disc pl-6">
+            <li>We reserve the right to suspend or terminate any account violating these terms.</li>
+            <li>Experts providing false information may lose their verified status.</li>
+          </ul>
 
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">7. Third-Party Links</h2>
-          <p>
-            Our website may contain links to third-party sites. We do not endorse or control these
-            sites and are not responsible for their content or security.
-          </p>
-
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">8. Changes to Terms</h2>
-          <p>
-            We may update these Terms and Conditions at any time. Continued use of our platform
-            signifies acceptance of any modifications.
-          </p>
-
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">9. Termination</h2>
-          <p>
-            We reserve the right to terminate or suspend accounts that violate these terms or engage
-            in fraudulent activities.
-          </p>
-
-          <h2 className="mb-2 mt-6 text-2xl font-semibold">10. Contact Information</h2>
-          <p>
-            If you have any questions about our Terms and Conditions, contact us at:
-            <a href="mailto:info@cybersecurityonestop.com" className="text-blue-600">
-              info@cybersecurityonestop.com
+          <h2 className="mt-6 text-xl font-semibold text-bg1">7. Privacy & Data Usage</h2>
+          <p className="mt-2">
+            Your data is protected under our{" "}
+            <a href="/privacy-policy" className="text-blue-600 hover:underline">
+              Privacy Policy
             </a>
-            .
+            . By using this platform, you agree to our data collection and security measures.
+          </p>
+
+          <h2 className="mt-6 text-xl font-semibold text-bg1">8. Changes to Terms</h2>
+          <p className="mt-2">
+            We may update these terms periodically. Continued use of our platform implies acceptance
+            of any modifications.
+          </p>
+
+          <h2 className="mt-6 text-xl font-semibold text-bg1">9. Contact Us</h2>
+          <p className="mt-2">
+            If you have any questions, please contact us at{" "}
+            <strong>info@cybersecurityonestop.com</strong>.
           </p>
         </div>
       </Wrapper>
