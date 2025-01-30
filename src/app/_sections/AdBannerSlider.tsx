@@ -16,8 +16,9 @@ export const AdBannerSlider = ({
   mobileHeight = "min-h-44",
   desktopHeight = "min-h-32",
   onlyMobile = false,
+  startIndex = 0,
+  uniqueId = "adBanner123",
 }: any) => {
-  const uniqueId = "adBanner123";
   const { data, loading, error, refetch } = useFetchAllAdBanners();
 
   const swiperOptions = {
@@ -25,6 +26,7 @@ export const AdBannerSlider = ({
     spaceBetween: 30,
     autoplay: { delay: 5000, disableOnInteraction: false },
     loop: true,
+    initialSlide: startIndex,
     navigation: {
       nextEl: `.${uniqueId}-next`,
       prevEl: `.${uniqueId}-prev`,

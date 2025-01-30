@@ -48,6 +48,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
   // const { query } = await searchParams;
   // console.log(query);
   const business = await fetchBusinessById({ businessSlug: businessID });
+  // console.log("business", business);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Business",
@@ -200,10 +201,10 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
               </p>
             </div>
           )}
-          {/* Academic Degree  */}
+          {/* Certifications  */}
           {business?.getBusinessById?.businessDetails?.degrees.length > 0 && (
             <div className="space-y-3">
-              <h6 className="text-2xl font-medium max-md:mb-2">Academic Degree:</h6>
+              <h6 className="text-2xl font-medium max-md:mb-2">Certifications:</h6>
               <p className="flex flex-wrap gap-2">
                 {business?.getBusinessById?.businessDetails?.degrees.map(
                   (name: string, index: number) => (
@@ -218,10 +219,19 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
               </p>
             </div>
           )}
-          {/* License/Bar Number */}
+          {/* Registration Number */}
+          {business?.getBusinessById?.businessDetails?.registrationNumber && (
+            <div className="space-y-3">
+              <h6 className="text-2xl font-medium max-md:mb-2">Registration Number:</h6>
+              <p className="w-max rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white">
+                {business?.getBusinessById?.businessDetails?.registrationNumber}
+              </p>
+            </div>
+          )}
+          {/* GST Number */}
           {business?.getBusinessById?.businessDetails?.license && (
             <div className="space-y-3">
-              <h6 className="text-2xl font-medium max-md:mb-2">License/Bar Number:</h6>
+              <h6 className="text-2xl font-medium max-md:mb-2">GST Number:</h6>
               <p className="w-max rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white">
                 {business?.getBusinessById?.businessDetails?.license}
               </p>

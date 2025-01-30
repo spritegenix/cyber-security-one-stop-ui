@@ -187,7 +187,7 @@ export default function PageSections({ serviceSlug }: any) {
                   item?.businessDetails?.categories?.length > 0
                     ? [
                         ...item.businessDetails.categories
-                          .slice(0, 4)
+                          .slice(0, 7)
                           .map((category: any) => category?.name),
                         "Many More",
                       ]
@@ -219,10 +219,14 @@ export default function PageSections({ serviceSlug }: any) {
         </ul>
         {/* Ad Cards  */}
         <div className="space-y-5 max-md:hidden md:col-span-4">
-          <div className="sticky top-48">
+          <div className="sticky top-48 space-y-4">
             {/* AdBannerSlider  */}
             <div className="swiperStyle2 relative">
-              <AdBannerSlider onlyMobile={true} />
+              <AdBannerSlider onlyMobile={true} uniqueId="adBanner1" />
+            </div>
+            {/* AdBannerSlider  */}
+            <div className="swiperStyle2 relative">
+              <AdBannerSlider onlyMobile={true} startIndex={1} uniqueId="adBanner2" />
             </div>
           </div>
           {/* <ChatBox /> */}

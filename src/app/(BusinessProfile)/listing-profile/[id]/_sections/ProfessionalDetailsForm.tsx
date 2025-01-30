@@ -170,11 +170,11 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
         </div> */}
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {/* Academic Degree */}
+        {/* Certifications */}
         <div>
-          <h3 className="text-lg font-semibold">Academic Degrees</h3>
+          <h3 className="text-lg font-semibold">Certifications</h3>
           <MultiInputWithStringInput
-            label="Add Academic Degrees"
+            label="Add Certifications"
             inputArray={academicDegree}
             setInputArray={(value) => setValue("academicDegree", value)}
             leftIcon={<PiStudentBold className="text-gray-800" />}
