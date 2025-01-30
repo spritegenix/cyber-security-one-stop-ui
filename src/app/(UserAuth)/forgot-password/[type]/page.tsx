@@ -19,7 +19,7 @@ export default function forgetPasswordPage({ params }: Props) {
   const passwordChangeBy = params?.type;
   return (
     <Layout headerStyle={1} footerStyle={1}>
-      <Wrapper isTop={true} className="mb-10 flex items-center justify-center p-2">
+      <Wrapper isTop={true} className="mb-10 flex h-screen justify-center">
         <ForgotPassword type={passwordChangeBy} />
       </Wrapper>
     </Layout>

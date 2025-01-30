@@ -4,9 +4,10 @@ import {
   useGetBusinessDetails,
   useVerifyPayment,
 } from "@/app/_queryCall/businessSubscription/csr";
-import { logoDark } from "@/assets";
 import Button from "@/components/elements/Button";
 import Env from "@/lib/env";
+import useAuthStore from "@/zustandStore/authStore";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const PaymentComponent = ({
@@ -16,8 +17,9 @@ const PaymentComponent = ({
   subscriptionId: string;
   totalPrice: number;
 }) => {
+  const router = useRouter();
   const { userData, loading, error, refetch } = useGetBusinessDetails();
-
+  const token = useAuthStore((state) => state?.firmToken);
   const {
     createSubscription,
     data: subscriptionData,
@@ -32,6 +34,11 @@ const PaymentComponent = ({
   } = useVerifyPayment();
 
   const handlePayment = async () => {
+    if (!token) {
+      alert("Please login first to take subscription.");
+      router.push("/listing-login");
+      return;
+    }
     try {
       // Step 1: Create a subscription order
       const response = await createSubscription({ variables: { subscriptionId } });

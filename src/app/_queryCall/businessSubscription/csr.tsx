@@ -1,5 +1,6 @@
 import useAuthStore from "@/zustandStore/authStore";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 // Mutation to create a subscription order
@@ -18,6 +19,10 @@ export const BUSINESS_SUBSCRIPTION = gql`
 `;
 
 export const useCreateSubscription = () => {
+  const { setTokenType } = useAuthStore();
+  useEffect(() => {
+    setTokenType("firm");
+  }, []);
   const [createSubscription, { data, loading, error }] = useMutation(BUSINESS_SUBSCRIPTION);
 
   return {
