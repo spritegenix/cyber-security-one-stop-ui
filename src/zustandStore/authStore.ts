@@ -103,7 +103,10 @@ const useAuthStore = create<AuthState>()(
                     const lastUpdated = parseInt(localStorage.getItem('auth-storage-timestamp') || '0', 10);
 
                     if (lastUpdated < expirationTimestamp) {
-                        state.clearTokens();
+                        state.clearTokens(); // Clears Zustand state
+                        cookies.remove('userToken', { path: '/' });
+                        cookies.remove('firmToken', { path: '/' });
+                        cookies.remove('adminToken', { path: '/' });
                     } else {
                         localStorage.setItem('auth-storage-timestamp', now.toString());
                     }

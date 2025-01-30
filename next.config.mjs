@@ -5,13 +5,13 @@ const nextConfig = {
     return [
       {
         source: "/api/graphql",
-        destination: "https://octopus-app-wjlta.ondigitalocean.app/graphql",
+        destination: process.env.NEXT_PUBLIC_BASE_GQL_URL,
       },
     ];
   },
   reactStrictMode: true,
   images: {
-    domains: ["cyber-bucket-2.blr1.digitaloceanspaces.com"],
+    domains: ["cyber-bucket-2.blr1.digitaloceanspaces.com", "lh3.googleusercontent.com"],
     remotePatterns: [
       {
         protocol: "https",
