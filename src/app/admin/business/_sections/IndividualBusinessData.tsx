@@ -10,7 +10,7 @@ import Modal from "@/components/elements/Modal";
 import Tooltip from "@/components/elements/Tooltip";
 import { formatDate } from "@/utils/customText";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDeleteForever, MdOutlinePostAdd } from "react-icons/md";
 
 const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void }> = ({
@@ -56,6 +56,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
     setDeleteConfirmation("");
     refetchData();
   };
+
   // -----------------------------------------------------
   // --------------------- Managing Ad Banners -----------
   const {
@@ -73,11 +74,13 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
   } = useAdminManageBusinessMobileAdBannerImage();
   async function handleDesktopAdBannerToWeb(id: string) {
     await manageBusinessAdBannerImage([{ id: id }]);
+    refetchData();
   }
   async function handleMobileAdBannerToWeb(id: string) {
     await manageBusinessMobileAdBannerImage([{ id: id }]);
+    refetchData();
   }
-  // -----------------------------------------------------
+  // ----------------------------------------------------- //
 
   if (!business) {
     return (

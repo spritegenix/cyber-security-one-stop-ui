@@ -10,6 +10,11 @@ import { MdDeleteForever } from "react-icons/md";
 export default function MobileAdCards() {
   const { adminGetAllBusinessMobileAdBannerImages, data, loading, error, refetch } =
     useAdminGetAllBusinessMobileAdBannerImages();
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   useEffect(() => {
     adminGetAllBusinessMobileAdBannerImages({});
     // console.log(data, "adminGetAllBusinessAdBannerImagesData");

@@ -11,6 +11,10 @@ export default function DesktopAdCards() {
   const { adminGetAllBusinessAdBannerImages, data, loading, error, refetch } =
     useAdminGetAllBusinessAdBannerImages();
   useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
     adminGetAllBusinessAdBannerImages({});
     // console.log(data, "adminGetAllBusinessAdBannerImagesData");
   }, [data]);
