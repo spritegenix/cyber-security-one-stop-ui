@@ -66,10 +66,10 @@ export function useAdminGetAllUserSubscriptions() {
     setTokenType("admin");
   }, []);
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_USER_SUBSCRIPTIONS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched subscriptions successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched subscriptions successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching subscriptions:", err);
@@ -215,10 +215,10 @@ export function useAdminSearchAllFeedbacks() {
     setTokenType("admin");
   }, []);
   const [fetchAllFeedbacks, { data, loading, error }] = useLazyQuery(ADMIN_SEARCH_ALL_FEEDBACKS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched feedbacks successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched feedbacks successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching feedbacks:", err);
@@ -299,10 +299,10 @@ export function useAdminSearchAllReviews() {
     setTokenType("admin");
   }, []);
   const [fetchAllReviews, { data, loading, error }] = useLazyQuery(ADMIN_SEARCH_ALL_REVIEWS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched reviews successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched reviews successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching reviews:", err);
@@ -370,10 +370,10 @@ export function useAdminGetAllTestimonials() {
 
   // Use Apollo's useQuery hook to fetch testimonials
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_TESTIMONIALS, {
-    onCompleted: (data: any) => {
-      // Log or handle successful response
-      console.log("Fetched testimonials successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Log or handle successful response
+    //   console.log("Fetched testimonials successfully:", data);
+    // },
     onError: (err: any) => {
       // Log or handle error response
       console.error("Error fetching testimonials:", err);
@@ -424,10 +424,10 @@ export function useAdminManageTestimonials() {
 
   // Use Apollo's useMutation hook for managing testimonials
   const [manageTestimonials, { data, loading, error }] = useMutation(ADMIN_MANAGE_TESTIMONIALS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed testimonials:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed testimonials:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing testimonials:", err);
@@ -514,10 +514,10 @@ export function useAdminManageCategories() {
 
   // Use Apollo's useMutation hook for managing categories
   const [manageCategories, { data, loading, error }] = useMutation(ADMIN_MANAGE_CATEGORIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed categories:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed categories:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing categories:", err);
@@ -569,10 +569,10 @@ export function useAdminGetAllLanguages() {
 
   // Use Apollo's useQuery hook to fetch languages
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_LANGUAGES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched languages successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched languages successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching languages:", err);
@@ -616,10 +616,10 @@ export function useAdminManageLanguages() {
 
   // Use Apollo's useMutation hook to manage languages
   const [manageLanguages, { data, loading, error }] = useMutation(ADMIN_MANAGE_LANGUAGES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed languages:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed languages:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing languages:", err);
@@ -675,10 +675,10 @@ export function useAdminGetAllCourts() {
 
   // Use Apollo's useQuery hook to fetch courts
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_COURTS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched courts successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched courts successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching courts:", err);
@@ -722,10 +722,10 @@ export function useAdminManageCourts() {
 
   // Use Apollo's useMutation hook to manage courts
   const [manageCourts, { data, loading, error }] = useMutation(ADMIN_MANAGE_COURTS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed courts:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed courts:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing courts:", err);
@@ -781,10 +781,10 @@ export function useAdminGetAllProficiencies() {
 
   // Use Apollo's useQuery hook to fetch proficiencies
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_PROFICIENCIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched proficiencies successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched proficiencies successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching proficiencies:", err);
@@ -828,10 +828,10 @@ export function useAdminManageProficiencies() {
 
   // Use Apollo's useMutation hook to manage proficiencies
   const [manageProficiencies, { data, loading, error }] = useMutation(ADMIN_MANAGE_PROFICIENCIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed proficiencies:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed proficiencies:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing proficiencies:", err);
@@ -893,10 +893,10 @@ export function useAdminGetAllCountries() {
 
   // Use Apollo's useQuery hook to fetch countries
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_COUNTRIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched countries successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched countries successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching countries:", err);
@@ -945,10 +945,10 @@ export function useAdminManageCountries() {
 
   // Use Apollo's useMutation hook to manage countries
   const [manageCountries, { data, loading, error }] = useMutation(ADMIN_MANAGE_COUNTRIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed countries:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed countries:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing countries:", err);
@@ -1011,10 +1011,10 @@ export function useAdminGetAllStates() {
 
   // Use Apollo's useQuery hook to fetch states
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_STATES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched states successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched states successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching states:", err);
@@ -1064,10 +1064,10 @@ export function useAdminManageStates() {
 
   // Use Apollo's useMutation hook to manage states
   const [manageStates, { data, loading, error }] = useMutation(ADMIN_MANAGE_STATES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed states:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed states:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing states:", err);
@@ -1130,10 +1130,10 @@ export function useAdminGetAllCities() {
 
   // Use Apollo's useQuery hook to fetch cities
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_CITIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched cities successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched cities successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching cities:", err);
@@ -1184,10 +1184,10 @@ export function useAdminManageCities() {
 
   // Use Apollo's useMutation hook to manage cities
   const [manageCities, { data, loading, error }] = useMutation(ADMIN_MANAGE_CITIES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed cities:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed cities:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing cities:", err);
@@ -1250,10 +1250,10 @@ export function useAdminGetAllPincodes() {
 
   // Use Apollo's useQuery hook to fetch pincodes
   const { data, loading, error } = useQuery(ADMIN_GET_ALL_PINCODES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched pincodes successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched pincodes successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching pincodes:", err);
@@ -1304,10 +1304,10 @@ export function useAdminManagePincodes() {
 
   // Use Apollo's useMutation hook to manage pincodes
   const [managePincodes, { data, loading, error }] = useMutation(ADMIN_MANAGE_PINCODES, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Successfully managed pincodes:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Successfully managed pincodes:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error managing pincodes:", err);

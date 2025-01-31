@@ -88,7 +88,7 @@ export function ProfileForm({ defaultValues }: any) {
   }, [defaultValues, reset]);
 
   const onSubmit = async (formData: any) => {
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
     const updatedAddress: any = {
       addressId: formData.addressId || undefined,
       street: formData.streetAddress,

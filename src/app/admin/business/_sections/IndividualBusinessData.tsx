@@ -90,7 +90,7 @@ const IndividualBusinessData: React.FC<{ business?: any; refetchData: () => void
     );
   }
 
-  console.log("business", business);
+  // console.log("business", business);
   return (
     <>
       <div className="mx-auto max-w-6xl p-4">

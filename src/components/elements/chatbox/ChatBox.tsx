@@ -116,7 +116,7 @@ function ChatContentContainer({ setIsChatBoxOpen }: any) {
 
   // Send message function
   const sendMessage = () => {
-    console.log("Message sent:", message);
+    // console.log("Message sent:", message);
     setMessage(""); // Clear the input field after sending
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto"; // Reset height

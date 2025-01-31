@@ -101,9 +101,9 @@ export function useGetUserFirmFeedback({ userType }: { userType: "firm" | "user"
     {
       fetchPolicy: "cache-and-network", // Fetch fresh data but use cache when available
       skip: !token,
-      onCompleted: () => {
-        console.log("user data for profile page", data);
-      },
+      // onCompleted: () => {
+      //   console.log("user data for profile page", data);
+      // },
     },
   );
   if (error) {

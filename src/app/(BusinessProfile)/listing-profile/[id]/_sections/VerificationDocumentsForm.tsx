@@ -11,7 +11,7 @@ export default function VerificationDocumentsForm({ data, refetchData }: any) {
   const { handleUpdate, data: mutationResult, loading, error } = useMutationBusinessFile();
 
   useEffect(() => {
-    console.log("Mutation result:", mutationResult);
+    // console.log("Mutation result:", mutationResult);
     console.log("Error:", error);
   }, [mutationResult, error]);
 

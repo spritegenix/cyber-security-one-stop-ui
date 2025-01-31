@@ -57,7 +57,7 @@ export default function Reviews({ businessSlug }: any) {
 
   useEffect(() => {
     if (loggedUserReview) {
-      console.log(loggedUserReview, "loggedUserReview");
+      // console.log(loggedUserReview, "loggedUserReview");
       reset({
         ...loggedUserReview,
         id: loggedUserReview?.id,
@@ -86,7 +86,7 @@ export default function Reviews({ businessSlug }: any) {
       toDelete: false,
     };
 
-    console.log("Submitted Data:", newReviewData);
+    // console.log("Submitted Data:", newReviewData);
     await reviewBusiness(newReviewData);
     if (!error) {
       await loggedUserReviewRefetch();

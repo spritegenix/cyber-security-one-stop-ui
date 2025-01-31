@@ -29,9 +29,9 @@ export default function MultiInput({
   individualErrors,
   ...props
 }: MultiInputProps) {
-  useEffect(() => {
-    console.log(inputArray, "inputArray");
-  }, [inputArray]);
+  // useEffect(() => {
+  //   console.log(inputArray, "inputArray");
+  // }, [inputArray]);
   const [inputValue, setInputValue] = useState<string>("");
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -64,7 +64,7 @@ export default function MultiInput({
   };
 
   const handleRemoveTag = async (selectedItem: inputItem) => {
-    console.log(selectedItem.id, "selectedItem");
+    // console.log(selectedItem.id, "selectedItem");
     if (selectedItem?.id) {
       setInputArray(
         inputArray.map((item) =>

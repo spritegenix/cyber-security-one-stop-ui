@@ -52,10 +52,10 @@ export function useAdminSearchAllFeedbacks() {
     setTokenType("admin");
   }, []);
   const [fetchAllFeedbacks, { data, loading, error }] = useLazyQuery(ADMIN_SEARCH_ALL_FEEDBACKS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched feedbacks successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched feedbacks successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching feedbacks:", err);
@@ -135,10 +135,10 @@ export function useAdminSearchAllReviews() {
     setTokenType("admin");
   }, []);
   const [fetchAllReviews, { data, loading, error }] = useLazyQuery(ADMIN_SEARCH_ALL_REVIEWS, {
-    onCompleted: (data: any) => {
-      // Handle successful response
-      console.log("Fetched reviews successfully:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Handle successful response
+    //   console.log("Fetched reviews successfully:", data);
+    // },
     onError: (err: any) => {
       // Handle error response
       console.error("Error fetching reviews:", err);
@@ -304,9 +304,9 @@ export function useAdminManageTestimonials() {
   }, [setTokenType]);
 
   const [manageTestimonials, { data, loading, error }] = useMutation(ADMIN_MANAGE_TESTIMONIALS, {
-    onCompleted: (data: any) => {
-      console.log("Successfully managed testimonials:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   console.log("Successfully managed testimonials:", data);
+    // },
     onError: (err: any) => {
       console.error("Error managing testimonials:", err);
     },

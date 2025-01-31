@@ -199,7 +199,7 @@ export function useVerifyBusinessContact() {
     password?: string | undefined;
   }) => {
     try {
-      console.log(requestId, "verifyContact");
+      // console.log(requestId, "verifyContact");
       const { data } = await verifyContactMutation({
         variables: {
           otp: otp,
@@ -643,7 +643,7 @@ export const useGetBusinessDetails = () => {
     skip: !token,
   });
   if (error) {
-    console.log(error?.message);
+    console.error(error?.message);
   }
   const userData = data?.businessMe;
   return { userData, loading, error, refetch };
@@ -665,10 +665,10 @@ export function useForgetBusinessPassword() {
     setTokenType("firm");
   }, []);
   const [forgetPasswordMutation, { data, loading, error }] = useMutation(FORGET_BUSINESS_PASSWORD, {
-    onCompleted: (data: any) => {
-      // Optional: Add logic here for what to do when the mutation is successful
-      console.log("Forget business password completed:", data);
-    },
+    // onCompleted: (data: any) => {
+    //   // Optional: Add logic here for what to do when the mutation is successful
+    //   console.log("Forget business password completed:", data);
+    // },
   });
 
   const forgetBusinessPassword = async ({
@@ -800,7 +800,7 @@ export const useHeaderUser = () => {
     // },
   });
   if (error) {
-    console.log(error?.message);
+    console.error(error?.message);
   }
   const userData = data?.businessMe;
   return { userData, loading, error, refetch };

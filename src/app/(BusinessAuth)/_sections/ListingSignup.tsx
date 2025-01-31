@@ -28,10 +28,6 @@ export default function ListingSignUp() {
     resolver: zodResolver(listingSignUpSchema),
   });
 
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
-
   const onSubmit = async (data: ListingSignUpFormValues) => {
     const type = data.loginIdentifier.includes("@") ? "email" : "phone";
     const identifier = data.loginIdentifier.includes("@")

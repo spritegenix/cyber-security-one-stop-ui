@@ -54,7 +54,7 @@ export function ChangePasswordByOtp({
         });
 
         if (response) {
-          console.log("Password changed successfully:", response.response);
+          // console.log("Password changed successfully:", response.response);
           // Redirect or display success message if needed
         } else {
           console.error("Error while changing password:", error);

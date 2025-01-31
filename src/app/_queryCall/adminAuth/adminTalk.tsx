@@ -52,7 +52,7 @@ export function useAdminNotices() {
   const [fetchAdminNotices, { data, loading, error }] = useLazyQuery(ADMIN_GET_ALL_NOTICES, {
     onCompleted: (data: any) => {
       if (data && data?.adminGetAllAdminNotices) {
-        console.log("Notices fetched successfully:", data?.adminGetAllAdminNotices);
+        // console.log("Notices fetched successfully:", data?.adminGetAllAdminNotices);
       }
     },
   });
@@ -129,11 +129,11 @@ export interface AdminNoticeInput {
 // Admin Manage Notices Mutation
 export function useAdminManageNotices() {
   const [manageAdminNotices, { data, loading, error }] = useMutation(ADMIN_MANAGE_ADMIN_NOTICES, {
-    onCompleted: (data: any) => {
-      if (data && data?.adminManageAdminNotices) {
-        console.log("Notices managed successfully:", data?.adminManageAdminNotices);
-      }
-    },
+    // onCompleted: (data: any) => {
+    //   if (data && data?.adminManageAdminNotices) {
+    //     console.log("Notices managed successfully:", data?.adminManageAdminNotices);
+    //   }
+    // },
   });
 
   const adminManageNotices = async (adminNotices: AdminNoticeInput[]) => {

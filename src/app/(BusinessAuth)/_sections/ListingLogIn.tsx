@@ -32,15 +32,8 @@ export default function ListingLogIn() {
   });
   const { businessLogin, data, loading, error } = useBusinessLogin();
 
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
-
   const onSubmit = async (data: LoginFormValues) => {
-    console.log("Form data submitted:", data);
+    // console.log("Form data submitted:", data);
     // Save the login identifier to local storage
     setLoginCredentials({ loginIdentifier: data.loginIdentifier });
 

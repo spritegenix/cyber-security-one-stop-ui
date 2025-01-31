@@ -125,7 +125,7 @@ export const useGetBusinessDetails = () => {
     skip: !token,
   });
   if (error) {
-    console.log(error?.message);
+    console.error(error?.message);
   }
   const userData = data?.businessMe;
   return { userData, loading, error, refetch };

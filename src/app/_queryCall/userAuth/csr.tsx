@@ -127,7 +127,7 @@ export function useResendUserOtp() {
   }, []);
   const [resendOtpMutation, { data, loading, error }] = useMutation(RESEND_USER_OTP, {
     onCompleted: (data: any) => {
-      console.log(data, "userSignup data");
+      // console.log(data, "userSignup data");
       const value = data?.resendUserOtp?.value || "";
       const type = value.includes("@") ? "email" : value ? "phone" : "";
 
@@ -598,7 +598,7 @@ export function useUserMe() {
     // },
   });
   if (error) {
-    console.log(error?.message);
+    console.error(error?.message);
   }
 
   const userData = data?.userMe;

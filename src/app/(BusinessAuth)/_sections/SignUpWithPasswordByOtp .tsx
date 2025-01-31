@@ -22,12 +22,7 @@ export function SignUpWithPasswordByOtp({
   requestId,
 }: ChangePasswordByOtpValue) {
   const { verifyContact, data, loading, error } = useVerifyBusinessContact();
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
+
   const router = useRouter();
   const [userOtp, setUserOtp] = useState("");
   const [password, setPassword] = useState({

@@ -35,7 +35,7 @@ export default function SignUp({ handleModelClose }: any) {
   const router = useRouter();
 
   const onSubmit = async (data: SignUpFormValues) => {
-    console.log(data);
+    // console.log(data);
     const result = await userSignup({
       name: data.name,
       password: data.password,

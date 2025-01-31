@@ -131,9 +131,9 @@ export default function LocationTypeHead() {
       country: "",
       selectedLocation: selected?.[0]?.name,
     };
-    console.log(location, "location");
+    // console.log(location, "location");
     let selectedArrayLength = selectedString?.split(", ").length || null;
-    console.log(selectedArrayLength, "selectedArrayLength");
+    // console.log(selectedArrayLength, "selectedArrayLength");
     if (selectedArrayLength !== null) {
       if (selectedArrayLength === 4) {
         location.pincode = selectedString?.split(",")[0].trim();

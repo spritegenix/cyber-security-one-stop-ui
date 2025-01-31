@@ -80,9 +80,9 @@ export default function AdditionalInformationForm({ data, refetchData }: any) {
 
   const onSubmit = async (formData: AdditionalInformationFormValues) => {
     // console.log("Form submitted:", formData);
-    console.log(formData.dayTimings, "formData.dayTimings");
+    // console.log(formData.dayTimings, "formData.dayTimings");
     const operatingHours = convertToWorkingHour(formData.dayTimings);
-    console.log(operatingHours, "operatingHours");
+    // console.log(operatingHours, "operatingHours");
     const socialLinks =
       (formData?.socialMediaLinks &&
         formData?.socialMediaLinks.map((item: any) => ({

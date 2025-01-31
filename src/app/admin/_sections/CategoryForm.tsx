@@ -105,7 +105,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
       order: !itemIdToBeUpdate ? categories.length + 1 : undefined,
       toDelete: false,
     };
-    console.log("formData", newData);
+    // console.log("formData", newData);
     try {
       await adminManageCategories([newData]);
       handleClear();
@@ -145,7 +145,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ data, refetchData }) => {
         .filter(
           (updated) => updated.order !== prev.find((item) => item.id === updated.id)?.priority,
         );
-      console.log("updates", updates);
+      // console.log("updates", updates);
 
       // Only make the API call if there are actual changes
       if (updates.length > 0) {

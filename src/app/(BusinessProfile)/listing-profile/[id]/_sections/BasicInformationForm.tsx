@@ -114,7 +114,7 @@ export default function BasicInformationForm({ data, refetchData }: any) {
             toDelete: false,
           }))
         : [];
-    console.log(addresses);
+    // console.log(addresses);
     const deletedAddress = addressToBeDeleted.map((address, index) => ({
       addressId: address.addressId || undefined,
       street: address.streetAddress,

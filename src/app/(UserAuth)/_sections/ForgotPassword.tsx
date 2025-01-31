@@ -39,7 +39,7 @@ export default function ForgotPassword({ type }: Type) {
         });
 
         if (response) {
-          console.log("OTP sent successfully:", response.message);
+          // console.log("OTP sent successfully:", response.message);
           setUserIdentifier(identifier);
           setIsOtpSent(true);
         } else {

@@ -640,10 +640,10 @@ export function useAdminGetAllBusinessSubscriptions() {
   const [fetchSubscriptions, { data, loading, error }] = useLazyQuery(
     ADMIN_GET_ALL_BUSINESS_SUBSCRIPTIONS,
     {
-      onCompleted: (data: any) => {
-        // Handle successful response
-        console.log("Fetched subscriptions successfully:", data);
-      },
+      // onCompleted: (data: any) => {
+      //   // Handle successful response
+      //   console.log("Fetched subscriptions successfully:", data);
+      // },
       onError: (err: any) => {
         // Handle error response
         console.error("Error fetching subscriptions:", err);
@@ -713,10 +713,10 @@ export function useAdminManageBusinessSubscriptions() {
   const [manageSubscription, { data, loading, error }] = useMutation(
     ADMIN_MANAGE_BUSINESS_SUBSCRIPTIONS,
     {
-      onCompleted: (data: any) => {
-        // Handle successful mutation
-        console.log("Subscription managed successfully:", data);
-      },
+      // onCompleted: (data: any) => {
+      //   // Handle successful mutation
+      //   console.log("Subscription managed successfully:", data);
+      // },
       onError: (err: any) => {
         // Handle mutation error
         console.error("Error managing subscription:", err);

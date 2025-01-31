@@ -22,7 +22,7 @@ export default function UserCard({
   const { adminBlockUsers, data, loading, error } = useAdminBlockUsers();
   function handleSubmit(e: any) {
     e.preventDefault();
-    console.log(e.target[0].value, id);
+    // console.log(e.target[0].value, id);
   }
   function handleDelete() {
     setAddAdminNote(false);
