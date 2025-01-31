@@ -192,7 +192,7 @@ export default async function IndividualBusinessPage({ params, searchParams }: P
                     <span
                       key={language.id}
                       data-secondary-key={language.slug}
-                      className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium transition-all duration-300 hover:bg-bg1 hover:text-white"
+                      className="rounded-md border border-bg1 bg-bg1/10 px-2 py-0.5 font-medium capitalize transition-all duration-300 hover:bg-bg1 hover:text-white"
                     >
                       {language.name}
                     </span>

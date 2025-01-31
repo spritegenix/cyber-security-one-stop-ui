@@ -185,7 +185,7 @@ export default function CoverPhotoUploaderForm({
       setCachedImages((prev) => prev.filter((item) => item?.id !== selectedItem?.id));
     } else {
       setCachedImages((prev) => prev.filter((_, i) => i !== index));
-      const newFiles = coverPhotos.filter((item, i) => item.name === selectedItem.file.name);
+      const newFiles = coverPhotos.filter((item, i) => item.name !== selectedItem.file.name);
       setValue("coverPhotos", newFiles as [File, ...File[]]);
     }
   };
