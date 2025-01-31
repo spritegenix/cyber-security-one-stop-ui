@@ -45,8 +45,8 @@ export const forgotPasswordSchema = z
     phoneNumber: z
       .string()
       .optional()
-      .refine((val) => !val || val.length >= 10, {
-        message: "Invalid phone number",
+      .refine((val) => !val || /^\+\d{1,3}\d{10,15}$/.test(val), {
+        message: "Enter a valid phone number with a country code (e.g., +91 1234567890).",
       }),
   })
   .refine((data) => data.email || data.phoneNumber, {
