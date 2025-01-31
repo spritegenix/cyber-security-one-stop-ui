@@ -17,6 +17,7 @@ export const ADMIN_ALL_USERS = gql`
     $limit: Int
     $sortBy: AllUsersSortBy
     $sortOrder: SortOrder
+    $hasFeedbacks: Boolean
   ) {
     adminAllUsers(
       name: $name
@@ -31,6 +32,7 @@ export const ADMIN_ALL_USERS = gql`
       limit: $limit
       sortBy: $sortBy
       sortOrder: $sortOrder
+      hasFeedbacks: $hasFeedbacks
     ) {
       users {
         id
@@ -91,6 +93,7 @@ export function useAdminAllUsers() {
     limit = 5,
     sortBy = undefined,
     sortOrder = undefined,
+    hasFeedbacks = undefined,
   }: {
     name?: string;
     email?: string;
@@ -104,6 +107,7 @@ export function useAdminAllUsers() {
     limit?: number;
     sortBy?: "alphabetical" | "createdAt" | "updatedAt";
     sortOrder?: "asc" | "desc";
+    hasFeedbacks?: boolean;
   }) => {
     try {
       const response = await fetchAllUsers({
@@ -120,6 +124,7 @@ export function useAdminAllUsers() {
           limit,
           sortBy,
           sortOrder,
+          hasFeedbacks,
         },
       });
       return { response: response?.data?.adminAllUsers, error: null, refetch };

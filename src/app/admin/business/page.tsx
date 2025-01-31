@@ -253,6 +253,29 @@ export default function UserListPage() {
                   ? "have Feedbacks"
                   : "Not have Feedbacks"}
             </Button>
+            {/* hasTestimonials  */}
+            <Button
+              variant="white"
+              className="col-span-12 h-min"
+              onClick={() => {
+                const sortOptions = [undefined, true, false];
+                const currentIndex = sortOptions.findIndex(
+                  (option) => option === filtersApplied?.hasTestimonials,
+                );
+                const nextIndex = (currentIndex + 1) % sortOptions.length;
+                setFiltersApplied({
+                  ...filtersApplied,
+                  hasTestimonials: sortOptions[nextIndex],
+                  page: 1,
+                });
+              }}
+            >
+              {filtersApplied?.hasTestimonials === undefined
+                ? "All admin selected / not selected Testimonials"
+                : filtersApplied?.hasTestimonials
+                  ? "admin selected Testimonials"
+                  : "admin Not selected Testimonials"}
+            </Button>
             {/* hasBusinessAdBanners  */}
             <Button
               variant="white"
@@ -390,29 +413,6 @@ export default function UserListPage() {
                 : filtersApplied?.isBusinessVerified
                   ? "have Business Verified"
                   : "Not have Business Verified"}
-            </Button>
-            {/* hasTestimonials  */}
-            <Button
-              variant="white"
-              className="col-span-12 h-min"
-              onClick={() => {
-                const sortOptions = [undefined, true, false];
-                const currentIndex = sortOptions.findIndex(
-                  (option) => option === filtersApplied?.hasTestimonials,
-                );
-                const nextIndex = (currentIndex + 1) % sortOptions.length;
-                setFiltersApplied({
-                  ...filtersApplied,
-                  hasTestimonials: sortOptions[nextIndex],
-                  page: 1,
-                });
-              }}
-            >
-              {filtersApplied?.hasTestimonials === undefined
-                ? "All admin selected / not selected Testimonials"
-                : filtersApplied?.hasTestimonials
-                  ? "admin selected Testimonials"
-                  : "admin Not selected Testimonials"}
             </Button>
           </div>
           {/* ------------------------------------------------------  */}

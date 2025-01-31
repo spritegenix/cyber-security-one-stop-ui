@@ -67,6 +67,7 @@ const PaymentComponent = ({
               },
             });
             alert("Payment Verified Successfully!");
+            refetch();
           } catch (verifyError) {
             console.error("Payment verification failed:", verifyError);
             alert("Payment verification failed. Please try again.");

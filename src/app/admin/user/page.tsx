@@ -21,6 +21,7 @@ export default function UserListPage() {
     isVerified: false,
     sortBy: "createdAt",
     sortOrder: "asc",
+    hasFeedbacks: undefined,
   });
   const [debouncedFilters, setDebouncedFilters] = useState(filtersApplied);
   const { adminAllUsers, data, loading, error, refetch: adminAllUsersRefetch } = useAdminAllUsers();
@@ -84,7 +85,8 @@ export default function UserListPage() {
         <div className="col-span-7">
           <h2 className="mb-5 text-2xl font-bold">Users On Platform</h2>
           {/* User Search Bar */}
-          <div className="grid grid-cols-12 items-center gap-1 rounded bg-white px-2 shadow">
+          <div className="grid grid-cols-12 items-center gap-1 rounded bg-white px-2 pb-4 shadow">
+            {/* Name  */}
             <div className="col-span-4">
               <Input
                 label="Name"
@@ -94,6 +96,7 @@ export default function UserListPage() {
                 }
               />
             </div>
+            {/* Email  */}
             <div className="col-span-4">
               <Input
                 label="Email"
@@ -103,6 +106,7 @@ export default function UserListPage() {
                 }
               />
             </div>
+            {/* Phone  */}
             <div className="col-span-4">
               <Input
                 label="Phone"
@@ -112,7 +116,7 @@ export default function UserListPage() {
                 }
               />
             </div>
-
+            {/* isVerified  */}
             <Button
               variant="white"
               className="col-span-4 h-min"
@@ -126,6 +130,7 @@ export default function UserListPage() {
             >
               {filtersApplied?.isVerified ? "Verified Users" : "All Users"}
             </Button>
+            {/* sortOrder  */}
             <Button
               variant="white"
               className="col-span-4 h-min text-xl"
@@ -139,6 +144,7 @@ export default function UserListPage() {
             >
               {filtersApplied?.sortOrder === "asc" ? <FaSortAlphaUp /> : <FaSortAlphaDown />}
             </Button>
+            {/* sortBy  */}
             <Button
               variant="white"
               className="col-span-4 h-min"
@@ -156,8 +162,31 @@ export default function UserListPage() {
             >
               {filtersApplied?.sortBy || "alphabetical"}
             </Button>
-            <p className="col-span-4">Total Result: {data?.total || "not found"}</p>
+            {/* hasFeedbacks  */}
+            <Button
+              variant="white"
+              className="col-span-4 h-min"
+              onClick={() => {
+                const sortOptions = [undefined, true, false];
+                const currentIndex = sortOptions.findIndex(
+                  (option) => option === filtersApplied?.hasFeedbacks,
+                );
+                const nextIndex = (currentIndex + 1) % sortOptions.length;
+                setFiltersApplied({
+                  ...filtersApplied,
+                  hasFeedbacks: sortOptions[nextIndex],
+                  page: 1,
+                });
+              }}
+            >
+              {filtersApplied?.hasFeedbacks === undefined
+                ? "All have / not have Feedbacks"
+                : filtersApplied?.hasFeedbacks
+                  ? "have Feedbacks"
+                  : "Not have Feedbacks"}
+            </Button>
           </div>
+          <p className="col-span-4">Total Result: {data?.total || "not found"}</p>
           {/* Filtered Users List */}
           {loading ? (
             "Loading..."

@@ -3,7 +3,6 @@ import {
   useAdminGetAllTestimonials,
   useAdminManageTestimonials,
 } from "@/app/_queryCall/adminAuth/reviews";
-import { Input } from "postcss";
 import React, { useEffect, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -20,6 +19,10 @@ export default function TestimonialsCards({ filterType = "BUSINESS" }: any) {
   } = useAdminManageTestimonials();
 
   useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
     getTestimonials({ filter: filterType });
     // console.log(data);
   }, [data]);
@@ -29,8 +32,8 @@ export default function TestimonialsCards({ filterType = "BUSINESS" }: any) {
     refetch();
   }
 
-  function handleTestimonialDelete(id: string) {
-    adminManageTestimonials([{ id, toDelete: true }]);
+  async function handleTestimonialDelete(id: string) {
+    await adminManageTestimonials([{ id, toDelete: true }]);
     refetch();
   }
 
