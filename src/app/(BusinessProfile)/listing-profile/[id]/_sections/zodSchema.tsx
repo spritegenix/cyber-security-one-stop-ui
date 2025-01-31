@@ -5,7 +5,6 @@ export const basicInfoSchema = z.object({
 
   phoneNumber: z
     .string()
-    .min(10, "Phone number is required")
     .regex(
       /^(\+?\d{1,4}[\s-]?)?(\(?\d{1,3}\)?[\s-]?)?\d{1,4}([\s-]?\d{1,4}){1,3}$/,
       "Invalid phone number",
@@ -17,7 +16,6 @@ export const basicInfoSchema = z.object({
     .array(
       z
         .string()
-        .min(10, "Invalid phone number")
         .regex(
           /^(\+?\d{1,4}[\s-]?)?(\(?\d{1,3}\)?[\s-]?)?\d{1,4}([\s-]?\d{1,4}){1,3}$/,
           "Invalid phone number",

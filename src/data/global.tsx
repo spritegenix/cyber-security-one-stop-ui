@@ -662,7 +662,6 @@ export const languageProficiencyIndia = [
   "Turkish",
   "Turkmen",
   "Ukrainian",
-  "Urdu",
   "Uyghur",
   "Uzbek",
   "Vietnamese",

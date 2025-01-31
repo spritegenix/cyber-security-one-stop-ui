@@ -27,6 +27,7 @@ export default function robots(): MetadataRoute.Robots {
                     '/user-profile/[id]',
                     '/feedback/[userType]',
                     '/privacy-policy',
+                    '/terms-and-conditions',
                     '/admin',
                     '/admin/*',
                     '/api/*',

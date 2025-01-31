@@ -185,8 +185,15 @@ export default function ProfessionalDetailsForm({ data, refetchData }: any) {
         <div>
           <h3 className="mb-5 text-lg font-semibold">Language Proficiency</h3>
           <MultiSelect
-            options={languageProficiencyIndia?.map((item) => ({ id: item, name: item }))}
-            selectedOptions={languageProficiency}
+            options={
+              !!languageProficiencyIndia?.length
+                ? languageProficiencyIndia?.map((item) => ({
+                    id: item.toLowerCase(),
+                    name: item,
+                  }))
+                : []
+            }
+            selectedOptions={languageProficiency || []}
             setSelectedOptions={(value) => setValue("languageProficiency", value)}
             leftIcon={
               <span>
