@@ -1,11 +1,10 @@
 "use client";
 import Button from "@/components/elements/Button";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaArrowRight } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import { useBusinessSignup } from "@/app/_queryCall/businessAuth/csr";
 
 // Validation schema allowing either email or phone number
@@ -21,7 +20,6 @@ type ListingSignUpFormValues = z.infer<typeof listingSignUpSchema>;
 
 export default function ListingSignUp() {
   const { businessSignup, data, loading, error } = useBusinessSignup();
-  const router = useRouter();
   const {
     register,
     handleSubmit,

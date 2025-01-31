@@ -16,8 +16,10 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address").nonempty("Email is required"),
   mobileNo: z
     .string()
-    .regex(/^\d{10}$/, "Mobile number must be 10 digits")
-    .nonempty("Mobile number is required"),
+    .nonempty("Mobile number is required")
+    .refine((val) => /^\+\d{1,3}\d{10,15}$/.test(val), {
+      message: "Enter a valid phone number with a country code (e.g., +91 1234567890).",
+    }),
   subject: z.string().nonempty("Subject is required"),
   message: z
     .string()
