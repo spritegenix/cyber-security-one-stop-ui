@@ -24,7 +24,7 @@ export default function ListingPasswordUpdateWithOtpPage({ params, searchParams 
   return (
     <Layout headerStyle={2} footerStyle={1}>
       <Wrapper isTop2={true} className="mb-10 flex h-screen justify-center">
-        <div className="rounded-lg bg-white p-5 shadow-lg">
+        <div className="rounded-lg bg-white p-5 shadow-lg h-max">
           <ChangePasswordByOtp
             type={type}
             userIdentifier={input}

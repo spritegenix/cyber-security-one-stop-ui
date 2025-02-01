@@ -699,7 +699,7 @@ export const subscriptionPage = {
       title: "Monthly",
       description:
         "Perfect for individuals or firms looking for short-term exposure or testing out the platform.",
-      monthlyPrice: "299",
+      monthlyPrice: "199",
       totalPrice: "299",
     },
     {
@@ -707,16 +707,16 @@ export const subscriptionPage = {
       title: "Quarterly",
       description:
         "Ideal for professionals aiming for a steady and reliable presence while saving significantly on costs.",
-      monthlyPrice: "90",
-      totalPrice: "350",
+      monthlyPrice: "179",
+      totalPrice: "716",
     },
     {
       id: 3,
       title: "Yearly",
       description:
         "Perfect for individuals or firms looking to grow their presence and reach a wider audience.",
-      monthlyPrice: "80",
-      totalPrice: "1000",
+      monthlyPrice: "149",
+      totalPrice: "1788",
     },
   ],
   testimonials: [
