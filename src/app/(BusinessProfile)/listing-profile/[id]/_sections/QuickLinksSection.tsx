@@ -1,6 +1,7 @@
 "use client";
 import { useHeaderUser } from "@/app/_queryCall/businessAuth/csr";
 import { ad, contact, profile, share } from "@/assets";
+import Env from "@/lib/env";
 import TextWithLineBreak from "@/utils/TextWithLineBreak";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +19,7 @@ export default function QuickLinks() {
             data={{
               title: "Cyber Security | One stop Solution",
               text: "Whether you're seeking expert advice or specialized services, explore detailed profile and reach out directly to us.",
-              url: `https://www.cybersecurityonestop.com/${loggedUser?.slug}`,
+              url: `${Env.BASE_URL}${loggedUser?.slug}`,
             }}
             onClick={() => console.log("shared successfully!")}
           >
@@ -34,7 +35,7 @@ export default function QuickLinks() {
         </div>
         <QuickLinkCard
           title={"User View"}
-          href={loggedUser?.slug ? `https://www.cybersecurityonestop.com/${loggedUser?.slug}` : "#"}
+          href={loggedUser?.slug ? `${Env.BASE_URL}${loggedUser?.slug}` : "#"}
           icon={profile}
         />
         <QuickLinkCard title={"Ads Subscription"} href={"/subscription"} icon={ad} />
