@@ -11,8 +11,9 @@ import { fetchBusinessById } from "@/app/_queryCall/businessProfile/ssg";
 import { notFound } from "next/navigation";
 import Banner from "./_sections/Banner";
 import ReviewsSection from "./_sections/ReviewsSection";
+import Env from "@/lib/env";
 
-export const revalidate = 3600; // Rebuild the page every hour
+export const revalidate = Number(Env.REVALIDATE_TIME);
 type Props = {
   params: Promise<{ businessID: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
