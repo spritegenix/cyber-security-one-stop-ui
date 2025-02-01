@@ -700,7 +700,7 @@ export const subscriptionPage = {
       description:
         "Perfect for individuals or firms looking for short-term exposure or testing out the platform.",
       monthlyPrice: "199",
-      totalPrice: "299",
+      totalPrice: "199",
     },
     {
       id: 2,
