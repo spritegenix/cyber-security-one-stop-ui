@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -60,8 +60,12 @@ export const TestimonialSlider = ({ testimonials }: any) => {
 };
 
 function TestimonialCard({ avatar, name, profession, testimonial, rating }: any) {
+  const [expanded, setExpanded] = useState(false);
+  const MAX_LENGTH = 180;
+  const isTruncated = testimonial.length > MAX_LENGTH;
+
   return (
-    <div className="flex min-h-[19.2rem] w-full flex-col justify-between p-4">
+    <div className="flex w-full flex-col justify-between rounded-lg border bg-white p-4 shadow-md">
       <div className="flex items-center">
         <div className="flex-center h-14 w-14 rounded-full border-2 border-white bg-bg1 font-bold text-white shadow-lg">
           {avatar ? (
@@ -81,15 +85,25 @@ function TestimonialCard({ avatar, name, profession, testimonial, rating }: any)
           <p className="text-sm text-zinc-500">{profession}</p>
         </div>
       </div>
-      <p className="my-2 line-clamp-4">{testimonial}</p>
-      <div className="flex-center mb-3">
+
+      <p className="my-2 text-justify">
+        {expanded || !isTruncated ? testimonial : `${testimonial.slice(0, MAX_LENGTH)}...`}
+      </p>
+
+      {isTruncated && (
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="ml-auto w-max text-sm text-bg1 underline"
+        >
+          {expanded ? "Read Less" : "Read More"}
+        </button>
+      )}
+
+      <div className="mt-3 flex justify-center">
         {Array.from({ length: rating }, (_, i) => (
-          <FaStar key={i} className="mx-2 text-2xl text-bg1" />
+          <FaStar key={i} className="mx-1 text-xl text-bg1" />
         ))}
       </div>
-      {/* <Link href={"#"} target="_blank" className="my-2">
-        <Button className="!w-full">View Story</Button>
-      </Link> */}
     </div>
   );
 }

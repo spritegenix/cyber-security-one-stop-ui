@@ -180,8 +180,7 @@ export const footer = {
   contactDetails: {
     contactNo: "+91 8957865554",
     email: "info@cybersecurity.com",
-    location:
-      "A Wing, Flat Nos 13, Suman Youngsters CHS, Opp. Agarwal Residency Apt Gate, Shankar Lane, Kandivali West, Mumbai- 400067.",
+    location: "India",
   },
   socials: {
     facebook: "https://www.facebook.com/CyberSecurity",
