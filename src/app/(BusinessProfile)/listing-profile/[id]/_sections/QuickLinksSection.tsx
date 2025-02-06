@@ -41,7 +41,7 @@ export default function QuickLinks() {
         <QuickLinkCard title={"Ads Subscription"} href={"/subscription"} icon={ad} />
         <QuickLinkCard
           title={"Business Support"}
-          href={"mailto:info@cybersecurity.com"}
+          href={"mailto:info@cybersecurityonestop.com"}
           icon={contact}
         />
       </div>

@@ -175,11 +175,12 @@ export const header2 = {
     },
   ],
 };
+
 export const footer = {
   text: "Connect with trusted fraud experts for Financial Fraud, Social Media Scams, Corporate Fraud, and more. Find reliable solutions to safeguard your assets and ensure peace of mind.",
   contactDetails: {
     contactNo: "+91 8957865554",
-    email: "info@cybersecurity.com",
+    email: "info@cybersecurityonestop.com",
     location: "India",
   },
   socials: {
@@ -189,7 +190,7 @@ export const footer = {
     linkedin: "https://www.linkedin.com/school/CyberSecurity/",
     youtube: "https://www.youtube.com/c/CyberSecurity",
   },
-  copyrightText: `Copyrights © ${new Date().getFullYear()} CyberSecurity. All rights reserved.`,
+  copyrightText: `Copyrights © ${new Date().getFullYear()} CyberSecurity One Stop Solution. All rights reserved.`,
   list1: {
     title: "Quick Links",
     links: [
