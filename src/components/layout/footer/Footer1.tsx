@@ -77,8 +77,8 @@ export default function Footer1({ footerData }: any) {
       <div className="flex items-center justify-between gap-5 border-t-2 border-white/30 py-5 max-md:flex-col">
         <p className="text-center text-sm">
           Copyrights © {new Date().getFullYear()}{" "}
-          <span className="font-medium">CyberSecurity</span>. All rights reserved. Designed and
-          Developed by{" "}
+          <span className="font-medium">CyberSecurity One Stop Solution</span>. All rights reserved.
+          Designed and Developed by{" "}
           <Link
             target="_blank"
             className="font-medium hover:underline"
