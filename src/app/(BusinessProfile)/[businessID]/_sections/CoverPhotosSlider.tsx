@@ -70,8 +70,8 @@ export default function Card({ image, index, imageLength, data }: any) {
         <Image
           src={image}
           alt="image"
-          width={764}
-          height={144}
+          width={500}
+          height={344}
           className="h-full w-full cursor-pointer object-cover"
           onClick={() => setIsModalOpen(true)}
         />
@@ -87,7 +87,7 @@ export default function Card({ image, index, imageLength, data }: any) {
             src={currentImage}
             alt="Selected image"
             className="max-h-[90vh] w-auto rounded-md object-contain"
-            width={800}
+            width={1000}
             height={800}
           />
         </Modal>
