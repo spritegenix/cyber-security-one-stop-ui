@@ -64,8 +64,8 @@ function ImageCard({ image }: any) {
     <Image
       src={image}
       alt="service"
-      width={764}
-      height={500}
+      width={500}
+      height={400}
       className="mx-auto h-full w-full cursor-pointer object-cover"
     />
   );
